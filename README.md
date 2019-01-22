@@ -1,14 +1,22 @@
 # baruwa-go
 
+[![MPLv2 License](https://img.shields.io/badge/license-MPLv2-blue.svg?style=flat-square)](https://www.mozilla.org/MPL/2.0/)
 
 ## Golang bindings for the Baruwa REST API
 
+## Requirements
+
+* Golang 1.10.x or higher
 
 ## Installation
 
-Install from Githib
+```console
+$ go get github.com/akissa/baruwa-go
+```
 
-    git clone https://github.com/akissa/baruwa-go.git
+## Testing
+
+``make test``
 
 ## Contributing
 
