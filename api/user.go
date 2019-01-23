@@ -7,3 +7,99 @@
 
 // Package api Golang bindings for Baruwa REST API
 package api
+
+import (
+	"fmt"
+	"net/url"
+
+	"github.com/google/go-querystring/query"
+)
+
+// UserDomain holds user
+type UserDomain struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
+}
+
+// User holds users
+type User struct {
+	Username    string       `json:"username"`
+	Firstname   string       `json:"firstname"`
+	Lastname    string       `json:"lastname"`
+	Password1   string       `json:"password1,omitempty"`
+	Password2   string       `json:"password2,omitempty"`
+	Email       string       `json:"email"`
+	Timezone    string       `json:"timezone"`
+	AccountType int          `json:"account_type"`
+	Domains     []UserDomain `json:"domains,omitempty"`
+	Active      bool         `json:"active"`
+	SendReport  bool         `json:"send_report"`
+	SpamChecks  bool         `json:"spam_checks"`
+	LowScore    float64      `json:"low_score"`
+	HighScore   float64      `json:"high_score"`
+	BlockMacros bool         `json:"block_macros"`
+}
+
+// GetUser returns a user account
+func (c *Client) GetUser(id int) (user *User, err error) {
+	if id <= 0 {
+		err = fmt.Errorf("The id param should be > 0")
+		return
+	}
+
+	err = c.get(fmt.Sprintf("users/%d", id), user)
+	return
+}
+
+// CreateUser creates a user account
+func (c *Client) CreateUser(user *User) (err error) {
+	var v url.Values
+
+	if user == nil {
+		err = fmt.Errorf("The user param cannot be nil")
+		return
+	}
+
+	if v, err = query.Values(user); err != nil {
+		return
+	}
+
+	err = c.post("users", v, user)
+
+	return
+}
+
+// UpdateUser updates a user account
+func (c *Client) UpdateUser(id int, user *User) (err error) {
+	var v url.Values
+
+	if id <= 0 {
+		err = fmt.Errorf("The id param should be > 0")
+		return
+	}
+
+	if user == nil {
+		err = fmt.Errorf("The user param cannot be nil")
+		return
+	}
+
+	if v, err = query.Values(user); err != nil {
+		return
+	}
+
+	err = c.put(fmt.Sprintf("users/%d", id), v, user)
+
+	return
+}
+
+// DeleteUser deletes a user account
+func (c *Client) DeleteUser(id int) (err error) {
+	if id <= 0 {
+		err = fmt.Errorf("The id param should be > 0")
+		return
+	}
+
+	err = c.delete(fmt.Sprintf("users/%d", id))
+
+	return
+}
