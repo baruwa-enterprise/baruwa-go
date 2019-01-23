@@ -132,6 +132,18 @@ func (c *Client) put(p string, v url.Values, data interface{}) (err error) {
 	return
 }
 
+func (c *Client) delete(p string) (err error) {
+	var req *http.Request
+
+	if req, err = c.newRequest(http.MethodDelete, apiPath(p), nil); err != nil {
+		return
+	}
+
+	err = c.doWithOAuth(req, nil)
+
+	return
+}
+
 // GetAccessToken returns a token
 func (c *Client) GetAccessToken(clientID, secret string) (token *TokenResponse, err error) {
 	var req *http.Request
@@ -189,7 +201,12 @@ func (c *Client) do(req *http.Request, v interface{}) (err error) {
 		return
 	}
 
+	if v == nil {
+		return
+	}
+
 	err = json.NewDecoder(resp.Body).Decode(v)
+
 	return
 }
 
