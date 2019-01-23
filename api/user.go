@@ -23,6 +23,7 @@ type UserDomain struct {
 
 // User holds users
 type User struct {
+	ID          int          `json:"id,omitempty"`
 	Username    string       `json:"username"`
 	Firstname   string       `json:"firstname"`
 	Lastname    string       `json:"lastname"`
@@ -70,16 +71,16 @@ func (c *Client) CreateUser(user *User) (err error) {
 }
 
 // UpdateUser updates a user account
-func (c *Client) UpdateUser(id int, user *User) (err error) {
+func (c *Client) UpdateUser(user *User) (err error) {
 	var v url.Values
-
-	if id <= 0 {
-		err = fmt.Errorf("The id param should be > 0")
-		return
-	}
 
 	if user == nil {
 		err = fmt.Errorf("The user param cannot be nil")
+		return
+	}
+
+	if user.ID <= 0 {
+		err = fmt.Errorf("The user.ID param should be > 0")
 		return
 	}
 
@@ -87,7 +88,7 @@ func (c *Client) UpdateUser(id int, user *User) (err error) {
 		return
 	}
 
-	err = c.put(fmt.Sprintf("users/%d", id), v, user)
+	err = c.put(fmt.Sprintf("users/%d", user.ID), v, user)
 
 	return
 }
