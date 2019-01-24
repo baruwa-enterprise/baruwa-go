@@ -7,3 +7,32 @@
 
 // Package api Golang bindings for Baruwa REST API
 package api
+
+// UserDeliveryServer holds user delivery servers
+type UserDeliveryServer struct {
+	DomainDeliveryServer
+}
+
+// GetUserDeliveryServer returns a user delivery server
+// https://www.baruwa.com/docs/api/#retrieve-a-user-delivery-server
+func (c *Client) GetUserDeliveryServer(id int) (server *UserDeliveryServer, err error) {
+	return
+}
+
+// CreateUserDeliveryServer creates a user delivery server
+// https://www.baruwa.com/docs/api/#create-a-user-delivery-server
+func (c *Client) CreateUserDeliveryServer(server *UserDeliveryServer) (err error) {
+	return
+}
+
+// UpdateUserDeliveryServer updates a user delivery server
+// https://www.baruwa.com/docs/api/#update-a-user-delivery-server
+func (c *Client) UpdateUserDeliveryServer(server *UserDeliveryServer) (err error) {
+	return
+}
+
+// DeleteUserDeliveryServer deletes a user delivery server
+// https://www.baruwa.com/docs/api/#delete-a-user-delivery-server
+func (c *Client) DeleteUserDeliveryServer(id int) (err error) {
+	return
+}
