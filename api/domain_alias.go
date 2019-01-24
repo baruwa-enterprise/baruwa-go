@@ -7,3 +7,41 @@
 
 // Package api Golang bindings for Baruwa REST API
 package api
+
+// AliasDomain hold alias domain entries
+type AliasDomain struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
+}
+
+// DomainAlias holds domain aliases
+type DomainAlias struct {
+	ID      int           `json:"id,omitempty"`
+	Address string        `json:"address"`
+	Enabled bool          `json:"enabled"`
+	Domain  []AliasDomain `json:"domain,omitempty"`
+}
+
+// GetDomainAlias returns a domain alias
+// https://www.baruwa.com/docs/api/#retrieve-domain-alias
+func (c *Client) GetDomainAlias(id int) (alias *DomainAlias, err error) {
+	return
+}
+
+// CreateDomainAlias creates a domain alias
+// https://www.baruwa.com/docs/api/#create-a-domain-alias
+func (c *Client) CreateDomainAlias(domain *DomainAlias) (err error) {
+	return
+}
+
+// UpdateDomainAlias updates a domain alias
+// https://www.baruwa.com/docs/api/#update-a-domain-alias
+func (c *Client) UpdateDomainAlias(domain *DomainAlias) (err error) {
+	return
+}
+
+// DeleteDomainAlias deletes an domain alias
+// https://www.baruwa.com/docs/api/#delete-a-domain-alias
+func (c *Client) DeleteDomainAlias(id int) (err error) {
+	return
+}
