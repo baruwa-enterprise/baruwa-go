@@ -15,30 +15,41 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
-// UserDomain holds user
+// UserDomain holds user domains
 type UserDomain struct {
 	ID   int    `json:"id"`
 	Name string `json:"name"`
 }
 
+// UserOrganization holds user organizations
+type UserOrganization struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
+}
+
+// UserAddress addresses
+type UserAddress struct {
+}
+
 // User holds users
 type User struct {
-	ID          int          `json:"id,omitempty"`
-	Username    string       `json:"username"`
-	Firstname   string       `json:"firstname"`
-	Lastname    string       `json:"lastname"`
-	Password1   string       `json:"password1,omitempty"`
-	Password2   string       `json:"password2,omitempty"`
-	Email       string       `json:"email"`
-	Timezone    string       `json:"timezone"`
-	AccountType int          `json:"account_type"`
-	Domains     []UserDomain `json:"domains,omitempty"`
-	Active      bool         `json:"active"`
-	SendReport  bool         `json:"send_report"`
-	SpamChecks  bool         `json:"spam_checks"`
-	LowScore    float64      `json:"low_score"`
-	HighScore   float64      `json:"high_score"`
-	BlockMacros bool         `json:"block_macros"`
+	ID            int                `json:"id,omitempty"`
+	Username      string             `json:"username"`
+	Firstname     string             `json:"firstname"`
+	Lastname      string             `json:"lastname"`
+	Password1     string             `json:"password1,omitempty"`
+	Password2     string             `json:"password2,omitempty"`
+	Email         string             `json:"email"`
+	Timezone      string             `json:"timezone"`
+	AccountType   int                `json:"account_type"`
+	Active        bool               `json:"active"`
+	SendReport    bool               `json:"send_report"`
+	SpamChecks    bool               `json:"spam_checks"`
+	LowScore      float64            `json:"low_score"`
+	HighScore     float64            `json:"high_score"`
+	BlockMacros   bool               `json:"block_macros"`
+	Domains       []UserDomain       `json:"domains,omitempty"`
+	Organizations []UserOrganization `json:"organizations,omitempty"`
 }
 
 // GetUser returns a user account
