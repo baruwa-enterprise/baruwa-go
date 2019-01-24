@@ -21,19 +21,19 @@ type DomainDeliveryServer struct {
 
 // GetDomainDeliveryServer returns a domain delivery server
 // https://www.baruwa.com/docs/api/#retrieve-a-delivery-server
-func (c *Client) GetDomainDeliveryServer(id int) (domain *DomainDeliveryServer, err error) {
+func (c *Client) GetDomainDeliveryServer(id int) (server *DomainDeliveryServer, err error) {
 	return
 }
 
 // CreateDomainDeliveryServer creates a domain delivery server
 // https://www.baruwa.com/docs/api/#create-a-delivery-server
-func (c *Client) CreateDomainDeliveryServer(domain *DomainDeliveryServer) (err error) {
+func (c *Client) CreateDomainDeliveryServer(server *DomainDeliveryServer) (err error) {
 	return
 }
 
 // UpdateDomainDeliveryServer updates a domain delivery server
 // https://www.baruwa.com/docs/api/#update-a-delivery-server
-func (c *Client) UpdateDomainDeliveryServer(domain *DomainDeliveryServer) (err error) {
+func (c *Client) UpdateDomainDeliveryServer(server *DomainDeliveryServer) (err error) {
 	return
 }
 
