@@ -21,7 +21,7 @@ type AuthServer struct {
 
 // GetAuthServer returns an authentication server
 // https://www.baruwa.com/docs/api/#retrieve-authentication-settings
-func (c *Client) GetAuthServer(id int) (server AuthServer, err error) {
+func (c *Client) GetAuthServer(id int) (server *AuthServer, err error) {
 	return
 }
 
