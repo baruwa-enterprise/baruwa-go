@@ -92,7 +92,7 @@ func (c *Client) UpdateDomainDeliveryServer(domainid int, server *DomainDelivery
 		return
 	}
 
-	err = c.post(fmt.Sprintf("deliveryservers/%d/%d", domainid, server.ID), v, server)
+	err = c.put(fmt.Sprintf("deliveryservers/%d/%d", domainid, server.ID), v, server)
 
 	return
 }

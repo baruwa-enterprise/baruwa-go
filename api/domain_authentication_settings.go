@@ -92,7 +92,7 @@ func (c *Client) UpdateAuthServer(domainid int, server *AuthServer) (err error) 
 		return
 	}
 
-	err = c.post(fmt.Sprintf("authservers/%d/%d", domainid, server.ID), v, server)
+	err = c.put(fmt.Sprintf("authservers/%d/%d", domainid, server.ID), v, server)
 
 	return
 }
