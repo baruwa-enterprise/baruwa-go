@@ -69,6 +69,11 @@ func (c *Client) CreateLDAPSettings(domainid, serverid int, settings *LDAPSettin
 		return
 	}
 
+	if settings == nil {
+		err = fmt.Errorf("The settings param cannot be nil")
+		return
+	}
+
 	if v, err = query.Values(settings); err != nil {
 		return
 	}
