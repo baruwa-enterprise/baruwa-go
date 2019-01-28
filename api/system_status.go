@@ -7,3 +7,17 @@
 
 // Package api Golang bindings for Baruwa REST API
 package api
+
+// SystemStatus holds system status
+type SystemStatus struct {
+	Inbound  int   `json:"inbound"`
+	Status   bool  `json:"status"`
+	Total    []int `json:"total"`
+	Outbound int   `json:"outbound"`
+}
+
+// GetSystemStatus returns radius settings
+// https://www.baruwa.com/docs/api/#retrieve-system-status
+func (c *Client) GetSystemStatus(id int) (server *SystemStatus, err error) {
+	return
+}
