@@ -8,6 +8,13 @@
 // Package api Golang bindings for Baruwa REST API
 package api
 
+import (
+	"fmt"
+	"net/url"
+
+	"github.com/google/go-querystring/query"
+)
+
 // LDAPSettings holds Domain LDAP settings
 type LDAPSettings struct {
 	ID                int    `json:"id,omitempty"`
@@ -24,26 +31,117 @@ type LDAPSettings struct {
 	EmailSearchDcope  string `json:"emailsearch_scope"`
 }
 
-// GetLDAPSettings returns a domain smarthost
+// GetLDAPSettings returns a domain LDAP settings
 // https://www.baruwa.com/docs/api/#retrieve-ad-ldap-settings
-func (c *Client) GetLDAPSettings(id int) (server *LDAPSettings, err error) {
+func (c *Client) GetLDAPSettings(domainid, serverid, settingsid int) (settings *LDAPSettings, err error) {
+	if domainid <= 0 {
+		err = fmt.Errorf("The domainid param should be > 0")
+		return
+	}
+
+	if serverid <= 0 {
+		err = fmt.Errorf("The serverid param should be > 0")
+		return
+	}
+
+	if settingsid <= 0 {
+		err = fmt.Errorf("The settingsid param should be > 0")
+		return
+	}
+
+	err = c.get(fmt.Sprintf("ldapsettings/%d/%d/%d", domainid, serverid, settingsid), settings)
+
 	return
 }
 
-// CreateLDAPSettings creates a domain smarthost
+// CreateLDAPSettings creates a domain LDAP settings
 // https://www.baruwa.com/docs/api/#create-ad-ldap-settings
-func (c *Client) CreateLDAPSettings(server *LDAPSettings) (err error) {
+func (c *Client) CreateLDAPSettings(domainid, serverid int, settings *LDAPSettings) (err error) {
+	var v url.Values
+
+	if domainid <= 0 {
+		err = fmt.Errorf("The domainid param should be > 0")
+		return
+	}
+
+	if serverid <= 0 {
+		err = fmt.Errorf("The serverid param should be > 0")
+		return
+	}
+
+	if v, err = query.Values(settings); err != nil {
+		return
+	}
+
+	err = c.post(fmt.Sprintf("ldapsettings/%d/%d", domainid, serverid), v, settings)
+
 	return
 }
 
-// UpdateLDAPSettings updates a domain smarthost
+// UpdateLDAPSettings updates a domain LDAP settings
 // https://www.baruwa.com/docs/api/#update-ad-ldap-settings
-func (c *Client) UpdateLDAPSettings(server *LDAPSettings) (err error) {
+func (c *Client) UpdateLDAPSettings(domainid, serverid int, settings *LDAPSettings) (err error) {
+	var v url.Values
+
+	if domainid <= 0 {
+		err = fmt.Errorf("The domainid param should be > 0")
+		return
+	}
+
+	if serverid <= 0 {
+		err = fmt.Errorf("The serverid param should be > 0")
+		return
+	}
+
+	if settings == nil {
+		err = fmt.Errorf("The settings param cannot be nil")
+		return
+	}
+
+	if settings.ID <= 0 {
+		err = fmt.Errorf("The settings.ID param should be > 0")
+		return
+	}
+
+	if v, err = query.Values(settings); err != nil {
+		return
+	}
+
+	err = c.put(fmt.Sprintf("ldapsettings/%d/%d/%d", domainid, serverid, settings.ID), v, settings)
+
 	return
 }
 
-// DeleteLDAPSettings deletes a domain smarthost
+// DeleteLDAPSettings deletes a domain LDAP settings
 // https://www.baruwa.com/docs/api/#delete-ad-ldap-settings
-func (c *Client) DeleteLDAPSettings(id int) (err error) {
+func (c *Client) DeleteLDAPSettings(domainid, serverid int, settings *LDAPSettings) (err error) {
+	var v url.Values
+
+	if domainid <= 0 {
+		err = fmt.Errorf("The domainid param should be > 0")
+		return
+	}
+
+	if serverid <= 0 {
+		err = fmt.Errorf("The serverid param should be > 0")
+		return
+	}
+
+	if settings == nil {
+		err = fmt.Errorf("The settings param cannot be nil")
+		return
+	}
+
+	if settings.ID <= 0 {
+		err = fmt.Errorf("The settings.ID param should be > 0")
+		return
+	}
+
+	if v, err = query.Values(settings); err != nil {
+		return
+	}
+
+	err = c.delete(fmt.Sprintf("ldapsettings/%d/%d/%d", domainid, serverid, settings.ID), v)
+
 	return
 }
