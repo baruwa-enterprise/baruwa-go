@@ -7,3 +7,44 @@
 
 // Package api Golang bindings for Baruwa REST API
 package api
+
+// FallBackServerOrg holds fallback server organization
+type FallBackServerOrg struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
+}
+
+// FallBackServer holds organization fallback servers
+type FallBackServer struct {
+	ID           int               `json:"id,omitempty"`
+	Address      string            `json:"address"`
+	Protocol     int               `json:"protocol"`
+	Port         int               `json:"port"`
+	RequireTLS   bool              `json:"require_tls"`
+	Enabled      bool              `json:"enabled"`
+	Organization FallBackServerOrg `json:"organization"`
+}
+
+// GetFallBackServer returns radius settings
+// https://www.baruwa.com/docs/api/#retrieve-a-fallback-server
+func (c *Client) GetFallBackServer(id int) (server *FallBackServer, err error) {
+	return
+}
+
+// CreateFallBackServer creates radius settings
+// https://www.baruwa.com/docs/api/#create-a-fallback-server
+func (c *Client) CreateFallBackServer(server *FallBackServer) (err error) {
+	return
+}
+
+// UpdateFallBackServer updates radius settings
+// https://www.baruwa.com/docs/api/#update-a-fallback-server
+func (c *Client) UpdateFallBackServer(server *FallBackServer) (err error) {
+	return
+}
+
+// DeleteFallBackServer deletes radius settings
+// https://www.baruwa.com/docs/api/#delete-a-fallback-server
+func (c *Client) DeleteFallBackServer(id int) (err error) {
+	return
+}
