@@ -132,11 +132,17 @@ func (c *Client) put(p string, v url.Values, data interface{}) (err error) {
 	return
 }
 
-func (c *Client) delete(p string) (err error) {
+func (c *Client) delete(p string, v url.Values) (err error) {
 	var req *http.Request
 
-	if req, err = c.newRequest(http.MethodDelete, apiPath(p), nil); err != nil {
-		return
+	if v == nil {
+		if req, err = c.newRequest(http.MethodDelete, apiPath(p), nil); err != nil {
+			return
+		}
+	} else {
+		if req, err = c.newRequest(http.MethodDelete, apiPath(p), strings.NewReader(v.Encode())); err != nil {
+			return
+		}
 	}
 
 	err = c.doWithOAuth(req, nil)

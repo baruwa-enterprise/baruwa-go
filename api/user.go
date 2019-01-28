@@ -111,7 +111,7 @@ func (c *Client) DeleteUser(id int) (err error) {
 		return
 	}
 
-	err = c.delete(fmt.Sprintf("users/%d", id))
+	err = c.delete(fmt.Sprintf("users/%d", id), nil)
 
 	return
 }

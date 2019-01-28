@@ -92,7 +92,7 @@ func (c *Client) DeleteAliasAddress(id int) (err error) {
 		return
 	}
 
-	err = c.delete(fmt.Sprintf("aliasaddresses/%d", id))
+	err = c.delete(fmt.Sprintf("aliasaddresses/%d", id), nil)
 
 	return
 }

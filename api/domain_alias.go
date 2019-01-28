@@ -113,7 +113,7 @@ func (c *Client) DeleteDomainAlias(domainid, aliasid int) (err error) {
 		return
 	}
 
-	err = c.delete(fmt.Sprintf("domainaliases/%d/%d", domainid, aliasid))
+	err = c.delete(fmt.Sprintf("domainaliases/%d/%d", domainid, aliasid), nil)
 
 	return
 }
