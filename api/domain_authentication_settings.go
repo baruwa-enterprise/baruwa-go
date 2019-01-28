@@ -8,6 +8,13 @@
 // Package api Golang bindings for Baruwa REST API
 package api
 
+import (
+	"fmt"
+	"net/url"
+
+	"github.com/google/go-querystring/query"
+)
+
 // AuthServer holds an authentication server
 type AuthServer struct {
 	ID              int    `json:"id,omitempty"`
@@ -21,24 +28,100 @@ type AuthServer struct {
 
 // GetAuthServer returns an authentication server
 // https://www.baruwa.com/docs/api/#retrieve-authentication-settings
-func (c *Client) GetAuthServer(id int) (server *AuthServer, err error) {
+func (c *Client) GetAuthServer(domainid, serverid int) (server *AuthServer, err error) {
+	if domainid <= 0 {
+		err = fmt.Errorf("The domainid param should be > 0")
+		return
+	}
+
+	if serverid <= 0 {
+		err = fmt.Errorf("The serverid param should be > 0")
+		return
+	}
+
+	err = c.get(fmt.Sprintf("authservers/%d/%d", domainid, serverid), server)
+
 	return
 }
 
 // CreateAuthServer creates an authentication server
 // https://www.baruwa.com/docs/api/#create-authentication-settings
-func (c *Client) CreateAuthServer(server *AuthServer) (err error) {
+func (c *Client) CreateAuthServer(domainid int, server *AuthServer) (err error) {
+	var v url.Values
+
+	if domainid <= 0 {
+		err = fmt.Errorf("The domainid param should be > 0")
+		return
+	}
+
+	if server == nil {
+		err = fmt.Errorf("The server param cannot be nil")
+		return
+	}
+
+	if v, err = query.Values(server); err != nil {
+		return
+	}
+
+	err = c.post(fmt.Sprintf("authservers/%d", domainid), v, server)
+
 	return
 }
 
 // UpdateAuthServer updates an authentication server
 // https://www.baruwa.com/docs/api/#update-authentication-settings
-func (c *Client) UpdateAuthServer(server *AuthServer) (err error) {
+func (c *Client) UpdateAuthServer(domainid int, server *AuthServer) (err error) {
+	var v url.Values
+
+	if domainid <= 0 {
+		err = fmt.Errorf("The domainid param should be > 0")
+		return
+	}
+
+	if server == nil {
+		err = fmt.Errorf("The server param cannot be nil")
+		return
+	}
+
+	if server.ID <= 0 {
+		err = fmt.Errorf("The server.ID param should be > 0")
+		return
+	}
+
+	if v, err = query.Values(server); err != nil {
+		return
+	}
+
+	err = c.post(fmt.Sprintf("authservers/%d/%d", domainid, server.ID), v, server)
+
 	return
 }
 
 // DeleteAuthServer deletes an authentication server
 // https://www.baruwa.com/docs/api/#delete-authentication-settings
-func (c *Client) DeleteAuthServer(id int) (err error) {
+func (c *Client) DeleteAuthServer(domainid int, server *AuthServer) (err error) {
+	var v url.Values
+
+	if domainid <= 0 {
+		err = fmt.Errorf("The domainid param should be > 0")
+		return
+	}
+
+	if server == nil {
+		err = fmt.Errorf("The server param cannot be nil")
+		return
+	}
+
+	if server.ID <= 0 {
+		err = fmt.Errorf("The server.ID param should be > 0")
+		return
+	}
+
+	if v, err = query.Values(server); err != nil {
+		return
+	}
+
+	err = c.delete(fmt.Sprintf("authservers/%d/%d", domainid, server.ID), v)
+
 	return
 }
