@@ -8,6 +8,13 @@
 // Package api Golang bindings for Baruwa REST API
 package api
 
+import (
+	"fmt"
+	"net/url"
+
+	"github.com/google/go-querystring/query"
+)
+
 // OrgDomain hold alias domain entries
 type OrgDomain struct {
 	ID   int    `json:"id"`
@@ -31,24 +38,69 @@ type OrganizationForm struct {
 
 // GetOrganization returns an organization
 // https://www.baruwa.com/docs/api/#retrieve-an-existing-organization
-func (c *Client) GetOrganization(id int) (org *Organization, err error) {
+func (c *Client) GetOrganization(organizationID int) (org *Organization, err error) {
+	if organizationID <= 0 {
+		err = fmt.Errorf("The organizationID param should be > 0")
+		return
+	}
+
+	err = c.get(fmt.Sprintf("organizations/%d", organizationID), org)
+
 	return
 }
 
 // CreateOrganization creates an organization
 // https://www.baruwa.com/docs/api/#create-an-organization
 func (c *Client) CreateOrganization(form *OrganizationForm, org Organization) (err error) {
+	var v url.Values
+
+	if form == nil {
+		err = fmt.Errorf("The form param cannot be nil")
+		return
+	}
+
+	if v, err = query.Values(form); err != nil {
+		return
+	}
+
+	err = c.post("organizations", v, org)
+
 	return
 }
 
 // UpdateOrganization updates an organization
 // https://www.baruwa.com/docs/api/#update-an-organization
 func (c *Client) UpdateOrganization(form *OrganizationForm, org Organization) (err error) {
+	var v url.Values
+
+	if form == nil {
+		err = fmt.Errorf("The form param cannot be nil")
+		return
+	}
+
+	if form.ID <= 0 {
+		err = fmt.Errorf("The form.ID param should be > 0")
+		return
+	}
+
+	if v, err = query.Values(form); err != nil {
+		return
+	}
+
+	err = c.put(fmt.Sprintf("organizations/%d", form.ID), v, org)
+
 	return
 }
 
 // DeleteOrganization deletes an organization
 // https://www.baruwa.com/docs/api/#delete-an-organization
-func (c *Client) DeleteOrganization(id int) (err error) {
+func (c *Client) DeleteOrganization(organizationID int) (err error) {
+	if organizationID <= 0 {
+		err = fmt.Errorf("The organizationID param should be > 0")
+		return
+	}
+
+	err = c.delete(fmt.Sprintf("organizations/%d", organizationID), nil)
+
 	return
 }
