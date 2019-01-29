@@ -44,13 +44,13 @@ type Domain struct {
 
 // GetDomain returns a domain
 // https://www.baruwa.com/docs/api/#retrieve-a-domain
-func (c *Client) GetDomain(domainid int) (domain *Domain, err error) {
-	if domainid <= 0 {
-		err = fmt.Errorf("The domainid param should be > 0")
+func (c *Client) GetDomain(domainID int) (domain *Domain, err error) {
+	if domainID <= 0 {
+		err = fmt.Errorf("The domainID param should be > 0")
 		return
 	}
 
-	err = c.get(fmt.Sprintf("domains/%d", domainid), domain)
+	err = c.get(fmt.Sprintf("domains/%d", domainID), domain)
 
 	return
 }
@@ -113,13 +113,13 @@ func (c *Client) UpdateDomain(domain *Domain) (err error) {
 
 // DeleteDomain deletes a domain
 // https://www.baruwa.com/docs/api/#delete-a-domain
-func (c *Client) DeleteDomain(domainid int) (err error) {
-	if domainid <= 0 {
-		err = fmt.Errorf("The domainid param should be > 0")
+func (c *Client) DeleteDomain(domainID int) (err error) {
+	if domainID <= 0 {
+		err = fmt.Errorf("The domainID param should be > 0")
 		return
 	}
 
-	err = c.delete(fmt.Sprintf("domains/%d", domainid), nil)
+	err = c.delete(fmt.Sprintf("domains/%d", domainID), nil)
 
 	return
 }

@@ -28,29 +28,29 @@ type DomainDeliveryServer struct {
 
 // GetDomainDeliveryServer returns a domain delivery server
 // https://www.baruwa.com/docs/api/#retrieve-a-delivery-server
-func (c *Client) GetDomainDeliveryServer(domainid, serverid int) (server *DomainDeliveryServer, err error) {
-	if domainid <= 0 {
-		err = fmt.Errorf("The domainid param should be > 0")
+func (c *Client) GetDomainDeliveryServer(domainID, serverID int) (server *DomainDeliveryServer, err error) {
+	if domainID <= 0 {
+		err = fmt.Errorf("The domainID param should be > 0")
 		return
 	}
 
-	if serverid <= 0 {
-		err = fmt.Errorf("The serverid param should be > 0")
+	if serverID <= 0 {
+		err = fmt.Errorf("The serverID param should be > 0")
 		return
 	}
 
-	err = c.get(fmt.Sprintf("deliveryservers/%d/%d", domainid, serverid), server)
+	err = c.get(fmt.Sprintf("deliveryservers/%d/%d", domainID, serverID), server)
 
 	return
 }
 
 // CreateDomainDeliveryServer creates a domain delivery server
 // https://www.baruwa.com/docs/api/#create-a-delivery-server
-func (c *Client) CreateDomainDeliveryServer(domainid int, server *DomainDeliveryServer) (err error) {
+func (c *Client) CreateDomainDeliveryServer(domainID int, server *DomainDeliveryServer) (err error) {
 	var v url.Values
 
-	if domainid <= 0 {
-		err = fmt.Errorf("The domainid param should be > 0")
+	if domainID <= 0 {
+		err = fmt.Errorf("The domainID param should be > 0")
 		return
 	}
 
@@ -63,18 +63,18 @@ func (c *Client) CreateDomainDeliveryServer(domainid int, server *DomainDelivery
 		return
 	}
 
-	err = c.post(fmt.Sprintf("deliveryservers/%d", domainid), v, server)
+	err = c.post(fmt.Sprintf("deliveryservers/%d", domainID), v, server)
 
 	return
 }
 
 // UpdateDomainDeliveryServer updates a domain delivery server
 // https://www.baruwa.com/docs/api/#update-a-delivery-server
-func (c *Client) UpdateDomainDeliveryServer(domainid int, server *DomainDeliveryServer) (err error) {
+func (c *Client) UpdateDomainDeliveryServer(domainID int, server *DomainDeliveryServer) (err error) {
 	var v url.Values
 
-	if domainid <= 0 {
-		err = fmt.Errorf("The domainid param should be > 0")
+	if domainID <= 0 {
+		err = fmt.Errorf("The domainID param should be > 0")
 		return
 	}
 
@@ -92,18 +92,18 @@ func (c *Client) UpdateDomainDeliveryServer(domainid int, server *DomainDelivery
 		return
 	}
 
-	err = c.put(fmt.Sprintf("deliveryservers/%d/%d", domainid, server.ID), v, server)
+	err = c.put(fmt.Sprintf("deliveryservers/%d/%d", domainID, server.ID), v, server)
 
 	return
 }
 
 // DeleteDomainDeliveryServer deletes a domain delivery server
 // https://www.baruwa.com/docs/api/#delete-a-delivery-server
-func (c *Client) DeleteDomainDeliveryServer(domainid int, server *DomainDeliveryServer) (err error) {
+func (c *Client) DeleteDomainDeliveryServer(domainID int, server *DomainDeliveryServer) (err error) {
 	var v url.Values
 
-	if domainid <= 0 {
-		err = fmt.Errorf("The domainid param should be > 0")
+	if domainID <= 0 {
+		err = fmt.Errorf("The domainID param should be > 0")
 		return
 	}
 
@@ -121,7 +121,7 @@ func (c *Client) DeleteDomainDeliveryServer(domainid int, server *DomainDelivery
 		return
 	}
 
-	err = c.delete(fmt.Sprintf("deliveryservers/%d/%d", domainid, server.ID), v)
+	err = c.delete(fmt.Sprintf("deliveryservers/%d/%d", domainID, server.ID), v)
 
 	return
 }

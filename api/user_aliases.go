@@ -25,24 +25,24 @@ type AliasAddress struct {
 
 // GetAliasAddress returns an alias address
 // https://www.baruwa.com/docs/api/#retrieve-an-existing-alias-address
-func (c *Client) GetAliasAddress(id int) (alias *AliasAddress, err error) {
-	if id <= 0 {
+func (c *Client) GetAliasAddress(aliasID int) (alias *AliasAddress, err error) {
+	if aliasID <= 0 {
 		err = fmt.Errorf("The id param should be > 0")
 		return
 	}
 
-	err = c.get(fmt.Sprintf("aliasaddresses/%d", id), alias)
+	err = c.get(fmt.Sprintf("aliasaddresses/%d", aliasID), alias)
 
 	return
 }
 
 // CreateAliasAddress creates an alias address
 // https://www.baruwa.com/docs/api/#create-an-alias-address
-func (c *Client) CreateAliasAddress(userid int, alias *AliasAddress) (err error) {
+func (c *Client) CreateAliasAddress(userID int, alias *AliasAddress) (err error) {
 	var v url.Values
 
-	if userid <= 0 {
-		err = fmt.Errorf("The userid param should be > 0")
+	if userID <= 0 {
+		err = fmt.Errorf("The userID param should be > 0")
 		return
 	}
 
@@ -55,7 +55,7 @@ func (c *Client) CreateAliasAddress(userid int, alias *AliasAddress) (err error)
 		return
 	}
 
-	err = c.post(fmt.Sprintf("aliasaddresses/%d", userid), v, alias)
+	err = c.post(fmt.Sprintf("aliasaddresses/%d", userID), v, alias)
 
 	return
 }

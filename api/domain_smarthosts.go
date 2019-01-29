@@ -29,29 +29,29 @@ type DomainSmartHost struct {
 
 // GetDomainSmartHost returns a domain smarthost
 // https://www.baruwa.com/docs/api/#retrieve-a-domain-smarthost
-func (c *Client) GetDomainSmartHost(domainid, serverid int) (server *DomainSmartHost, err error) {
-	if domainid <= 0 {
-		err = fmt.Errorf("The domainid param should be > 0")
+func (c *Client) GetDomainSmartHost(domainID, serverID int) (server *DomainSmartHost, err error) {
+	if domainID <= 0 {
+		err = fmt.Errorf("The domainID param should be > 0")
 		return
 	}
 
-	if serverid <= 0 {
-		err = fmt.Errorf("The serverid param should be > 0")
+	if serverID <= 0 {
+		err = fmt.Errorf("The serverID param should be > 0")
 		return
 	}
 
-	err = c.get(fmt.Sprintf("domains/smarthosts/%d/%d", domainid, serverid), server)
+	err = c.get(fmt.Sprintf("domains/smarthosts/%d/%d", domainID, serverID), server)
 
 	return
 }
 
 // CreateDomainSmartHost creates a domain smarthost
 // https://www.baruwa.com/docs/api/#create-a-domain-smarthost
-func (c *Client) CreateDomainSmartHost(domainid int, server *DomainSmartHost) (err error) {
+func (c *Client) CreateDomainSmartHost(domainID int, server *DomainSmartHost) (err error) {
 	var v url.Values
 
-	if domainid <= 0 {
-		err = fmt.Errorf("The domainid param should be > 0")
+	if domainID <= 0 {
+		err = fmt.Errorf("The domainID param should be > 0")
 		return
 	}
 
@@ -64,18 +64,18 @@ func (c *Client) CreateDomainSmartHost(domainid int, server *DomainSmartHost) (e
 		return
 	}
 
-	err = c.post(fmt.Sprintf("domains/smarthosts/%d", domainid), v, server)
+	err = c.post(fmt.Sprintf("domains/smarthosts/%d", domainID), v, server)
 
 	return
 }
 
 // UpdateDomainSmartHost updates a domain smarthost
 // https://www.baruwa.com/docs/api/#update-a-domain-smarthost
-func (c *Client) UpdateDomainSmartHost(domainid int, server *DomainSmartHost) (err error) {
+func (c *Client) UpdateDomainSmartHost(domainID int, server *DomainSmartHost) (err error) {
 	var v url.Values
 
-	if domainid <= 0 {
-		err = fmt.Errorf("The domainid param should be > 0")
+	if domainID <= 0 {
+		err = fmt.Errorf("The domainID param should be > 0")
 		return
 	}
 
@@ -93,18 +93,18 @@ func (c *Client) UpdateDomainSmartHost(domainid int, server *DomainSmartHost) (e
 		return
 	}
 
-	err = c.put(fmt.Sprintf("domains/smarthosts/%d/%d", domainid, server.ID), v, server)
+	err = c.put(fmt.Sprintf("domains/smarthosts/%d/%d", domainID, server.ID), v, server)
 
 	return
 }
 
 // DeleteDomainSmartHost deletes a domain smarthost
 // https://www.baruwa.com/docs/api/#delete-a-domain-smarthost
-func (c *Client) DeleteDomainSmartHost(domainid int, server *DomainSmartHost) (err error) {
+func (c *Client) DeleteDomainSmartHost(domainID int, server *DomainSmartHost) (err error) {
 	var v url.Values
 
-	if domainid <= 0 {
-		err = fmt.Errorf("The domainid param should be > 0")
+	if domainID <= 0 {
+		err = fmt.Errorf("The domainID param should be > 0")
 		return
 	}
 
@@ -122,7 +122,7 @@ func (c *Client) DeleteDomainSmartHost(domainid int, server *DomainSmartHost) (e
 		return
 	}
 
-	err = c.delete(fmt.Sprintf("domains/smarthosts/%d/%d", domainid, server.ID), v)
+	err = c.delete(fmt.Sprintf("domains/smarthosts/%d/%d", domainID, server.ID), v)
 
 	return
 }

@@ -31,29 +31,29 @@ type DomainAlias struct {
 
 // GetDomainAlias returns a domain alias
 // https://www.baruwa.com/docs/api/#retrieve-domain-alias
-func (c *Client) GetDomainAlias(domainid, aliasid int) (alias *DomainAlias, err error) {
-	if domainid <= 0 {
-		err = fmt.Errorf("The domainid param should be > 0")
+func (c *Client) GetDomainAlias(domainID, aliasID int) (alias *DomainAlias, err error) {
+	if domainID <= 0 {
+		err = fmt.Errorf("The domainID param should be > 0")
 		return
 	}
 
-	if aliasid <= 0 {
-		err = fmt.Errorf("The aliasid param should be > 0")
+	if aliasID <= 0 {
+		err = fmt.Errorf("The aliasID param should be > 0")
 		return
 	}
 
-	err = c.get(fmt.Sprintf("domainaliases/%d/%d", domainid, aliasid), alias)
+	err = c.get(fmt.Sprintf("domainaliases/%d/%d", domainID, aliasID), alias)
 
 	return
 }
 
 // CreateDomainAlias creates a domain alias
 // https://www.baruwa.com/docs/api/#create-a-domain-alias
-func (c *Client) CreateDomainAlias(domainid int, alias *DomainAlias) (err error) {
+func (c *Client) CreateDomainAlias(domainID int, alias *DomainAlias) (err error) {
 	var v url.Values
 
-	if domainid <= 0 {
-		err = fmt.Errorf("The domainid param should be > 0")
+	if domainID <= 0 {
+		err = fmt.Errorf("The domainID param should be > 0")
 		return
 	}
 
@@ -66,18 +66,18 @@ func (c *Client) CreateDomainAlias(domainid int, alias *DomainAlias) (err error)
 		return
 	}
 
-	err = c.post(fmt.Sprintf("domainaliases/%d", domainid), v, alias)
+	err = c.post(fmt.Sprintf("domainaliases/%d", domainID), v, alias)
 
 	return
 }
 
 // UpdateDomainAlias updates a domain alias
 // https://www.baruwa.com/docs/api/#update-a-domain-alias
-func (c *Client) UpdateDomainAlias(domainid int, alias *DomainAlias) (err error) {
+func (c *Client) UpdateDomainAlias(domainID int, alias *DomainAlias) (err error) {
 	var v url.Values
 
-	if domainid <= 0 {
-		err = fmt.Errorf("The domainid param should be > 0")
+	if domainID <= 0 {
+		err = fmt.Errorf("The domainID param should be > 0")
 		return
 	}
 
@@ -95,25 +95,25 @@ func (c *Client) UpdateDomainAlias(domainid int, alias *DomainAlias) (err error)
 		return
 	}
 
-	err = c.put(fmt.Sprintf("domainaliases/%d/%d", domainid, alias.ID), v, alias)
+	err = c.put(fmt.Sprintf("domainaliases/%d/%d", domainID, alias.ID), v, alias)
 
 	return
 }
 
 // DeleteDomainAlias deletes an domain alias
 // https://www.baruwa.com/docs/api/#delete-a-domain-alias
-func (c *Client) DeleteDomainAlias(domainid, aliasid int) (err error) {
-	if domainid <= 0 {
-		err = fmt.Errorf("The domainid param should be > 0")
+func (c *Client) DeleteDomainAlias(domainID, aliasID int) (err error) {
+	if domainID <= 0 {
+		err = fmt.Errorf("The domainID param should be > 0")
 		return
 	}
 
-	if aliasid <= 0 {
-		err = fmt.Errorf("The aliasid param should be > 0")
+	if aliasID <= 0 {
+		err = fmt.Errorf("The aliasID param should be > 0")
 		return
 	}
 
-	err = c.delete(fmt.Sprintf("domainaliases/%d/%d", domainid, aliasid), nil)
+	err = c.delete(fmt.Sprintf("domainaliases/%d/%d", domainID, aliasID), nil)
 
 	return
 }

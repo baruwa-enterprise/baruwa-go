@@ -28,29 +28,29 @@ type AuthServer struct {
 
 // GetAuthServer returns an authentication server
 // https://www.baruwa.com/docs/api/#retrieve-authentication-settings
-func (c *Client) GetAuthServer(domainid, serverid int) (server *AuthServer, err error) {
-	if domainid <= 0 {
-		err = fmt.Errorf("The domainid param should be > 0")
+func (c *Client) GetAuthServer(domainID, serverID int) (server *AuthServer, err error) {
+	if domainID <= 0 {
+		err = fmt.Errorf("The domainID param should be > 0")
 		return
 	}
 
-	if serverid <= 0 {
-		err = fmt.Errorf("The serverid param should be > 0")
+	if serverID <= 0 {
+		err = fmt.Errorf("The serverID param should be > 0")
 		return
 	}
 
-	err = c.get(fmt.Sprintf("authservers/%d/%d", domainid, serverid), server)
+	err = c.get(fmt.Sprintf("authservers/%d/%d", domainID, serverID), server)
 
 	return
 }
 
 // CreateAuthServer creates an authentication server
 // https://www.baruwa.com/docs/api/#create-authentication-settings
-func (c *Client) CreateAuthServer(domainid int, server *AuthServer) (err error) {
+func (c *Client) CreateAuthServer(domainID int, server *AuthServer) (err error) {
 	var v url.Values
 
-	if domainid <= 0 {
-		err = fmt.Errorf("The domainid param should be > 0")
+	if domainID <= 0 {
+		err = fmt.Errorf("The domainID param should be > 0")
 		return
 	}
 
@@ -63,18 +63,18 @@ func (c *Client) CreateAuthServer(domainid int, server *AuthServer) (err error) 
 		return
 	}
 
-	err = c.post(fmt.Sprintf("authservers/%d", domainid), v, server)
+	err = c.post(fmt.Sprintf("authservers/%d", domainID), v, server)
 
 	return
 }
 
 // UpdateAuthServer updates an authentication server
 // https://www.baruwa.com/docs/api/#update-authentication-settings
-func (c *Client) UpdateAuthServer(domainid int, server *AuthServer) (err error) {
+func (c *Client) UpdateAuthServer(domainID int, server *AuthServer) (err error) {
 	var v url.Values
 
-	if domainid <= 0 {
-		err = fmt.Errorf("The domainid param should be > 0")
+	if domainID <= 0 {
+		err = fmt.Errorf("The domainID param should be > 0")
 		return
 	}
 
@@ -92,18 +92,18 @@ func (c *Client) UpdateAuthServer(domainid int, server *AuthServer) (err error) 
 		return
 	}
 
-	err = c.put(fmt.Sprintf("authservers/%d/%d", domainid, server.ID), v, server)
+	err = c.put(fmt.Sprintf("authservers/%d/%d", domainID, server.ID), v, server)
 
 	return
 }
 
 // DeleteAuthServer deletes an authentication server
 // https://www.baruwa.com/docs/api/#delete-authentication-settings
-func (c *Client) DeleteAuthServer(domainid int, server *AuthServer) (err error) {
+func (c *Client) DeleteAuthServer(domainID int, server *AuthServer) (err error) {
 	var v url.Values
 
-	if domainid <= 0 {
-		err = fmt.Errorf("The domainid param should be > 0")
+	if domainID <= 0 {
+		err = fmt.Errorf("The domainID param should be > 0")
 		return
 	}
 
@@ -121,7 +121,7 @@ func (c *Client) DeleteAuthServer(domainid int, server *AuthServer) (err error) 
 		return
 	}
 
-	err = c.delete(fmt.Sprintf("authservers/%d/%d", domainid, server.ID), v)
+	err = c.delete(fmt.Sprintf("authservers/%d/%d", domainID, server.ID), v)
 
 	return
 }

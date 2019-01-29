@@ -53,13 +53,13 @@ type User struct {
 }
 
 // GetUser returns a user account
-func (c *Client) GetUser(id int) (user *User, err error) {
-	if id <= 0 {
-		err = fmt.Errorf("The id param should be > 0")
+func (c *Client) GetUser(userID int) (user *User, err error) {
+	if userID <= 0 {
+		err = fmt.Errorf("The userID param should be > 0")
 		return
 	}
 
-	err = c.get(fmt.Sprintf("users/%d", id), user)
+	err = c.get(fmt.Sprintf("users/%d", userID), user)
 	return
 }
 
@@ -105,13 +105,13 @@ func (c *Client) UpdateUser(user *User) (err error) {
 }
 
 // DeleteUser deletes a user account
-func (c *Client) DeleteUser(id int) (err error) {
-	if id <= 0 {
-		err = fmt.Errorf("The id param should be > 0")
+func (c *Client) DeleteUser(userID int) (err error) {
+	if userID <= 0 {
+		err = fmt.Errorf("The userID param should be > 0")
 		return
 	}
 
-	err = c.delete(fmt.Sprintf("users/%d", id), nil)
+	err = c.delete(fmt.Sprintf("users/%d", userID), nil)
 
 	return
 }
