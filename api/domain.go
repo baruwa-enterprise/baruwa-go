@@ -8,6 +8,13 @@
 // Package api Golang bindings for Baruwa REST API
 package api
 
+import (
+	"fmt"
+	"net/url"
+
+	"github.com/google/go-querystring/query"
+)
+
 // Domain holds domains
 type Domain struct {
 	ID                int     `json:"id,omitempty"`
@@ -37,31 +44,83 @@ type Domain struct {
 
 // GetDomain returns a domain
 // https://www.baruwa.com/docs/api/#retrieve-a-domain
-func (c *Client) GetDomain(id int) (domain *Domain, err error) {
+func (c *Client) GetDomain(domainid int) (domain *Domain, err error) {
+	if domainid <= 0 {
+		err = fmt.Errorf("The domainid param should be > 0")
+		return
+	}
+
+	err = c.get(fmt.Sprintf("domains/%d", domainid), domain)
+
 	return
 }
 
 // GetDomainByName returns a domain
 // https://www.baruwa.com/docs/api/#retrieve-a-domain-by-name
-func (c *Client) GetDomainByName(name string) (domain *Domain, err error) {
+func (c *Client) GetDomainByName(domainName string) (domain *Domain, err error) {
+	if domainName == "" {
+		err = fmt.Errorf("The domainName param is required")
+		return
+	}
+
+	err = c.get(fmt.Sprintf("domains/byname/%s", domainName), domain)
+
 	return
 }
 
 // CreateDomain creates a domain
 // https://www.baruwa.com/docs/api/#create-a-new-domain
 func (c *Client) CreateDomain(domain *Domain) (err error) {
+	var v url.Values
+
+	if domain == nil {
+		err = fmt.Errorf("The domain param cannot be nil")
+		return
+	}
+
+	if v, err = query.Values(domain); err != nil {
+		return
+	}
+
+	err = c.post("domains", v, domain)
+
 	return
 }
 
 // UpdateDomain updates a domain
 // https://www.baruwa.com/docs/api/#update-a-domain
 func (c *Client) UpdateDomain(domain *Domain) (err error) {
+	var v url.Values
+
+	if domain == nil {
+		err = fmt.Errorf("The domain param cannot be nil")
+		return
+	}
+
+	if domain.ID <= 0 {
+		err = fmt.Errorf("The domain.ID param should be > 0")
+		return
+	}
+
+	if v, err = query.Values(domain); err != nil {
+		return
+	}
+
+	err = c.put(fmt.Sprintf("domains/%d", domain.ID), v, domain)
+
 	return
 }
 
 // DeleteDomain deletes a domain
 // https://www.baruwa.com/docs/api/#delete-a-domain
-func (c *Client) DeleteDomain(id int) (err error) {
+func (c *Client) DeleteDomain(domainid int) (err error) {
+	if domainid <= 0 {
+		err = fmt.Errorf("The domainid param should be > 0")
+		return
+	}
+
+	err = c.delete(fmt.Sprintf("domains/%d", domainid), nil)
+
 	return
 }
 
