@@ -247,7 +247,7 @@ func New(endpoint, token string, options *Options) (c *Client, err error) {
 	var transport *http.Transport
 
 	if endpoint == "" {
-		err = fmt.Errorf("endpoint is required")
+		err = fmt.Errorf(endpointError)
 		return
 	}
 

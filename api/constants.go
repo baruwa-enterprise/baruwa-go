@@ -11,5 +11,6 @@ const (
 	// APIVersion of Baruwa API
 	APIVersion = "v1"
 	// Version of this library
-	Version = "0.0.1"
+	Version       = "0.0.1"
+	endpointError = "The endpoint param is required"
 )
