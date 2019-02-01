@@ -13,4 +13,5 @@ const (
 	// Version of this library
 	Version       = "0.0.1"
 	endpointError = "The endpoint param is required"
+	userIDError   = "The userID param should be > 0"
 )

@@ -72,7 +72,7 @@ func (c *Client) GetUsers(opts *ListOptions) (l *UserList, err error) {
 // https://www.baruwa.com/docs/api/#retrieve-an-existing-account
 func (c *Client) GetUser(userID int) (user *User, err error) {
 	if userID <= 0 {
-		err = fmt.Errorf("The userID param should be > 0")
+		err = fmt.Errorf(userIDError)
 		return
 	}
 
