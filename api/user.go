@@ -47,6 +47,8 @@ type User struct {
 	LowScore      float64            `json:"low_score"`
 	HighScore     float64            `json:"high_score"`
 	BlockMacros   bool               `json:"block_macros"`
+	CreatedOn     MyTime             `json:"created_on"`
+	LastLogin     MyTime             `json:"last_login"`
 	Domains       []UserDomain       `json:"domains,omitempty"`
 	Organizations []UserOrganization `json:"organizations,omitempty"`
 }
@@ -75,6 +77,8 @@ func (c *Client) GetUser(userID int) (user *User, err error) {
 		err = fmt.Errorf(userIDError)
 		return
 	}
+
+	user = &User{}
 
 	err = c.get(fmt.Sprintf("users/%d", userID), nil, user)
 
