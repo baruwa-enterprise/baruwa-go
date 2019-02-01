@@ -55,6 +55,17 @@ type User struct {
 type UserList struct {
 	Items []User `json:"items"`
 	Links Links  `json:"links"`
+	Meta  Meta   `json:"meta"`
+}
+
+// GetUsers returns a UserList object
+// This contains a paginated list of user accounts and links
+// to the neigbouring pages.
+// https://www.baruwa.com/docs/api/?python#list-all-accounts
+func (c *Client) GetUsers(opts *ListOptions) (l *UserList, err error) {
+	err = c.get("users", nil, l)
+
+	return
 }
 
 // GetUser returns a user account
@@ -65,6 +76,7 @@ func (c *Client) GetUser(userID int) (user *User, err error) {
 	}
 
 	err = c.get(fmt.Sprintf("users/%d", userID), nil, user)
+
 	return
 }
 
