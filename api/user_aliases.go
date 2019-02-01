@@ -31,7 +31,7 @@ func (c *Client) GetAliasAddress(aliasID int) (alias *AliasAddress, err error) {
 		return
 	}
 
-	err = c.get(fmt.Sprintf("aliasaddresses/%d", aliasID), alias)
+	err = c.get(fmt.Sprintf("aliasaddresses/%d", aliasID), nil, alias)
 
 	return
 }

@@ -33,7 +33,7 @@ func (c *Client) GetUserDeliveryServer(domainID, serverID int) (server *UserDeli
 		return
 	}
 
-	err = c.get(fmt.Sprintf("userdeliveryservers/%d/%d", domainID, serverID), server)
+	err = c.get(fmt.Sprintf("userdeliveryservers/%d/%d", domainID, serverID), nil, server)
 
 	return
 }

@@ -19,7 +19,7 @@ type SystemStatus struct {
 // GetSystemStatus returns radius settings
 // https://www.baruwa.com/docs/api/#retrieve-system-status
 func (c *Client) GetSystemStatus() (status *SystemStatus, err error) {
-	err = c.get("status", status)
+	err = c.get("status", nil, status)
 
 	return
 }

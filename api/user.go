@@ -52,6 +52,12 @@ type User struct {
 	Organizations []UserOrganization `json:"organizations,omitempty"`
 }
 
+// UserList holds users
+type UserList struct {
+	Items []User `json:"items"`
+	Links Links  `json:"links"`
+}
+
 // GetUser returns a user account
 func (c *Client) GetUser(userID int) (user *User, err error) {
 	if userID <= 0 {
@@ -59,7 +65,7 @@ func (c *Client) GetUser(userID int) (user *User, err error) {
 		return
 	}
 
-	err = c.get(fmt.Sprintf("users/%d", userID), user)
+	err = c.get(fmt.Sprintf("users/%d", userID), nil, user)
 	return
 }
 

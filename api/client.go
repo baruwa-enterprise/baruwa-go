@@ -73,14 +73,34 @@ func (r *ErrorResponse) Error() string {
 	return fmt.Sprintf("%v %v: %d %s", r.Response.Request.Method, r.Response.Request.URL, r.Code, r.Message)
 }
 
-func (c *Client) newRequest(method, p string, body io.Reader) (req *http.Request, err error) {
-	var u, rel *url.URL
+func (c *Client) newRequest(method, path string, opts *ListOptions, body io.Reader) (req *http.Request, err error) {
+	var k, p string
+	var q url.Values
+	var u, nu, rel *url.URL
 
-	if rel, err = url.Parse(p); err != nil {
+	if rel, err = url.Parse(path); err != nil {
 		return
 	}
 
 	u = c.BaseURL.ResolveReference(rel)
+
+	if method == http.MethodGet && opts.Page != "" {
+		if nu, err = url.Parse(opts.Page); err == nil {
+			if strings.HasPrefix(nu.String(), u.String()) {
+				q = nu.Query()
+				if len(q) >= 1 {
+					for k = range q {
+						if k != "page" {
+							q.Del(k)
+						}
+					}
+					if p = q.Get("page"); p != "" {
+						u.RawQuery = q.Encode()
+					}
+				}
+			}
+		}
+	}
 
 	if req, err = http.NewRequest(method, u.String(), body); err != nil {
 		return
@@ -96,10 +116,10 @@ func (c *Client) newRequest(method, p string, body io.Reader) (req *http.Request
 	return
 }
 
-func (c *Client) get(path string, data interface{}) (err error) {
+func (c *Client) get(path string, opts *ListOptions, data interface{}) (err error) {
 	var req *http.Request
 
-	if req, err = c.newRequest(http.MethodGet, apiPath(path), nil); err != nil {
+	if req, err = c.newRequest(http.MethodGet, apiPath(path), opts, nil); err != nil {
 		return
 	}
 
@@ -111,7 +131,7 @@ func (c *Client) get(path string, data interface{}) (err error) {
 func (c *Client) post(p string, v url.Values, data interface{}) (err error) {
 	var req *http.Request
 
-	if req, err = c.newRequest(http.MethodPost, apiPath(p), strings.NewReader(v.Encode())); err != nil {
+	if req, err = c.newRequest(http.MethodPost, apiPath(p), nil, strings.NewReader(v.Encode())); err != nil {
 		return
 	}
 
@@ -123,7 +143,7 @@ func (c *Client) post(p string, v url.Values, data interface{}) (err error) {
 func (c *Client) put(p string, v url.Values, data interface{}) (err error) {
 	var req *http.Request
 
-	if req, err = c.newRequest(http.MethodPut, apiPath(p), strings.NewReader(v.Encode())); err != nil {
+	if req, err = c.newRequest(http.MethodPut, apiPath(p), nil, strings.NewReader(v.Encode())); err != nil {
 		return
 	}
 
@@ -136,11 +156,11 @@ func (c *Client) delete(p string, v url.Values) (err error) {
 	var req *http.Request
 
 	if v == nil {
-		if req, err = c.newRequest(http.MethodDelete, apiPath(p), nil); err != nil {
+		if req, err = c.newRequest(http.MethodDelete, apiPath(p), nil, nil); err != nil {
 			return
 		}
 	} else {
-		if req, err = c.newRequest(http.MethodDelete, apiPath(p), strings.NewReader(v.Encode())); err != nil {
+		if req, err = c.newRequest(http.MethodDelete, apiPath(p), nil, strings.NewReader(v.Encode())); err != nil {
 			return
 		}
 	}
@@ -166,7 +186,7 @@ func (c *Client) GetAccessToken(clientID, secret string) (token *TokenResponse, 
 	}
 
 	buf = bytes.NewBuffer([]byte("grant_type=password"))
-	if req, err = c.newRequest(http.MethodPost, "oauth2/token", buf); err != nil {
+	if req, err = c.newRequest(http.MethodPost, "oauth2/token", nil, buf); err != nil {
 		return
 	}
 

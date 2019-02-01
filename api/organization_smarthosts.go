@@ -40,7 +40,7 @@ func (c *Client) GetOrgSmartHost(organizationID, serverID int) (server *OrgSmart
 		return
 	}
 
-	err = c.get(fmt.Sprintf("organizations/smarthosts/%d/%d", organizationID, serverID), server)
+	err = c.get(fmt.Sprintf("organizations/smarthosts/%d/%d", organizationID, serverID), nil, server)
 
 	return
 }

@@ -40,7 +40,7 @@ func (c *Client) GetRadiusSettings(domainID, serverID, settingsID int) (settings
 		return
 	}
 
-	err = c.get(fmt.Sprintf("radiussettings/%d/%d/%d", domainID, serverID, settingsID), settings)
+	err = c.get(fmt.Sprintf("radiussettings/%d/%d/%d", domainID, serverID, settingsID), nil, settings)
 
 	return
 }

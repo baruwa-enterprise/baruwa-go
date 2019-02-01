@@ -44,7 +44,7 @@ func (c *Client) GetOrganization(organizationID int) (org *Organization, err err
 		return
 	}
 
-	err = c.get(fmt.Sprintf("organizations/%d", organizationID), org)
+	err = c.get(fmt.Sprintf("organizations/%d", organizationID), nil, org)
 
 	return
 }

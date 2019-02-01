@@ -49,7 +49,7 @@ func (c *Client) GetLDAPSettings(domainID, serverID, settingsID int) (settings *
 		return
 	}
 
-	err = c.get(fmt.Sprintf("ldapsettings/%d/%d/%d", domainID, serverID, settingsID), settings)
+	err = c.get(fmt.Sprintf("ldapsettings/%d/%d/%d", domainID, serverID, settingsID), nil, settings)
 
 	return
 }

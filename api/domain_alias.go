@@ -42,7 +42,7 @@ func (c *Client) GetDomainAlias(domainID, aliasID int) (alias *DomainAlias, err 
 		return
 	}
 
-	err = c.get(fmt.Sprintf("domainaliases/%d/%d", domainID, aliasID), alias)
+	err = c.get(fmt.Sprintf("domainaliases/%d/%d", domainID, aliasID), nil, alias)
 
 	return
 }

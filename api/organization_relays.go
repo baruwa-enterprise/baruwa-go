@@ -41,7 +41,7 @@ func (c *Client) GetRelaySetting(relayID int) (server *RelaySetting, err error) 
 		return
 	}
 
-	err = c.get(fmt.Sprintf("relays/%d", relayID), server)
+	err = c.get(fmt.Sprintf("relays/%d", relayID), nil, server)
 
 	return
 }

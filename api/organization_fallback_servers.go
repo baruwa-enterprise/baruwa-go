@@ -40,7 +40,7 @@ func (c *Client) GetFallBackServer(serverID int) (server *FallBackServer, err er
 		return
 	}
 
-	err = c.get(fmt.Sprintf("failbackservers/%d", serverID), server)
+	err = c.get(fmt.Sprintf("failbackservers/%d", serverID), nil, server)
 
 	return
 }

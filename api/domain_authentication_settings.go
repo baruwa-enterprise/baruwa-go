@@ -39,7 +39,7 @@ func (c *Client) GetAuthServer(domainID, serverID int) (server *AuthServer, err 
 		return
 	}
 
-	err = c.get(fmt.Sprintf("authservers/%d/%d", domainID, serverID), server)
+	err = c.get(fmt.Sprintf("authservers/%d/%d", domainID, serverID), nil, server)
 
 	return
 }

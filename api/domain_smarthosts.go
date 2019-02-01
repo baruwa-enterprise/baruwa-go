@@ -40,7 +40,7 @@ func (c *Client) GetDomainSmartHost(domainID, serverID int) (server *DomainSmart
 		return
 	}
 
-	err = c.get(fmt.Sprintf("domains/smarthosts/%d/%d", domainID, serverID), server)
+	err = c.get(fmt.Sprintf("domains/smarthosts/%d/%d", domainID, serverID), nil, server)
 
 	return
 }

@@ -50,7 +50,7 @@ func (c *Client) GetDomain(domainID int) (domain *Domain, err error) {
 		return
 	}
 
-	err = c.get(fmt.Sprintf("domains/%d", domainID), domain)
+	err = c.get(fmt.Sprintf("domains/%d", domainID), nil, domain)
 
 	return
 }
@@ -63,7 +63,7 @@ func (c *Client) GetDomainByName(domainName string) (domain *Domain, err error) 
 		return
 	}
 
-	err = c.get(fmt.Sprintf("domains/byname/%s", domainName), domain)
+	err = c.get(fmt.Sprintf("domains/byname/%s", domainName), nil, domain)
 
 	return
 }
