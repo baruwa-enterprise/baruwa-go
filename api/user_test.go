@@ -35,8 +35,8 @@ func Test_User_NotFoundError(t *testing.T) {
 	default:
 		t.Errorf("Expected *ErrorResponse got %v", v)
 	}
-	if u != nil {
-		t.Errorf("Expected %v got %v", nil, u)
+	if u.ID != 0 {
+		t.Errorf("Expected %d got %d", 0, u.ID)
 	}
 }
 
@@ -58,8 +58,8 @@ func Test_User_ServerError(t *testing.T) {
 	default:
 		t.Errorf("Expected error got %v", v)
 	}
-	if u != nil {
-		t.Errorf("Expected %v got %v", nil, u)
+	if u.ID != 0 {
+		t.Errorf("Expected %d got %d", 0, u.ID)
 	}
 }
 
@@ -81,8 +81,8 @@ func Test_User_UnAuthError(t *testing.T) {
 	default:
 		t.Errorf("Expected error got %v", v)
 	}
-	if u != nil {
-		t.Errorf("Expected %v got %v", nil, u)
+	if u.ID != 0 {
+		t.Errorf("Expected %d got %d", 0, u.ID)
 	}
 }
 
@@ -101,5 +101,44 @@ func Test_User_InvalidID(t *testing.T) {
 	}
 	if u != nil {
 		t.Errorf("Expected %v got %v", nil, u)
+	}
+}
+
+func Test_User(t *testing.T) {
+	data := `{
+	"username": "rowdyrough",
+	"send_report": false,
+	"account_type": 3,
+	"addresses": [],
+	"firstname": "Rowdy",
+	"organizations": [],
+	"lastname": "Rough",
+	"spam_checks": false,
+	"email": "rowdyrough@example.com",
+	"low_score": 0.0,
+	"high_score": 0.0,
+	"created_on": "2014:10:07:06:35:48",
+	"last_login": "2014:10:11:22:38:11",
+	"active": true,
+	"timezone": "Africa/Johannesburg",
+	"local": true,
+	"id": 2,
+	"domains": [{
+		"name": "example.com",
+		"id": 4
+	}]
+	}
+`
+	server, client, err := getTestServerAndClient(http.StatusOK, data)
+	if err != nil {
+		t.Fatalf("An error should not be returned")
+	}
+	defer server.Close()
+	u, err := client.GetUser(2)
+	if err != nil {
+		t.Fatalf("An error should not be returned: %s", err.Error())
+	}
+	if u.ID != 2 {
+		t.Errorf("Expected %d got %d", 2, u.ID)
 	}
 }
