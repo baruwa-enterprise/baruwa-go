@@ -12,6 +12,7 @@ const (
 	APIVersion = "v1"
 	// Version of this library
 	Version       = "0.0.1"
+	timeFmt       = "2006:01:02:15:04:05"
 	endpointError = "The endpoint param is required"
 	userIDError   = "The userID param should be > 0"
 )

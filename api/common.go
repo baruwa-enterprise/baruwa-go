@@ -7,6 +7,14 @@
 
 package api
 
+import (
+	"fmt"
+	"strings"
+	"time"
+)
+
+var nilTime = (time.Time{}).UnixNano()
+
 // Meta holds meta
 type Meta struct {
 	Total int `json:"total"`
@@ -28,4 +36,32 @@ type Pages struct {
 // ListOptions holds list options
 type ListOptions struct {
 	Page string
+}
+
+// MyTime custom date formater
+type MyTime struct {
+	time.Time
+}
+
+// UnmarshalJSON unmarshals the custom date
+func (mt *MyTime) UnmarshalJSON(b []byte) (err error) {
+	s := strings.Trim(string(b), "\"")
+	t, err := time.Parse(time.RFC3339Nano, s)
+
+	if err != nil {
+		t, err = time.Parse(timeFmt, s)
+	}
+
+	mt.Time = t
+
+	return
+}
+
+// MarshalJSON marshals the custom date
+func (mt *MyTime) MarshalJSON() ([]byte, error) {
+	if mt.Time.UnixNano() == nilTime {
+		return []byte("null"), nil
+	}
+
+	return []byte(fmt.Sprintf("\"%s\"", mt.Time.Format(timeFmt))), nil
 }
