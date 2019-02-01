@@ -61,7 +61,7 @@ type UserList struct {
 // GetUsers returns a UserList object
 // This contains a paginated list of user accounts and links
 // to the neigbouring pages.
-// https://www.baruwa.com/docs/api/?python#list-all-accounts
+// https://www.baruwa.com/docs/api/#list-all-accounts
 func (c *Client) GetUsers(opts *ListOptions) (l *UserList, err error) {
 	err = c.get("users", nil, l)
 
@@ -69,6 +69,7 @@ func (c *Client) GetUsers(opts *ListOptions) (l *UserList, err error) {
 }
 
 // GetUser returns a user account
+// https://www.baruwa.com/docs/api/#retrieve-an-existing-account
 func (c *Client) GetUser(userID int) (user *User, err error) {
 	if userID <= 0 {
 		err = fmt.Errorf("The userID param should be > 0")
@@ -81,6 +82,7 @@ func (c *Client) GetUser(userID int) (user *User, err error) {
 }
 
 // CreateUser creates a user account
+// https://www.baruwa.com/docs/api/#create-a-new-account
 func (c *Client) CreateUser(user *User) (err error) {
 	var v url.Values
 
@@ -99,6 +101,7 @@ func (c *Client) CreateUser(user *User) (err error) {
 }
 
 // UpdateUser updates a user account
+// https://www.baruwa.com/docs/api/#update-an-account
 func (c *Client) UpdateUser(user *User) (err error) {
 	var v url.Values
 
@@ -122,6 +125,7 @@ func (c *Client) UpdateUser(user *User) (err error) {
 }
 
 // DeleteUser deletes a user account
+// https://www.baruwa.com/docs/api/#delete-an-account
 func (c *Client) DeleteUser(userID int) (err error) {
 	if userID <= 0 {
 		err = fmt.Errorf("The userID param should be > 0")
