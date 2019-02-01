@@ -5,11 +5,13 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this file,
 // You can obtain one at http://mozilla.org/MPL/2.0/.
 
-package api
+/*
+Package api Golang bindings for Baruwa REST API
 
-const (
-	// APIVersion of Baruwa API
-	APIVersion = "v1"
-	// Version of this library
-	Version = "0.0.1"
-)
+Usage:
+
+	import "github.com/baruwa-enterprise/baruwa-go/api"
+
+
+*/
+package api
