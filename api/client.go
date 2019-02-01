@@ -83,7 +83,7 @@ func (c *Client) newRequest(method, path string, opts *ListOptions, body io.Read
 
 	u = c.BaseURL.ResolveReference(rel)
 
-	if method == http.MethodGet && opts.Page != "" {
+	if method == http.MethodGet && opts != nil && opts.Page != "" {
 		if nu, err = url.Parse(opts.Page); err == nil {
 			if strings.HasPrefix(nu.String(), u.String()) {
 				q = nu.Query()
@@ -216,10 +216,15 @@ func (c *Client) do(req *http.Request, v interface{}) (err error) {
 
 	if resp.StatusCode < 200 || resp.StatusCode > 299 {
 		errResp = &ErrorResponse{Response: resp}
+		errResp.Code = resp.StatusCode
+		errResp.Message = resp.Status
 		data, err = ioutil.ReadAll(resp.Body)
 
 		if err == nil && len(data) > 0 {
-			json.Unmarshal(data, errResp)
+			if err = json.Unmarshal(data, errResp); err == nil {
+				err = errResp
+			}
+		} else {
 			err = errResp
 		}
 
