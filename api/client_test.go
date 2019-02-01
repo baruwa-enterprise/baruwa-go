@@ -10,8 +10,28 @@ package api
 import (
 	"fmt"
 	"net/http"
+	"net/http/httptest"
 	"testing"
 )
+
+func getTestServer(code int, body string) *httptest.Server {
+	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(code)
+		fmt.Fprint(w, body)
+	}))
+}
+
+func getTestClient(endpoint string, opts *Options) (c *Client, e error) {
+	c, e = New(endpoint, "test-token", opts)
+	return
+}
+
+func getTestServerAndClient(code int, body string) (*httptest.Server, *Client, error) {
+	server := getTestServer(code, body)
+	client, err := getTestClient(server.URL, nil)
+	return server, client, err
+}
 
 func TestNewErrors(t *testing.T) {
 	c, e := New("", "", nil)
