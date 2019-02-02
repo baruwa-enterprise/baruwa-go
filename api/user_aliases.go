@@ -26,9 +26,11 @@ type AliasAddress struct {
 // https://www.baruwa.com/docs/api/#retrieve-an-existing-alias-address
 func (c *Client) GetAliasAddress(aliasID int) (alias *AliasAddress, err error) {
 	if aliasID <= 0 {
-		err = fmt.Errorf("The id param should be > 0")
+		err = fmt.Errorf(aliasIDError)
 		return
 	}
+
+	alias = &AliasAddress{}
 
 	err = c.get(fmt.Sprintf("aliasaddresses/%d", aliasID), nil, alias)
 
@@ -41,12 +43,12 @@ func (c *Client) CreateAliasAddress(userID int, alias *AliasAddress) (err error)
 	var v url.Values
 
 	if userID <= 0 {
-		err = fmt.Errorf("The userID param should be > 0")
+		err = fmt.Errorf(userIDError)
 		return
 	}
 
 	if alias == nil {
-		err = fmt.Errorf("The alias param cannot be nil")
+		err = fmt.Errorf(aliasParamError)
 		return
 	}
 
@@ -65,12 +67,12 @@ func (c *Client) UpdateAliasAddress(alias *AliasAddress) (err error) {
 	var v url.Values
 
 	if alias == nil {
-		err = fmt.Errorf("The alias param cannot be nil")
+		err = fmt.Errorf(aliasParamError)
 		return
 	}
 
 	if alias.ID <= 0 {
-		err = fmt.Errorf("The alias.ID param should be > 0")
+		err = fmt.Errorf(aliasSIDError)
 		return
 	}
 
@@ -85,13 +87,24 @@ func (c *Client) UpdateAliasAddress(alias *AliasAddress) (err error) {
 
 // DeleteAliasAddress deletes an alias address
 // https://www.baruwa.com/docs/api/#delete-an-alias-address
-func (c *Client) DeleteAliasAddress(id int) (err error) {
-	if id <= 0 {
-		err = fmt.Errorf("The id param should be > 0")
+func (c *Client) DeleteAliasAddress(alias *AliasAddress) (err error) {
+	var v url.Values
+
+	if alias == nil {
+		err = fmt.Errorf(aliasParamError)
 		return
 	}
 
-	err = c.delete(fmt.Sprintf("aliasaddresses/%d", id), nil)
+	if alias.ID <= 0 {
+		err = fmt.Errorf(aliasSIDError)
+		return
+	}
+
+	if v, err = query.Values(alias); err != nil {
+		return
+	}
+
+	err = c.delete(fmt.Sprintf("aliasaddresses/%d", alias.ID), v)
 
 	return
 }
