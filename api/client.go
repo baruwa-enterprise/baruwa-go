@@ -175,12 +175,12 @@ func (c *Client) GetAccessToken(clientID, secret string) (token *TokenResponse, 
 	var buf *bytes.Buffer
 
 	if clientID == "" {
-		err = fmt.Errorf("clientID is required")
+		err = fmt.Errorf(clientIDError)
 		return
 	}
 
 	if secret == "" {
-		err = fmt.Errorf("secret is required")
+		err = fmt.Errorf(clientSecretError)
 		return
 	}
 
@@ -191,6 +191,8 @@ func (c *Client) GetAccessToken(clientID, secret string) (token *TokenResponse, 
 
 	req.Header.Set("Content-type", "application/x-www-form-urlencoded")
 	req.SetBasicAuth(clientID, secret)
+
+	token = &TokenResponse{}
 
 	err = c.do(req, token)
 
