@@ -18,4 +18,5 @@ const (
 	userParamError    = "The user param cannot be nil"
 	clientIDError     = "clientID is required"
 	clientSecretError = "secret is required"
+	pwFormError       = "The form param is required"
 )
