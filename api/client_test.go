@@ -84,6 +84,92 @@ func TestNewOpts(t *testing.T) {
 	}
 }
 
+func TestRequestOptions(t *testing.T) {
+	bu := "https://baruwa.example.com"
+	c, e := New(bu, "test-token", nil)
+	if e != nil {
+		t.Fatalf("An error should not be returned")
+	}
+	page := "https://baruwa.example.com/api/v1/users?page=2"
+	opts := &ListOptions{
+		Page: page,
+	}
+	req, e := c.newRequest(http.MethodGet, apiPath("users"), opts, nil)
+	if e != nil {
+		t.Fatalf("An error should not be returned")
+	}
+	if req.URL.String() != page {
+		t.Errorf("Expected %s got %s", page, req.RequestURI)
+	}
+	opts.Page = "https://b2.example.com/api/v1/users?page=2"
+	req, e = c.newRequest(http.MethodGet, apiPath("users"), opts, nil)
+	if e != nil {
+		t.Fatalf("An error should not be returned")
+	}
+	if req.URL.String() == page {
+		t.Errorf("Expected %s got %s", "https://baruwa.example.com/api/v1/users", req.RequestURI)
+	}
+}
+
+func TestGetAccessTokenError(t *testing.T) {
+	bu := "https://baruwa.example.com"
+	c, e := New(bu, "", nil)
+	if e != nil {
+		t.Fatalf("An error should not be returned")
+	}
+	if c.BaseURL.String() != bu {
+		t.Errorf("Expected %s got %s", bu, c.BaseURL)
+	}
+	_, e = c.GetAccessToken("", "")
+	if e == nil {
+		t.Fatalf("An error should be returned")
+	}
+	if e.Error() != clientIDError {
+		t.Errorf("Expected %s got %s", clientIDError, e)
+	}
+	_, e = c.GetAccessToken("test", "")
+	if e == nil {
+		t.Fatalf("An error should be returned")
+	}
+	if e.Error() != clientSecretError {
+		t.Errorf("Expected %s got %s", clientSecretError, e)
+	}
+	server, client, e := getTestServerAndClient(http.StatusForbidden, ``)
+	if e != nil {
+		t.Fatalf("An error should not be returned: %s", e)
+	}
+	defer server.Close()
+	_, e = client.GetAccessToken("test-id", "test-secret")
+	if e == nil {
+		t.Fatalf("An error should be returned")
+	}
+}
+
+func TestGetAccessTokenOK(t *testing.T) {
+	accessToken := "teUU1ApyURKgLpNctloeLpX7WAkCirgOYbTNwXQygqerOSEdxeeIRobTxNbR"
+	data := fmt.Sprintf(`
+	{
+		"access_token": "%s",
+		"token_type": "Bearer",
+		"expires_in": 3600,
+		"refresh_token": "Vcc0xyvhrTyoYIIiqs4LHhCoD4JYuvyodpGMXLPSirpM62KJD5qS6m6Zr0eT",
+		"scope": "act-read act-create act-update act-delete dom-read dom-create dom-update dom-delete org-read org-create org-update org-delete sta-read"
+	}
+	`, accessToken)
+	server, client, err := getTestServerAndClient(http.StatusOK, data)
+	if err != nil {
+		t.Fatalf("An error should not be returned: %s", err)
+	}
+	defer server.Close()
+	token, err := client.GetAccessToken("test-id", "test-secret")
+	if err != nil {
+		t.Fatalf("An error should not be returned: %s", err)
+	}
+	if token.Token != accessToken {
+		t.Errorf("Expected %s got %s", accessToken, token.Token)
+	}
+}
+
 func TestApiPath(t *testing.T) {
 	p := "users"
 	expected := fmt.Sprintf("/api/%s/%s", APIVersion, p)
