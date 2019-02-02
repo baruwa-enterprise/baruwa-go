@@ -11,9 +11,11 @@ const (
 	// APIVersion of Baruwa API
 	APIVersion = "v1"
 	// Version of this library
-	Version        = "0.0.1"
-	timeFmt        = "2006:01:02:15:04:05"
-	endpointError  = "The endpoint param is required"
-	userIDError    = "The userID param should be > 0"
-	userParamError = "The user param cannot be nil"
+	Version           = "0.0.1"
+	timeFmt           = "2006:01:02:15:04:05"
+	endpointError     = "The endpoint param is required"
+	userIDError       = "The userID param should be > 0"
+	userParamError    = "The user param cannot be nil"
+	clientIDError     = "clientID is required"
+	clientSecretError = "secret is required"
 )
