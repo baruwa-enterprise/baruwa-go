@@ -97,14 +97,14 @@ func Test_User_InvalidID(t *testing.T) {
 		t.Fatalf("An error should be returned: %v", u)
 	}
 	if err.Error() != userIDError {
-		t.Errorf("Expected '%s' got '%s'", err, userIDError)
+		t.Errorf("Expected '%s' got '%s'", userIDError, err)
 	}
 	if u != nil {
 		t.Errorf("Expected %v got %v", nil, u)
 	}
 }
 
-func Test_User(t *testing.T) {
+func Test_GetUserOK(t *testing.T) {
 	data := `{
 	"username": "rowdyrough",
 	"send_report": false,
@@ -140,5 +140,191 @@ func Test_User(t *testing.T) {
 	}
 	if u.ID != 2 {
 		t.Errorf("Expected %d got %d", 2, u.ID)
+	}
+}
+
+func Test_GetUsersOK(t *testing.T) {
+	data := `{
+		"items": [{
+			"username": "fuzzy@example.com",
+			"send_report": false,
+			"account_type": 3,
+			"addresses": [],
+			"firstname": "Fuzzy",
+			"organizations": [],
+			"lastname": "Lumpkins",
+			"spam_checks": false,
+			"email": "fuzzy@example.com",
+			"low_score": 2.0,
+			"high_score": 12.0,
+			"created_on": "2014:09:20:15:14:30",
+			"last_login": "2014:10:03:08:54:28",
+			"active": true,
+			"timezone": "Africa/Abidjan",
+			"local": true,
+			"id": 4,
+			"domains": [{
+				"name": "example.com",
+				"id": 4
+			}]
+		}, {
+			"username": "rowdyrough",
+			"send_report": false,
+			"account_type": 3,
+			"addresses": [],
+			"firstname": "Rowdy",
+			"organizations": [],
+			"lastname": "Rough",
+			"spam_checks": false,
+			"email": "rowdyrough@example.com",
+			"low_score": 0.0,
+			"high_score": 0.0,
+			"created_on": "2014:10:07:06:35:48",
+			"last_login": "2014:10:11:22:38:11",
+			"active": true,
+			"timezone": "Africa/Johannesburg",
+			"local": true,
+			"id": 5,
+			"domains": [{
+				"name": "example.com",
+				"id": 4
+			}]
+		}],
+		"meta": {
+			"total": 2
+		},
+		"links": {
+			"pages": {
+				"last": "http://baruwa.example.com/api/v1/users?page=2",
+				"next": "http://baruwa.example.com/api/v1/users?page=2"
+			}
+		}
+	}
+`
+	server, client, err := getTestServerAndClient(http.StatusOK, data)
+	if err != nil {
+		t.Fatalf("An error should not be returned")
+	}
+	defer server.Close()
+	u, err := client.GetUsers(nil)
+	if err != nil {
+		t.Fatalf("An error should not be returned: %s", err.Error())
+	}
+	if len(u.Items) != 2 {
+		t.Errorf("Expected %d got %d", 2, len(u.Items))
+	}
+	if u.Meta.Total != 2 {
+		t.Errorf("Expected %d got %d", 2, u.Meta.Total)
+	}
+	if u.Links.Pages.First != "" {
+		t.Errorf("Expected '' got '%s'", u.Links.Pages.First)
+	}
+	next := "http://baruwa.example.com/api/v1/users?page=2"
+	if u.Links.Pages.Next != next {
+		t.Errorf("Expected '%s' got '%s'", next, u.Links.Pages.Next)
+	}
+	t.Log(u)
+}
+
+func Test_CreateUserError(t *testing.T) {
+	data := ``
+	server, client, err := getTestServerAndClient(http.StatusOK, data)
+	if err != nil {
+		t.Fatalf("An error should not be returned")
+	}
+	defer server.Close()
+	err = client.CreateUser(nil)
+	if err == nil {
+		t.Fatalf("An error should be returned")
+	}
+	if err.Error() != userParamError {
+		t.Errorf("Expected '%s' got '%s'", userParamError, err)
+	}
+}
+
+func Test_CreateUserOK(t *testing.T) {
+	data := ``
+	server, client, err := getTestServerAndClient(http.StatusOK, data)
+	if err != nil {
+		t.Fatalf("An error should not be returned")
+	}
+	defer server.Close()
+	u := &User{
+		Username: "andrew",
+		Email:    "andrew@example.com",
+		Timezone: "Africa/Johannesburg",
+	}
+	err = client.CreateUser(u)
+	if err != nil {
+		t.Fatalf("An error should not be returned: %s", err)
+	}
+}
+
+func Test_UpdateUserError(t *testing.T) {
+	data := ``
+	server, client, err := getTestServerAndClient(http.StatusOK, data)
+	if err != nil {
+		t.Fatalf("An error should not be returned")
+	}
+	defer server.Close()
+	u := &User{
+		Username: "andrew",
+		Email:    "andrew@example.com",
+		Timezone: "Africa/Johannesburg",
+	}
+	err = client.UpdateUser(u)
+	if err == nil {
+		t.Fatalf("An error should be returned")
+	}
+	if err.Error() != userIDError {
+		t.Errorf("Expected '%s' got '%s'", userIDError, err)
+	}
+}
+
+func Test_UpdateUserOK(t *testing.T) {
+	data := ``
+	server, client, err := getTestServerAndClient(http.StatusOK, data)
+	if err != nil {
+		t.Fatalf("An error should not be returned")
+	}
+	defer server.Close()
+	u := &User{
+		ID:       2,
+		Username: "andrew",
+		Email:    "andrew@example.com",
+		Timezone: "Africa/Johannesburg",
+	}
+	err = client.UpdateUser(u)
+	if err != nil {
+		t.Fatalf("An error not should be returned: %s", err)
+	}
+}
+
+func Test_DeleteUserError(t *testing.T) {
+	data := ``
+	server, client, err := getTestServerAndClient(http.StatusOK, data)
+	if err != nil {
+		t.Fatalf("An error should not be returned")
+	}
+	defer server.Close()
+	err = client.DeleteUser(0)
+	if err == nil {
+		t.Fatalf("An error should be returned")
+	}
+	if err.Error() != userIDError {
+		t.Errorf("Expected '%s' got '%s'", userIDError, err)
+	}
+}
+
+func Test_DeleteUserOK(t *testing.T) {
+	data := ``
+	server, client, err := getTestServerAndClient(http.StatusOK, data)
+	if err != nil {
+		t.Fatalf("An error should not be returned")
+	}
+	defer server.Close()
+	err = client.DeleteUser(2)
+	if err != nil {
+		t.Fatalf("An error not should be returned: %s", err)
 	}
 }
