@@ -267,6 +267,13 @@ func Test_UpdateUserError(t *testing.T) {
 		t.Fatalf("An error should not be returned")
 	}
 	defer server.Close()
+	err = client.UpdateUser(nil)
+	if err == nil {
+		t.Fatalf("An error should be returned")
+	}
+	if err.Error() != userParamError {
+		t.Errorf("Expected '%s' got '%s'", userIDError, err)
+	}
 	u := &User{
 		Username: "andrew",
 		Email:    "andrew@example.com",
