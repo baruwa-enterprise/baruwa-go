@@ -65,6 +65,8 @@ type UserList struct {
 // to the neigbouring pages.
 // https://www.baruwa.com/docs/api/#list-all-accounts
 func (c *Client) GetUsers(opts *ListOptions) (l *UserList, err error) {
+	l = &UserList{}
+
 	err = c.get("users", nil, l)
 
 	return
@@ -91,7 +93,7 @@ func (c *Client) CreateUser(user *User) (err error) {
 	var v url.Values
 
 	if user == nil {
-		err = fmt.Errorf("The user param cannot be nil")
+		err = fmt.Errorf(userParamError)
 		return
 	}
 
@@ -99,7 +101,7 @@ func (c *Client) CreateUser(user *User) (err error) {
 		return
 	}
 
-	err = c.post("users", v, user)
+	err = c.post("users", v, nil)
 
 	return
 }
@@ -110,12 +112,12 @@ func (c *Client) UpdateUser(user *User) (err error) {
 	var v url.Values
 
 	if user == nil {
-		err = fmt.Errorf("The user param cannot be nil")
+		err = fmt.Errorf(userParamError)
 		return
 	}
 
 	if user.ID <= 0 {
-		err = fmt.Errorf("The user.ID param should be > 0")
+		err = fmt.Errorf(userIDError)
 		return
 	}
 
@@ -123,7 +125,7 @@ func (c *Client) UpdateUser(user *User) (err error) {
 		return
 	}
 
-	err = c.put(fmt.Sprintf("users/%d", user.ID), v, user)
+	err = c.put(fmt.Sprintf("users/%d", user.ID), v, nil)
 
 	return
 }
@@ -132,7 +134,7 @@ func (c *Client) UpdateUser(user *User) (err error) {
 // https://www.baruwa.com/docs/api/#delete-an-account
 func (c *Client) DeleteUser(userID int) (err error) {
 	if userID <= 0 {
-		err = fmt.Errorf("The userID param should be > 0")
+		err = fmt.Errorf(userIDError)
 		return
 	}
 
