@@ -32,14 +32,16 @@ type DomainAlias struct {
 // https://www.baruwa.com/docs/api/#retrieve-domain-alias
 func (c *Client) GetDomainAlias(domainID, aliasID int) (alias *DomainAlias, err error) {
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if aliasID <= 0 {
-		err = fmt.Errorf("The aliasID param should be > 0")
+		err = fmt.Errorf(aliasIDError)
 		return
 	}
+
+	alias = &DomainAlias{}
 
 	err = c.get(fmt.Sprintf("domainaliases/%d/%d", domainID, aliasID), nil, alias)
 
@@ -52,12 +54,12 @@ func (c *Client) CreateDomainAlias(domainID int, alias *DomainAlias) (err error)
 	var v url.Values
 
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if alias == nil {
-		err = fmt.Errorf("The alias param cannot be nil")
+		err = fmt.Errorf(aliasParamError)
 		return
 	}
 
@@ -76,17 +78,17 @@ func (c *Client) UpdateDomainAlias(domainID int, alias *DomainAlias) (err error)
 	var v url.Values
 
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if alias == nil {
-		err = fmt.Errorf("The alias param cannot be nil")
+		err = fmt.Errorf(aliasParamError)
 		return
 	}
 
 	if alias.ID <= 0 {
-		err = fmt.Errorf("The alias.ID param should be > 0")
+		err = fmt.Errorf(aliasSIDError)
 		return
 	}
 
@@ -103,12 +105,12 @@ func (c *Client) UpdateDomainAlias(domainID int, alias *DomainAlias) (err error)
 // https://www.baruwa.com/docs/api/#delete-a-domain-alias
 func (c *Client) DeleteDomainAlias(domainID, aliasID int) (err error) {
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if aliasID <= 0 {
-		err = fmt.Errorf("The aliasID param should be > 0")
+		err = fmt.Errorf(aliasIDError)
 		return
 	}
 
