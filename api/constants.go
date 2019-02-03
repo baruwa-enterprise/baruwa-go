@@ -16,6 +16,7 @@ const (
 	endpointError     = "The endpoint param is required"
 	userIDError       = "The userID param should be > 0"
 	aliasIDError      = "The aliasID param should be > 0"
+	domainIDError     = "The domainID param should be > 0"
 	aliasSIDError     = "The alias.ID param should be > 0"
 	userParamError    = "The user param cannot be nil"
 	aliasParamError   = "The alias param cannot be nil"
