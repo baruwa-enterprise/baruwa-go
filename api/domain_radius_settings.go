@@ -16,28 +16,31 @@ import (
 
 // RadiusSettings holds domain radius settings
 type RadiusSettings struct {
-	ID      int    `json:"id,omitempty"`
-	Secret  string `json:"secret"`
-	Timeout int    `json:"timeout"`
+	ID         int         `json:"id,omitempty"`
+	Secret     string      `json:"secret"`
+	Timeout    int         `json:"timeout"`
+	AuthServer *SettingsAS `json:"authserver"`
 }
 
 // GetRadiusSettings returns radius settings
 // https://www.baruwa.com/docs/api/#retrieve-radius-settings
 func (c *Client) GetRadiusSettings(domainID, serverID, settingsID int) (settings *RadiusSettings, err error) {
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if serverID <= 0 {
-		err = fmt.Errorf("The serverID param should be > 0")
+		err = fmt.Errorf(serverIDError)
 		return
 	}
 
 	if settingsID <= 0 {
-		err = fmt.Errorf("The settingsID param should be > 0")
+		err = fmt.Errorf(settingsIDError)
 		return
 	}
+
+	settings = &RadiusSettings{}
 
 	err = c.get(fmt.Sprintf("radiussettings/%d/%d/%d", domainID, serverID, settingsID), nil, settings)
 
@@ -50,17 +53,17 @@ func (c *Client) CreateRadiusSettings(domainID, serverID int, settings *RadiusSe
 	var v url.Values
 
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if serverID <= 0 {
-		err = fmt.Errorf("The serverID param should be > 0")
+		err = fmt.Errorf(serverIDError)
 		return
 	}
 
 	if settings == nil {
-		err = fmt.Errorf("The settings param cannot be nil")
+		err = fmt.Errorf(settingsParamError)
 		return
 	}
 
@@ -79,22 +82,22 @@ func (c *Client) UpdateRadiusSettings(domainID, serverID int, settings *RadiusSe
 	var v url.Values
 
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if serverID <= 0 {
-		err = fmt.Errorf("The serverID param should be > 0")
+		err = fmt.Errorf(serverIDError)
 		return
 	}
 
 	if settings == nil {
-		err = fmt.Errorf("The settings param cannot be nil")
+		err = fmt.Errorf(settingsParamError)
 		return
 	}
 
 	if settings.ID <= 0 {
-		err = fmt.Errorf("The settings.ID param should be > 0")
+		err = fmt.Errorf(settingsSIDError)
 		return
 	}
 
@@ -102,7 +105,7 @@ func (c *Client) UpdateRadiusSettings(domainID, serverID int, settings *RadiusSe
 		return
 	}
 
-	err = c.put(fmt.Sprintf("radiussettings/%d/%d/%d", domainID, serverID, settings.ID), v, settings)
+	err = c.put(fmt.Sprintf("radiussettings/%d/%d/%d", domainID, serverID, settings.ID), v, nil)
 
 	return
 }
@@ -113,22 +116,22 @@ func (c *Client) DeleteRadiusSettings(domainID, serverID int, settings *RadiusSe
 	var v url.Values
 
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if serverID <= 0 {
-		err = fmt.Errorf("The serverID param should be > 0")
+		err = fmt.Errorf(serverIDError)
 		return
 	}
 
 	if settings == nil {
-		err = fmt.Errorf("The settings param cannot be nil")
+		err = fmt.Errorf(settingsParamError)
 		return
 	}
 
 	if settings.ID <= 0 {
-		err = fmt.Errorf("The settings.ID param should be > 0")
+		err = fmt.Errorf(settingsSIDError)
 		return
 	}
 
