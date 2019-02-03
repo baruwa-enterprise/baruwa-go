@@ -15,6 +15,11 @@ import (
 
 var nilTime = (time.Time{}).UnixNano()
 
+// SettingsAS hold the authentication server id
+type SettingsAS struct {
+	ID int `json:"id"`
+}
+
 // Meta holds meta
 type Meta struct {
 	Total int `json:"total"`
