@@ -16,27 +16,54 @@ import (
 
 // DomainDeliveryServer holds domain delivery servers
 type DomainDeliveryServer struct {
-	ID               int    `json:"id,omitempty"`
-	Address          string `json:"address"`
-	Protocol         int    `json:"protocol"`
-	Port             int    `json:"port"`
-	RequireTLS       bool   `json:"require_tls"`
-	VerificationOnly bool   `json:"verification_only"`
-	Enabled          bool   `json:"enabled"`
+	ID               int          `json:"id,omitempty"`
+	Address          string       `json:"address"`
+	Protocol         int          `json:"protocol"`
+	Port             int          `json:"port"`
+	RequireTLS       bool         `json:"require_tls"`
+	VerificationOnly bool         `json:"verification_only"`
+	Enabled          bool         `json:"enabled"`
+	Domain           *AliasDomain `json:"domain,omitempty"`
+}
+
+// DomainDeliveryServerList holds domain delivery servers
+type DomainDeliveryServerList struct {
+	Items []DomainDeliveryServer `json:"items"`
+	Links Links                  `json:"links"`
+	Meta  Meta                   `json:"meta"`
+}
+
+// GetDomainDeliveryServers returns a DomainDeliveryServerList object
+// This contains a paginated list of domain delivery servers and links
+// to the neigbouring pages.
+// https://www.baruwa.com/docs/api/?shell#listing-delivery-servers
+func (c *Client) GetDomainDeliveryServers(domainID int, opts *ListOptions) (l *DomainDeliveryServerList, err error) {
+	if domainID <= 0 {
+		err = fmt.Errorf(domainIDError)
+		return
+	}
+
+	l = &DomainDeliveryServerList{}
+
+	err = c.get(fmt.Sprintf("deliveryservers/%d", domainID), nil, l)
+
+	return
 }
 
 // GetDomainDeliveryServer returns a domain delivery server
 // https://www.baruwa.com/docs/api/#retrieve-a-delivery-server
 func (c *Client) GetDomainDeliveryServer(domainID, serverID int) (server *DomainDeliveryServer, err error) {
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if serverID <= 0 {
-		err = fmt.Errorf("The serverID param should be > 0")
+		err = fmt.Errorf(serverIDError)
 		return
 	}
+
+	server = &DomainDeliveryServer{}
 
 	err = c.get(fmt.Sprintf("deliveryservers/%d/%d", domainID, serverID), nil, server)
 
@@ -49,12 +76,12 @@ func (c *Client) CreateDomainDeliveryServer(domainID int, server *DomainDelivery
 	var v url.Values
 
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if server == nil {
-		err = fmt.Errorf("The server param cannot be nil")
+		err = fmt.Errorf(serverParamError)
 		return
 	}
 
@@ -73,17 +100,17 @@ func (c *Client) UpdateDomainDeliveryServer(domainID int, server *DomainDelivery
 	var v url.Values
 
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if server == nil {
-		err = fmt.Errorf("The server param cannot be nil")
+		err = fmt.Errorf(serverParamError)
 		return
 	}
 
 	if server.ID <= 0 {
-		err = fmt.Errorf("The server.ID param should be > 0")
+		err = fmt.Errorf(serverSIDError)
 		return
 	}
 
@@ -91,7 +118,7 @@ func (c *Client) UpdateDomainDeliveryServer(domainID int, server *DomainDelivery
 		return
 	}
 
-	err = c.put(fmt.Sprintf("deliveryservers/%d/%d", domainID, server.ID), v, server)
+	err = c.put(fmt.Sprintf("deliveryservers/%d/%d", domainID, server.ID), v, nil)
 
 	return
 }
@@ -102,17 +129,17 @@ func (c *Client) DeleteDomainDeliveryServer(domainID int, server *DomainDelivery
 	var v url.Values
 
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if server == nil {
-		err = fmt.Errorf("The server param cannot be nil")
+		err = fmt.Errorf(serverParamError)
 		return
 	}
 
 	if server.ID <= 0 {
-		err = fmt.Errorf("The server.ID param should be > 0")
+		err = fmt.Errorf(serverSIDError)
 		return
 	}
 
