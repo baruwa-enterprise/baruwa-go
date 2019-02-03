@@ -101,7 +101,7 @@ func (c *Client) CreateUser(user *User) (err error) {
 		return
 	}
 
-	err = c.post("users", v, nil)
+	err = c.post("users", v, user)
 
 	return
 }

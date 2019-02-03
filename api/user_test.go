@@ -243,7 +243,31 @@ func Test_CreateUserError(t *testing.T) {
 }
 
 func Test_CreateUserOK(t *testing.T) {
-	data := ``
+	userID := 2
+	data := fmt.Sprintf(`{
+		"username": "rowdyrough",
+		"send_report": false,
+		"account_type": 3,
+		"addresses": [],
+		"firstname": "Rowdy",
+		"organizations": [],
+		"lastname": "Rough",
+		"spam_checks": false,
+		"email": "rowdyrough@example.com",
+		"low_score": 0.0,
+		"high_score": 0.0,
+		"created_on": "2014:10:07:06:35:48",
+		"last_login": "2014:10:11:22:38:11",
+		"active": true,
+		"timezone": "Africa/Johannesburg",
+		"local": true,
+		"id": %d,
+		"domains": [{
+			"name": "example.com",
+			"id": 4
+		}]
+		}
+	`, userID)
 	server, client, err := getTestServerAndClient(http.StatusOK, data)
 	if err != nil {
 		t.Fatalf("An error should not be returned")
@@ -257,6 +281,9 @@ func Test_CreateUserOK(t *testing.T) {
 	err = client.CreateUser(u)
 	if err != nil {
 		t.Fatalf("An error should not be returned: %s", err)
+	}
+	if u.ID != userID {
+		t.Errorf("Expected %d got %d", userID, u.ID)
 	}
 }
 
