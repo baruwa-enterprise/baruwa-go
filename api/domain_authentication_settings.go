@@ -19,24 +19,49 @@ type AuthServer struct {
 	ID              int    `json:"id,omitempty"`
 	Address         string `json:"address"`
 	Protocol        int    `json:"protocol"`
-	Port            int    `json:"port"`
 	Enabled         bool   `json:"enabled"`
 	SplitAddress    bool   `json:"split_address"`
 	UserMapTemplate string `json:"user_map_template"`
+}
+
+// AuthServerList holds authentication servers
+type AuthServerList struct {
+	Items []AuthServer `json:"items"`
+	Links Links        `json:"links"`
+	Meta  Meta         `json:"meta"`
+}
+
+// GetAuthServers returns a AuthServerList object
+// This contains a paginated list of authentication servers and links
+// to the neigbouring pages.
+// https://www.baruwa.com/docs/api/#listing-authentication-settings
+func (c *Client) GetAuthServers(domainID int, opts *ListOptions) (l *AuthServerList, err error) {
+	if domainID <= 0 {
+		err = fmt.Errorf(domainIDError)
+		return
+	}
+
+	l = &AuthServerList{}
+
+	err = c.get(fmt.Sprintf("authservers/%d", domainID), nil, l)
+
+	return
 }
 
 // GetAuthServer returns an authentication server
 // https://www.baruwa.com/docs/api/#retrieve-authentication-settings
 func (c *Client) GetAuthServer(domainID, serverID int) (server *AuthServer, err error) {
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if serverID <= 0 {
-		err = fmt.Errorf("The serverID param should be > 0")
+		err = fmt.Errorf(serverIDError)
 		return
 	}
+
+	server = &AuthServer{}
 
 	err = c.get(fmt.Sprintf("authservers/%d/%d", domainID, serverID), nil, server)
 
@@ -49,12 +74,12 @@ func (c *Client) CreateAuthServer(domainID int, server *AuthServer) (err error) 
 	var v url.Values
 
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if server == nil {
-		err = fmt.Errorf("The server param cannot be nil")
+		err = fmt.Errorf(serverParamError)
 		return
 	}
 
@@ -73,17 +98,17 @@ func (c *Client) UpdateAuthServer(domainID int, server *AuthServer) (err error) 
 	var v url.Values
 
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if server == nil {
-		err = fmt.Errorf("The server param cannot be nil")
+		err = fmt.Errorf(serverParamError)
 		return
 	}
 
 	if server.ID <= 0 {
-		err = fmt.Errorf("The server.ID param should be > 0")
+		err = fmt.Errorf(serverSIDError)
 		return
 	}
 
@@ -91,7 +116,7 @@ func (c *Client) UpdateAuthServer(domainID int, server *AuthServer) (err error) 
 		return
 	}
 
-	err = c.put(fmt.Sprintf("authservers/%d/%d", domainID, server.ID), v, server)
+	err = c.put(fmt.Sprintf("authservers/%d/%d", domainID, server.ID), v, nil)
 
 	return
 }
@@ -102,17 +127,17 @@ func (c *Client) DeleteAuthServer(domainID int, server *AuthServer) (err error) 
 	var v url.Values
 
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if server == nil {
-		err = fmt.Errorf("The server param cannot be nil")
+		err = fmt.Errorf(serverParamError)
 		return
 	}
 
 	if server.ID <= 0 {
-		err = fmt.Errorf("The server.ID param should be > 0")
+		err = fmt.Errorf(serverSIDError)
 		return
 	}
 
