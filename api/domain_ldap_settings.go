@@ -34,19 +34,21 @@ type LDAPSettings struct {
 // https://www.baruwa.com/docs/api/#retrieve-ad-ldap-settings
 func (c *Client) GetLDAPSettings(domainID, serverID, settingsID int) (settings *LDAPSettings, err error) {
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if serverID <= 0 {
-		err = fmt.Errorf("The serverID param should be > 0")
+		err = fmt.Errorf(serverIDError)
 		return
 	}
 
 	if settingsID <= 0 {
-		err = fmt.Errorf("The settingsID param should be > 0")
+		err = fmt.Errorf(settingsIDError)
 		return
 	}
+
+	settings = &LDAPSettings{}
 
 	err = c.get(fmt.Sprintf("ldapsettings/%d/%d/%d", domainID, serverID, settingsID), nil, settings)
 
@@ -59,17 +61,17 @@ func (c *Client) CreateLDAPSettings(domainID, serverID int, settings *LDAPSettin
 	var v url.Values
 
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if serverID <= 0 {
-		err = fmt.Errorf("The serverID param should be > 0")
+		err = fmt.Errorf(serverIDError)
 		return
 	}
 
 	if settings == nil {
-		err = fmt.Errorf("The settings param cannot be nil")
+		err = fmt.Errorf(settingsParamError)
 		return
 	}
 
@@ -88,22 +90,22 @@ func (c *Client) UpdateLDAPSettings(domainID, serverID int, settings *LDAPSettin
 	var v url.Values
 
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if serverID <= 0 {
-		err = fmt.Errorf("The serverID param should be > 0")
+		err = fmt.Errorf(serverIDError)
 		return
 	}
 
 	if settings == nil {
-		err = fmt.Errorf("The settings param cannot be nil")
+		err = fmt.Errorf(settingsParamError)
 		return
 	}
 
 	if settings.ID <= 0 {
-		err = fmt.Errorf("The settings.ID param should be > 0")
+		err = fmt.Errorf(settingsSIDError)
 		return
 	}
 
@@ -111,7 +113,7 @@ func (c *Client) UpdateLDAPSettings(domainID, serverID int, settings *LDAPSettin
 		return
 	}
 
-	err = c.put(fmt.Sprintf("ldapsettings/%d/%d/%d", domainID, serverID, settings.ID), v, settings)
+	err = c.put(fmt.Sprintf("ldapsettings/%d/%d/%d", domainID, serverID, settings.ID), v, nil)
 
 	return
 }
@@ -122,22 +124,22 @@ func (c *Client) DeleteLDAPSettings(domainID, serverID int, settings *LDAPSettin
 	var v url.Values
 
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if serverID <= 0 {
-		err = fmt.Errorf("The serverID param should be > 0")
+		err = fmt.Errorf(serverIDError)
 		return
 	}
 
 	if settings == nil {
-		err = fmt.Errorf("The settings param cannot be nil")
+		err = fmt.Errorf(settingsParamError)
 		return
 	}
 
 	if settings.ID <= 0 {
-		err = fmt.Errorf("The settings.ID param should be > 0")
+		err = fmt.Errorf(settingsSIDError)
 		return
 	}
 
