@@ -22,10 +22,11 @@ type AliasDomain struct {
 
 // DomainAlias holds domain aliases
 type DomainAlias struct {
-	ID      int           `json:"id,omitempty"`
-	Address string        `json:"address"`
-	Enabled bool          `json:"enabled"`
-	Domain  []AliasDomain `json:"domain,omitempty"`
+	ID            int          `json:"id,omitempty"`
+	Address       string       `json:"address"`
+	Enabled       bool         `json:"status"`
+	AcceptInbound bool         `json:"accept_inbound"`
+	Domain        *AliasDomain `json:"domain,omitempty"`
 }
 
 // GetDomainAlias returns a domain alias
@@ -96,25 +97,36 @@ func (c *Client) UpdateDomainAlias(domainID int, alias *DomainAlias) (err error)
 		return
 	}
 
-	err = c.put(fmt.Sprintf("domainaliases/%d/%d", domainID, alias.ID), v, alias)
+	err = c.put(fmt.Sprintf("domainaliases/%d/%d", domainID, alias.ID), v, nil)
 
 	return
 }
 
 // DeleteDomainAlias deletes an domain alias
 // https://www.baruwa.com/docs/api/#delete-a-domain-alias
-func (c *Client) DeleteDomainAlias(domainID, aliasID int) (err error) {
+func (c *Client) DeleteDomainAlias(domainID int, alias *DomainAlias) (err error) {
+	var v url.Values
+
 	if domainID <= 0 {
 		err = fmt.Errorf(domainIDError)
 		return
 	}
 
-	if aliasID <= 0 {
-		err = fmt.Errorf(aliasIDError)
+	if alias == nil {
+		err = fmt.Errorf(aliasParamError)
 		return
 	}
 
-	err = c.delete(fmt.Sprintf("domainaliases/%d/%d", domainID, aliasID), nil)
+	if alias.ID <= 0 {
+		err = fmt.Errorf(aliasSIDError)
+		return
+	}
+
+	if v, err = query.Values(alias); err != nil {
+		return
+	}
+
+	err = c.delete(fmt.Sprintf("domainaliases/%d/%d", domainID, alias.ID), v)
 
 	return
 }
