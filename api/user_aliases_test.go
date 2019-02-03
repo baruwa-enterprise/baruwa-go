@@ -76,7 +76,14 @@ func TestCreateAliasAddressError(t *testing.T) {
 }
 
 func TestCreateAliasAddressOK(t *testing.T) {
-	data := ``
+	aliasID := 3
+	data := fmt.Sprintf(`
+	{
+		"enabled": false,
+		"id": %d,
+		"address": "info@example.com"
+	}
+	`, aliasID)
 	server, client, err := getTestServerAndClient(http.StatusOK, data)
 	if err != nil {
 		t.Fatalf("An error should not be returned")
@@ -89,6 +96,9 @@ func TestCreateAliasAddressOK(t *testing.T) {
 	err = client.CreateAliasAddress(1, a)
 	if err != nil {
 		t.Fatalf("An error should not be returned: %s", err)
+	}
+	if a.ID != aliasID {
+		t.Errorf("Expected %d got %d", aliasID, a.ID)
 	}
 }
 

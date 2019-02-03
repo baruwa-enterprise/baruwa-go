@@ -56,7 +56,7 @@ func (c *Client) CreateAliasAddress(userID int, alias *AliasAddress) (err error)
 		return
 	}
 
-	err = c.post(fmt.Sprintf("aliasaddresses/%d", userID), v, nil)
+	err = c.post(fmt.Sprintf("aliasaddresses/%d", userID), v, alias)
 
 	return
 }
