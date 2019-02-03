@@ -14,20 +14,26 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
+// LDAPSettingsAS hold the authentication server id
+type LDAPSettingsAS struct {
+	ID int `json:"id"`
+}
+
 // LDAPSettings holds Domain LDAP settings
 type LDAPSettings struct {
-	ID                int    `json:"id,omitempty"`
-	Basedn            string `json:"basedn"`
-	NameAttribute     string `json:"nameattribute"`
-	EmailAttribute    string `json:"emailattribute"`
-	BindDN            string `json:"binddn"`
-	BindPw            string `json:"bindpw"`
-	UseTLS            bool   `json:"usetls"`
-	UseSearch         bool   `json:"usesearch"`
-	SearchFilter      string `json:"searchfilter"`
-	SearchScope       string `json:"search_scope"`
-	EmailSearchFilter string `json:"emailsearchfilter"`
-	EmailSearchDcope  string `json:"emailsearch_scope"`
+	ID                int            `json:"id,omitempty"`
+	Basedn            string         `json:"basedn"`
+	NameAttribute     string         `json:"nameattribute"`
+	EmailAttribute    string         `json:"emailattribute"`
+	BindDN            string         `json:"binddn"`
+	BindPw            string         `json:"bindpw"`
+	UseTLS            bool           `json:"usetls"`
+	UseSearch         bool           `json:"usesearch"`
+	SearchFilter      string         `json:"searchfilter"`
+	SearchScope       string         `json:"search_scope"`
+	EmailSearchFilter string         `json:"emailsearchfilter"`
+	EmailSearchScope  string         `json:"emailsearch_scope"`
+	AuthServer        LDAPSettingsAS `json:"authserver"`
 }
 
 // GetLDAPSettings returns a domain LDAP settings
