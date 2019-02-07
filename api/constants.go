@@ -20,6 +20,7 @@ const (
 	serverIDError        = "The serverID param should be > 0"
 	settingsIDError      = "The settingsID param should be > 0"
 	organizationIDError  = "The organizationID param should be > 0"
+	relayIDError         = "The relayID param should be > 0"
 	aliasSIDError        = "The alias.ID param should be > 0"
 	serverSIDError       = "The server.ID param should be > 0"
 	settingsSIDError     = "The settings.ID param should be > 0"
