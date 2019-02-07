@@ -30,14 +30,16 @@ type DomainSmartHost struct {
 // https://www.baruwa.com/docs/api/#retrieve-a-domain-smarthost
 func (c *Client) GetDomainSmartHost(domainID, serverID int) (server *DomainSmartHost, err error) {
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if serverID <= 0 {
-		err = fmt.Errorf("The serverID param should be > 0")
+		err = fmt.Errorf(serverIDError)
 		return
 	}
+
+	server = &DomainSmartHost{}
 
 	err = c.get(fmt.Sprintf("domains/smarthosts/%d/%d", domainID, serverID), nil, server)
 
@@ -50,12 +52,12 @@ func (c *Client) CreateDomainSmartHost(domainID int, server *DomainSmartHost) (e
 	var v url.Values
 
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if server == nil {
-		err = fmt.Errorf("The server param cannot be nil")
+		err = fmt.Errorf(serverParamError)
 		return
 	}
 
@@ -74,17 +76,17 @@ func (c *Client) UpdateDomainSmartHost(domainID int, server *DomainSmartHost) (e
 	var v url.Values
 
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if server == nil {
-		err = fmt.Errorf("The server param cannot be nil")
+		err = fmt.Errorf(serverParamError)
 		return
 	}
 
 	if server.ID <= 0 {
-		err = fmt.Errorf("The server.ID param should be > 0")
+		err = fmt.Errorf(serverSIDError)
 		return
 	}
 
@@ -103,17 +105,17 @@ func (c *Client) DeleteDomainSmartHost(domainID int, server *DomainSmartHost) (e
 	var v url.Values
 
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if server == nil {
-		err = fmt.Errorf("The server param cannot be nil")
+		err = fmt.Errorf(serverParamError)
 		return
 	}
 
 	if server.ID <= 0 {
-		err = fmt.Errorf("The server.ID param should be > 0")
+		err = fmt.Errorf(serverSIDError)
 		return
 	}
 
