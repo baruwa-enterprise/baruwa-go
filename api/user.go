@@ -67,7 +67,7 @@ type UserList struct {
 func (c *Client) GetUsers(opts *ListOptions) (l *UserList, err error) {
 	l = &UserList{}
 
-	err = c.get("users", nil, l)
+	err = c.get("users", opts, l)
 
 	return
 }

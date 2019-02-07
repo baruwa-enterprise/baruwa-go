@@ -43,7 +43,7 @@ func (c *Client) GetAuthServers(domainID int, opts *ListOptions) (l *AuthServerL
 
 	l = &AuthServerList{}
 
-	err = c.get(fmt.Sprintf("authservers/%d", domainID), nil, l)
+	err = c.get(fmt.Sprintf("authservers/%d", domainID), opts, l)
 
 	return
 }

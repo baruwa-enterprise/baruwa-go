@@ -45,7 +45,7 @@ func (c *Client) GetDomainDeliveryServers(domainID int, opts *ListOptions) (l *D
 
 	l = &DomainDeliveryServerList{}
 
-	err = c.get(fmt.Sprintf("deliveryservers/%d", domainID), nil, l)
+	err = c.get(fmt.Sprintf("deliveryservers/%d", domainID), opts, l)
 
 	return
 }
