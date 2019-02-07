@@ -83,7 +83,7 @@ func TestGetUserDeliveryServerError(t *testing.T) {
 	if as != nil {
 		t.Errorf("Expected %v got %v", nil, as)
 	}
-	as, err = client.GetUserDeliveryServer(1, 0)
+	_, err = client.GetUserDeliveryServer(1, 0)
 	if err == nil {
 		t.Fatalf("An error should be returned")
 	}

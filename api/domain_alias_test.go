@@ -30,7 +30,7 @@ func TestGetDomainAliasError(t *testing.T) {
 	if alias != nil {
 		t.Errorf("Expected %v got %v", nil, alias)
 	}
-	alias, err = client.GetDomainAlias(1, 0)
+	_, err = client.GetDomainAlias(1, 0)
 	if err == nil {
 		t.Fatalf("An error should be returned")
 	}

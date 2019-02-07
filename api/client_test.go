@@ -44,7 +44,7 @@ func TestNewErrors(t *testing.T) {
 	if c != nil {
 		t.Errorf("Expected %v got %v", nil, c)
 	}
-	c, e = New("http://[fe80::%31]:8080/", "", nil)
+	_, e = New("http://[fe80::%31]:8080/", "", nil)
 	if e == nil {
 		t.Fatalf("An error should be returned as endpoint is required")
 	}
