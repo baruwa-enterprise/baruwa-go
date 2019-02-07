@@ -41,13 +41,34 @@ type Domain struct {
 	Organizations     int     `json:"organizations,omitempty"`
 }
 
+// DomainList holds domain smarthosts
+type DomainList struct {
+	Items []Domain `json:"items"`
+	Links Links    `json:"links"`
+	Meta  Meta     `json:"meta"`
+}
+
+// GetDomains returns a DomainList object
+// This contains a paginated list of domains and links
+// to the neigbouring pages.
+// https://www.baruwa.com/docs/api/#list-all-domains
+func (c *Client) GetDomains(opts *ListOptions) (l *DomainList, err error) {
+	l = &DomainList{}
+
+	err = c.get("domains", opts, l)
+
+	return
+}
+
 // GetDomain returns a domain
 // https://www.baruwa.com/docs/api/#retrieve-a-domain
 func (c *Client) GetDomain(domainID int) (domain *Domain, err error) {
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
+
+	domain = &Domain{}
 
 	err = c.get(fmt.Sprintf("domains/%d", domainID), nil, domain)
 
@@ -58,9 +79,11 @@ func (c *Client) GetDomain(domainID int) (domain *Domain, err error) {
 // https://www.baruwa.com/docs/api/#retrieve-a-domain-by-name
 func (c *Client) GetDomainByName(domainName string) (domain *Domain, err error) {
 	if domainName == "" {
-		err = fmt.Errorf("The domainName param is required")
+		err = fmt.Errorf(domainNameParamError)
 		return
 	}
+
+	domain = &Domain{}
 
 	err = c.get(fmt.Sprintf("domains/byname/%s", domainName), nil, domain)
 
@@ -73,7 +96,7 @@ func (c *Client) CreateDomain(domain *Domain) (err error) {
 	var v url.Values
 
 	if domain == nil {
-		err = fmt.Errorf("The domain param cannot be nil")
+		err = fmt.Errorf(domainParamError)
 		return
 	}
 
@@ -92,12 +115,12 @@ func (c *Client) UpdateDomain(domain *Domain) (err error) {
 	var v url.Values
 
 	if domain == nil {
-		err = fmt.Errorf("The domain param cannot be nil")
+		err = fmt.Errorf(domainParamError)
 		return
 	}
 
 	if domain.ID <= 0 {
-		err = fmt.Errorf("The domain.ID param should be > 0")
+		err = fmt.Errorf(domainSIDError)
 		return
 	}
 
@@ -114,17 +137,11 @@ func (c *Client) UpdateDomain(domain *Domain) (err error) {
 // https://www.baruwa.com/docs/api/#delete-a-domain
 func (c *Client) DeleteDomain(domainID int) (err error) {
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	err = c.delete(fmt.Sprintf("domains/%d", domainID), nil)
 
-	return
-}
-
-// ListDomains returns paged domain list
-// https://www.baruwa.com/docs/api/#list-all-domains
-func (c *Client) ListDomains() (err error) {
 	return
 }
