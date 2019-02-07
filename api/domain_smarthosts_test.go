@@ -13,6 +13,62 @@ import (
 	"testing"
 )
 
+func TestGetDomainSmartHostsOK(t *testing.T) {
+	domainID := 2
+	data := fmt.Sprintf(`{
+		"items": [{
+			"enabled": true,
+			"require_tls": false,
+			"id": 2,
+			"address": "192.168.1.150",
+			"username": "andrew",
+			"description": "outbound-archiver",
+			"port": 25
+		},
+		{
+			"enabled": true,
+			"require_tls": false,
+			"id": 2,
+			"address": "192.168.2.150",
+			"username": "andrew",
+			"description": "outbound-archiver2",
+			"port": 25
+		}],
+		"meta": {
+			"total": 2
+		},
+		"links": {
+			"pages": {
+				"last": "http://baruwa.example.com/api/v1/domains/smarthosts/%d?page=2",
+				"next": "http://baruwa.example.com/api/v1/domains/smarthosts/%d?page=2"
+			}
+		}
+	}
+`, domainID, domainID)
+	server, client, err := getTestServerAndClient(http.StatusOK, data)
+	if err != nil {
+		t.Fatalf("An error should not be returned")
+	}
+	defer server.Close()
+	u, err := client.GetDomainSmartHosts(domainID, nil)
+	if err != nil {
+		t.Fatalf("An error should not be returned: %s", err.Error())
+	}
+	if len(u.Items) != 2 {
+		t.Errorf("Expected %d got %d", 2, len(u.Items))
+	}
+	if u.Meta.Total != 2 {
+		t.Errorf("Expected %d got %d", 2, u.Meta.Total)
+	}
+	if u.Links.Pages.First != "" {
+		t.Errorf("Expected '' got '%s'", u.Links.Pages.First)
+	}
+	next := fmt.Sprintf("http://baruwa.example.com/api/v1/domains/smarthosts/%d?page=2", domainID)
+	if u.Links.Pages.Next != next {
+		t.Errorf("Expected '%s' got '%s'", next, u.Links.Pages.Next)
+	}
+}
+
 func TestGetDomainSmartHostError(t *testing.T) {
 	data := ``
 	server, client, err := getTestServerAndClient(http.StatusOK, data)
