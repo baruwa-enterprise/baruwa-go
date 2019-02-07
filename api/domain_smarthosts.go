@@ -26,6 +26,30 @@ type DomainSmartHost struct {
 	Description string `json:"description"`
 }
 
+// DomainSmartHostList holds domain smarthosts
+type DomainSmartHostList struct {
+	Items []DomainSmartHost `json:"items"`
+	Links Links             `json:"links"`
+	Meta  Meta              `json:"meta"`
+}
+
+// GetDomainSmartHosts returns a UserList object
+// This contains a paginated list of domain smarthosts and links
+// to the neigbouring pages.
+// https://www.baruwa.com/docs/api/#listing-domain-smarthosts
+func (c *Client) GetDomainSmartHosts(domainID int, opts *ListOptions) (l *DomainSmartHostList, err error) {
+	if domainID <= 0 {
+		err = fmt.Errorf(domainIDError)
+		return
+	}
+
+	l = &DomainSmartHostList{}
+
+	err = c.get(fmt.Sprintf("domains/smarthosts/%d", domainID), opts, l)
+
+	return
+}
+
 // GetDomainSmartHost returns a domain smarthost
 // https://www.baruwa.com/docs/api/#retrieve-a-domain-smarthost
 func (c *Client) GetDomainSmartHost(domainID, serverID int) (server *DomainSmartHost, err error) {
