@@ -22,22 +22,48 @@ type FallBackServerOrg struct {
 
 // FallBackServer holds organization fallback servers
 type FallBackServer struct {
-	ID           int               `json:"id,omitempty"`
-	Address      string            `json:"address"`
-	Protocol     int               `json:"protocol"`
-	Port         int               `json:"port"`
-	RequireTLS   bool              `json:"require_tls"`
-	Enabled      bool              `json:"enabled"`
-	Organization FallBackServerOrg `json:"organization"`
+	ID           int                `json:"id,omitempty"`
+	Address      string             `json:"address"`
+	Protocol     int                `json:"protocol"`
+	Port         int                `json:"port"`
+	RequireTLS   bool               `json:"require_tls"`
+	Enabled      bool               `json:"enabled"`
+	Organization *FallBackServerOrg `json:"organization"`
+}
+
+// FallBackServerList holds users
+type FallBackServerList struct {
+	Items []FallBackServer `json:"items"`
+	Links Links            `json:"links"`
+	Meta  Meta             `json:"meta"`
+}
+
+// GetFallBackServers returns a FallBackServerList object
+// This contains a paginated list of fallback servers and links
+// to the neigbouring pages.
+// https://www.baruwa.com/docs/api/#fallback-servers
+func (c *Client) GetFallBackServers(organizationID int, opts *ListOptions) (l *FallBackServerList, err error) {
+	if organizationID <= 0 {
+		err = fmt.Errorf(organizationIDError)
+		return
+	}
+
+	l = &FallBackServerList{}
+
+	err = c.get(fmt.Sprintf("failbackservers/%d", organizationID), opts, l)
+
+	return
 }
 
 // GetFallBackServer returns radius settings
 // https://www.baruwa.com/docs/api/#retrieve-a-fallback-server
 func (c *Client) GetFallBackServer(serverID int) (server *FallBackServer, err error) {
 	if serverID <= 0 {
-		err = fmt.Errorf("The serverID param should be > 0")
+		err = fmt.Errorf(serverIDError)
 		return
 	}
+
+	server = &FallBackServer{}
 
 	err = c.get(fmt.Sprintf("failbackservers/%d", serverID), nil, server)
 
@@ -50,12 +76,12 @@ func (c *Client) CreateFallBackServer(organizationID int, server *FallBackServer
 	var v url.Values
 
 	if organizationID <= 0 {
-		err = fmt.Errorf("The organizationID param should be > 0")
+		err = fmt.Errorf(organizationIDError)
 		return
 	}
 
 	if server == nil {
-		err = fmt.Errorf("The server param cannot be nil")
+		err = fmt.Errorf(serverParamError)
 		return
 	}
 
@@ -74,12 +100,12 @@ func (c *Client) UpdateFallBackServer(server *FallBackServer) (err error) {
 	var v url.Values
 
 	if server == nil {
-		err = fmt.Errorf("The server param cannot be nil")
+		err = fmt.Errorf(serverParamError)
 		return
 	}
 
 	if server.ID <= 0 {
-		err = fmt.Errorf("The server.ID param should be > 0")
+		err = fmt.Errorf(serverSIDError)
 		return
 	}
 
@@ -98,12 +124,12 @@ func (c *Client) DeleteFallBackServer(server *FallBackServer) (err error) {
 	var v url.Values
 
 	if server == nil {
-		err = fmt.Errorf("The server param cannot be nil")
+		err = fmt.Errorf(serverParamError)
 		return
 	}
 
 	if server.ID <= 0 {
-		err = fmt.Errorf("The server.ID param should be > 0")
+		err = fmt.Errorf(serverSIDError)
 		return
 	}
 
