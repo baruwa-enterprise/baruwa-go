@@ -16,21 +16,54 @@ import (
 
 // UserDeliveryServer holds user delivery servers
 type UserDeliveryServer struct {
-	DomainDeliveryServer
+	ID               int          `json:"id,omitempty"`
+	Address          string       `json:"address"`
+	Protocol         int          `json:"protocol"`
+	Port             int          `json:"port"`
+	RequireTLS       bool         `json:"require_tls"`
+	VerificationOnly bool         `json:"verification_only"`
+	Enabled          bool         `json:"enabled"`
+	Domain           *AliasDomain `json:"domain,omitempty"`
+}
+
+// UserDeliveryServerList holds user delivery servers
+type UserDeliveryServerList struct {
+	Items []UserDeliveryServer `json:"items"`
+	Links Links                `json:"links"`
+	Meta  Meta                 `json:"meta"`
+}
+
+// GetUserDeliveryServers returns a UserDeliveryServerList object
+// This contains a paginated list of domain delivery servers and links
+// to the neigbouring pages.
+// https://www.baruwa.com/docs/api/#listing-user-delivery-servers
+func (c *Client) GetUserDeliveryServers(domainID int, opts *ListOptions) (l *UserDeliveryServerList, err error) {
+	if domainID <= 0 {
+		err = fmt.Errorf(domainIDError)
+		return
+	}
+
+	l = &UserDeliveryServerList{}
+
+	err = c.get(fmt.Sprintf("userdeliveryservers/%d", domainID), opts, l)
+
+	return
 }
 
 // GetUserDeliveryServer returns a user delivery server
 // https://www.baruwa.com/docs/api/#retrieve-a-user-delivery-server
 func (c *Client) GetUserDeliveryServer(domainID, serverID int) (server *UserDeliveryServer, err error) {
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if serverID <= 0 {
-		err = fmt.Errorf("The serverID param should be > 0")
+		err = fmt.Errorf(serverIDError)
 		return
 	}
+
+	server = &UserDeliveryServer{}
 
 	err = c.get(fmt.Sprintf("userdeliveryservers/%d/%d", domainID, serverID), nil, server)
 
@@ -43,12 +76,12 @@ func (c *Client) CreateUserDeliveryServer(domainID int, server *UserDeliveryServ
 	var v url.Values
 
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if server == nil {
-		err = fmt.Errorf("The server param cannot be nil")
+		err = fmt.Errorf(serverParamError)
 		return
 	}
 
@@ -67,17 +100,17 @@ func (c *Client) UpdateUserDeliveryServer(domainID int, server *UserDeliveryServ
 	var v url.Values
 
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if server == nil {
-		err = fmt.Errorf("The server param cannot be nil")
+		err = fmt.Errorf(serverParamError)
 		return
 	}
 
 	if server.ID <= 0 {
-		err = fmt.Errorf("The server.ID param should be > 0")
+		err = fmt.Errorf(serverSIDError)
 		return
 	}
 
@@ -96,17 +129,17 @@ func (c *Client) DeleteUserDeliveryServer(domainID int, server *UserDeliveryServ
 	var v url.Values
 
 	if domainID <= 0 {
-		err = fmt.Errorf("The domainID param should be > 0")
+		err = fmt.Errorf(domainIDError)
 		return
 	}
 
 	if server == nil {
-		err = fmt.Errorf("The server param cannot be nil")
+		err = fmt.Errorf(serverParamError)
 		return
 	}
 
 	if server.ID <= 0 {
-		err = fmt.Errorf("The server.ID param should be > 0")
+		err = fmt.Errorf(serverSIDError)
 		return
 	}
 
