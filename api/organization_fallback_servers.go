@@ -40,7 +40,7 @@ type FallBackServerList struct {
 
 // GetFallBackServers returns a FallBackServerList object
 // This contains a paginated list of fallback servers and links
-// to the neigbouring pages.
+// to the neighbouring pages.
 // https://www.baruwa.com/docs/api/#fallback-servers
 func (c *Client) GetFallBackServers(organizationID int, opts *ListOptions) (l *FallBackServerList, err error) {
 	if organizationID <= 0 {

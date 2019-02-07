@@ -35,7 +35,7 @@ type UserDeliveryServerList struct {
 
 // GetUserDeliveryServers returns a UserDeliveryServerList object
 // This contains a paginated list of domain delivery servers and links
-// to the neigbouring pages.
+// to the neighbouring pages.
 // https://www.baruwa.com/docs/api/#listing-user-delivery-servers
 func (c *Client) GetUserDeliveryServers(domainID int, opts *ListOptions) (l *UserDeliveryServerList, err error) {
 	if domainID <= 0 {

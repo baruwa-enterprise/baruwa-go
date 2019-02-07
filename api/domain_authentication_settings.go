@@ -33,7 +33,7 @@ type AuthServerList struct {
 
 // GetAuthServers returns a AuthServerList object
 // This contains a paginated list of authentication servers and links
-// to the neigbouring pages.
+// to the neighbouring pages.
 // https://www.baruwa.com/docs/api/#listing-authentication-settings
 func (c *Client) GetAuthServers(domainID int, opts *ListOptions) (l *AuthServerList, err error) {
 	if domainID <= 0 {

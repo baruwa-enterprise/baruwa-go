@@ -35,7 +35,7 @@ type OrgSmartHostList struct {
 
 // GetOrgSmartHosts returns a OrgSmartHostList object
 // This contains a paginated list of Organization smarthosts and links
-// to the neigbouring pages.
+// to the neighbouring pages.
 // https://www.baruwa.com/docs/api/#listing-organization-smarthosts
 func (c *Client) GetOrgSmartHosts(organizationID int, opts *ListOptions) (l *OrgSmartHostList, err error) {
 	if organizationID <= 0 {

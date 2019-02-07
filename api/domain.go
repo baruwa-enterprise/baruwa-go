@@ -50,7 +50,7 @@ type DomainList struct {
 
 // GetDomains returns a DomainList object
 // This contains a paginated list of domains and links
-// to the neigbouring pages.
+// to the neighbouring pages.
 // https://www.baruwa.com/docs/api/#list-all-domains
 func (c *Client) GetDomains(opts *ListOptions) (l *DomainList, err error) {
 	l = &DomainList{}

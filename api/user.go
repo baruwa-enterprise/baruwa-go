@@ -62,7 +62,7 @@ type UserList struct {
 
 // GetUsers returns a UserList object
 // This contains a paginated list of user accounts and links
-// to the neigbouring pages.
+// to the neighbouring pages.
 // https://www.baruwa.com/docs/api/#list-all-accounts
 func (c *Client) GetUsers(opts *ListOptions) (l *UserList, err error) {
 	l = &UserList{}
