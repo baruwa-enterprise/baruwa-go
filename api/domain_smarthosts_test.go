@@ -13,6 +13,22 @@ import (
 	"testing"
 )
 
+func TestGetDomainSmartHostsError(t *testing.T) {
+	data := ``
+	server, client, err := getTestServerAndClient(http.StatusOK, data)
+	if err != nil {
+		t.Fatalf("An error should not be returned")
+	}
+	defer server.Close()
+	_, err = client.GetDomainSmartHosts(0, nil)
+	if err == nil {
+		t.Fatalf("An error should be returned")
+	}
+	if err.Error() != domainIDError {
+		t.Errorf("Expected '%s' got '%s'", domainIDError, err)
+	}
+}
+
 func TestGetDomainSmartHostsOK(t *testing.T) {
 	domainID := 2
 	data := fmt.Sprintf(`{
