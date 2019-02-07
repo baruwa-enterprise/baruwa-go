@@ -33,7 +33,7 @@ type DomainSmartHostList struct {
 	Meta  Meta              `json:"meta"`
 }
 
-// GetDomainSmartHosts returns a UserList object
+// GetDomainSmartHosts returns a DomainSmartHostList object
 // This contains a paginated list of domain smarthosts and links
 // to the neigbouring pages.
 // https://www.baruwa.com/docs/api/#listing-domain-smarthosts
