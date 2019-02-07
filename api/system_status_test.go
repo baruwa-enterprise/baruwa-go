@@ -6,3 +6,28 @@
 // You can obtain one at http://mozilla.org/MPL/2.0/.
 
 package api
+
+import (
+	"net/http"
+	"testing"
+)
+
+func TestGetSystemStatus(t *testing.T) {
+	data := `
+	{
+		"inbound": 0,
+		"status": true,
+		"total": [19, 19, 0, 0, 0, 0, 0],
+		"outbound": 0
+	}
+	`
+	server, client, err := getTestServerAndClient(http.StatusOK, data)
+	if err != nil {
+		t.Fatalf("An error should not be returned")
+	}
+	defer server.Close()
+	_, err = client.GetSystemStatus()
+	if err != nil {
+		t.Fatalf("An error should not be returned: %s", err)
+	}
+}
