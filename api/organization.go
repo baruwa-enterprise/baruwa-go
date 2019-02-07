@@ -35,13 +35,34 @@ type OrganizationForm struct {
 	Admins  []int  `json:"admins,omitempty"`
 }
 
+// OrganizationList holds domain smarthosts
+type OrganizationList struct {
+	Items []Organization `json:"items"`
+	Links Links          `json:"links"`
+	Meta  Meta           `json:"meta"`
+}
+
+// GetOrganizations returns a OrganizationList object
+// This contains a paginated list of Organizations and links
+// to the neigbouring pages.
+// https://www.baruwa.com/docs/api/#listing-all-organizations
+func (c *Client) GetOrganizations(opts *ListOptions) (l *OrgSmartHostList, err error) {
+	l = &OrgSmartHostList{}
+
+	err = c.get("organizations", opts, l)
+
+	return
+}
+
 // GetOrganization returns an organization
 // https://www.baruwa.com/docs/api/#retrieve-an-existing-organization
 func (c *Client) GetOrganization(organizationID int) (org *Organization, err error) {
 	if organizationID <= 0 {
-		err = fmt.Errorf("The organizationID param should be > 0")
+		err = fmt.Errorf(organizationIDError)
 		return
 	}
+
+	org = &Organization{}
 
 	err = c.get(fmt.Sprintf("organizations/%d", organizationID), nil, org)
 
@@ -50,17 +71,19 @@ func (c *Client) GetOrganization(organizationID int) (org *Organization, err err
 
 // CreateOrganization creates an organization
 // https://www.baruwa.com/docs/api/#create-an-organization
-func (c *Client) CreateOrganization(form *OrganizationForm, org Organization) (err error) {
+func (c *Client) CreateOrganization(form *OrganizationForm) (org *Organization, err error) {
 	var v url.Values
 
 	if form == nil {
-		err = fmt.Errorf("The form param cannot be nil")
+		err = fmt.Errorf(formParamError)
 		return
 	}
 
 	if v, err = query.Values(form); err != nil {
 		return
 	}
+
+	org = &Organization{}
 
 	err = c.post("organizations", v, org)
 
@@ -69,16 +92,26 @@ func (c *Client) CreateOrganization(form *OrganizationForm, org Organization) (e
 
 // UpdateOrganization updates an organization
 // https://www.baruwa.com/docs/api/#update-an-organization
-func (c *Client) UpdateOrganization(form *OrganizationForm, org Organization) (err error) {
+func (c *Client) UpdateOrganization(form *OrganizationForm, org *Organization) (err error) {
 	var v url.Values
 
 	if form == nil {
-		err = fmt.Errorf("The form param cannot be nil")
+		err = fmt.Errorf(formParamError)
 		return
 	}
 
 	if form.ID <= 0 {
-		err = fmt.Errorf("The form.ID param should be > 0")
+		err = fmt.Errorf(formSIDError)
+		return
+	}
+
+	if org == nil {
+		err = fmt.Errorf(orgParamError)
+		return
+	}
+
+	if org.ID <= 0 {
+		err = fmt.Errorf(orgSIDError)
 		return
 	}
 
@@ -95,7 +128,7 @@ func (c *Client) UpdateOrganization(form *OrganizationForm, org Organization) (e
 // https://www.baruwa.com/docs/api/#delete-an-organization
 func (c *Client) DeleteOrganization(organizationID int) (err error) {
 	if organizationID <= 0 {
-		err = fmt.Errorf("The organizationID param should be > 0")
+		err = fmt.Errorf(organizationIDError)
 		return
 	}
 
