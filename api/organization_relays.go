@@ -36,9 +36,11 @@ type RelaySetting struct {
 // https://www.baruwa.com/docs/api/#retrieve-relay-settings
 func (c *Client) GetRelaySetting(relayID int) (server *RelaySetting, err error) {
 	if relayID <= 0 {
-		err = fmt.Errorf("The relayID param should be > 0")
+		err = fmt.Errorf(relayIDError)
 		return
 	}
+
+	server = &RelaySetting{}
 
 	err = c.get(fmt.Sprintf("relays/%d", relayID), nil, server)
 
@@ -51,12 +53,12 @@ func (c *Client) CreateRelaySetting(organizationID int, server *RelaySetting) (e
 	var v url.Values
 
 	if organizationID <= 0 {
-		err = fmt.Errorf("The organizationID param should be > 0")
+		err = fmt.Errorf(organizationIDError)
 		return
 	}
 
 	if server == nil {
-		err = fmt.Errorf("The server param cannot be nil")
+		err = fmt.Errorf(serverParamError)
 		return
 	}
 
@@ -75,12 +77,12 @@ func (c *Client) UpdateRelaySetting(server *RelaySetting) (err error) {
 	var v url.Values
 
 	if server == nil {
-		err = fmt.Errorf("The server param cannot be nil")
+		err = fmt.Errorf(serverParamError)
 		return
 	}
 
 	if server.ID <= 0 {
-		err = fmt.Errorf("The server.ID param should be > 0")
+		err = fmt.Errorf(serverSIDError)
 		return
 	}
 
@@ -99,12 +101,12 @@ func (c *Client) DeleteRelaySetting(server *RelaySetting) (err error) {
 	var v url.Values
 
 	if server == nil {
-		err = fmt.Errorf("The server param cannot be nil")
+		err = fmt.Errorf(serverParamError)
 		return
 	}
 
 	if server.ID <= 0 {
-		err = fmt.Errorf("The server.ID param should be > 0")
+		err = fmt.Errorf(serverSIDError)
 		return
 	}
 
