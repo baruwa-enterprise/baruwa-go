@@ -26,18 +26,44 @@ type OrgSmartHost struct {
 	Description string `json:"description"`
 }
 
+// OrgSmartHostList holds domain smarthosts
+type OrgSmartHostList struct {
+	Items []OrgSmartHost `json:"items"`
+	Links Links          `json:"links"`
+	Meta  Meta           `json:"meta"`
+}
+
+// GetOrgSmartHosts returns a OrgSmartHostList object
+// This contains a paginated list of Organization smarthosts and links
+// to the neigbouring pages.
+// https://www.baruwa.com/docs/api/#listing-organization-smarthosts
+func (c *Client) GetOrgSmartHosts(organizationID int, opts *ListOptions) (l *OrgSmartHostList, err error) {
+	if organizationID <= 0 {
+		err = fmt.Errorf(organizationIDError)
+		return
+	}
+
+	l = &OrgSmartHostList{}
+
+	err = c.get(fmt.Sprintf("organizations/smarthosts/%d", organizationID), opts, l)
+
+	return
+}
+
 // GetOrgSmartHost returns a domain smarthost
 // https://www.baruwa.com/docs/api/#retrieve-a-organization-smarthost
 func (c *Client) GetOrgSmartHost(organizationID, serverID int) (server *OrgSmartHost, err error) {
 	if organizationID <= 0 {
-		err = fmt.Errorf("The organizationID param should be > 0")
+		err = fmt.Errorf(organizationIDError)
 		return
 	}
 
 	if serverID <= 0 {
-		err = fmt.Errorf("The serverID param should be > 0")
+		err = fmt.Errorf(serverIDError)
 		return
 	}
+
+	server = &OrgSmartHost{}
 
 	err = c.get(fmt.Sprintf("organizations/smarthosts/%d/%d", organizationID, serverID), nil, server)
 
@@ -50,12 +76,12 @@ func (c *Client) CreateOrgSmartHost(organizationID int, server *OrgSmartHost) (e
 	var v url.Values
 
 	if organizationID <= 0 {
-		err = fmt.Errorf("The organizationID param should be > 0")
+		err = fmt.Errorf(organizationIDError)
 		return
 	}
 
 	if server == nil {
-		err = fmt.Errorf("The server param cannot be nil")
+		err = fmt.Errorf(serverParamError)
 		return
 	}
 
@@ -74,17 +100,17 @@ func (c *Client) UpdateOrgSmartHost(organizationID int, server *OrgSmartHost) (e
 	var v url.Values
 
 	if organizationID <= 0 {
-		err = fmt.Errorf("The organizationID param should be > 0")
+		err = fmt.Errorf(organizationIDError)
 		return
 	}
 
 	if server == nil {
-		err = fmt.Errorf("The server param cannot be nil")
+		err = fmt.Errorf(serverParamError)
 		return
 	}
 
 	if server.ID <= 0 {
-		err = fmt.Errorf("The server.ID param should be > 0")
+		err = fmt.Errorf(serverSIDError)
 		return
 	}
 
@@ -103,17 +129,17 @@ func (c *Client) DeleteOrgSmartHost(organizationID int, server *OrgSmartHost) (e
 	var v url.Values
 
 	if organizationID <= 0 {
-		err = fmt.Errorf("The organizationID param should be > 0")
+		err = fmt.Errorf(organizationIDError)
 		return
 	}
 
 	if server == nil {
-		err = fmt.Errorf("The server param cannot be nil")
+		err = fmt.Errorf(serverParamError)
 		return
 	}
 
 	if server.ID <= 0 {
-		err = fmt.Errorf("The server.ID param should be > 0")
+		err = fmt.Errorf(serverSIDError)
 		return
 	}
 
