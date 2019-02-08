@@ -29,6 +29,14 @@
   name = "github.com/google/go-querystring"
   version = "1.0.0"
 
+[[constraint]]
+  name = "github.com/jawher/mow.cli"
+  version = "1.0.4"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/hokaccha/go-prettyjson"
+
 [prune]
   go-tests = true
   unused-packages = true
