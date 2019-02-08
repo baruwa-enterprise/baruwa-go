@@ -14,6 +14,8 @@ import (
 )
 
 var (
+	apiToken             string
+	serverURL            string
 	user                 *flaggy.Subcommand
 	userGet              *flaggy.Subcommand
 	userCreate           *flaggy.Subcommand
@@ -369,5 +371,7 @@ func init() {
 	organizationSM.AttachSubcommand(organizationSMDelete, 1)
 	flaggy.AttachSubcommand(organizations, 1)
 	flaggy.AttachSubcommand(system, 1)
+	flaggy.String(&serverURL, "s", "server-url", "Baruwa server url")
+	flaggy.String(&apiToken, "k", "api-token", "Baruwa API OAUTH Token")
 	flaggy.Parse()
 }
