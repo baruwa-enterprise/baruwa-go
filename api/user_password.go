@@ -16,8 +16,8 @@ import (
 
 // PasswordForm sends password update
 type PasswordForm struct {
-	Password1 string `json:"password1"`
-	Password2 string `json:"password2"`
+	Password1 string `json:"password1" url:"password1"`
+	Password2 string `json:"password2" url:"password2"`
 }
 
 // ChangeUserPassword changes a users account password

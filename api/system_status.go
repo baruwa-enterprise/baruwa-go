@@ -9,10 +9,10 @@ package api
 
 // SystemStatus holds system status
 type SystemStatus struct {
-	Inbound  int   `json:"inbound"`
-	Status   bool  `json:"status"`
-	Total    []int `json:"total"`
-	Outbound int   `json:"outbound"`
+	Inbound  int   `json:"inbound" url:"inbound"`
+	Status   bool  `json:"status" url:"status"`
+	Total    []int `json:"total" url:"total"`
+	Outbound int   `json:"outbound" url:"outbound"`
 }
 
 // GetSystemStatus returns radius settings

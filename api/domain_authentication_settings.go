@@ -16,12 +16,12 @@ import (
 
 // AuthServer holds an authentication server
 type AuthServer struct {
-	ID              int    `json:"id,omitempty"`
-	Address         string `json:"address"`
-	Protocol        int    `json:"protocol"`
-	Enabled         bool   `json:"enabled"`
-	SplitAddress    bool   `json:"split_address"`
-	UserMapTemplate string `json:"user_map_template"`
+	ID              int    `json:"id,omitempty" url:"id,omitempty"`
+	Address         string `json:"address" url:"address"`
+	Protocol        int    `json:"protocol" url:"protocol"`
+	Enabled         bool   `json:"enabled" url:"enabled"`
+	SplitAddress    bool   `json:"split_address" url:"split_address"`
+	UserMapTemplate string `json:"user_map_template" url:"user_map_template"`
 }
 
 // AuthServerList holds authentication servers

@@ -16,19 +16,19 @@ import (
 
 // FallBackServerOrg holds fallback server organization
 type FallBackServerOrg struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
+	ID   int    `json:"id" url:"id"`
+	Name string `json:"name" url:"name"`
 }
 
 // FallBackServer holds organization fallback servers
 type FallBackServer struct {
-	ID           int                `json:"id,omitempty"`
-	Address      string             `json:"address"`
-	Protocol     int                `json:"protocol"`
-	Port         int                `json:"port"`
-	RequireTLS   bool               `json:"require_tls"`
-	Enabled      bool               `json:"enabled"`
-	Organization *FallBackServerOrg `json:"organization"`
+	ID           int                `json:"id,omitempty" url:"id,omitempty"`
+	Address      string             `json:"address" url:"address"`
+	Protocol     int                `json:"protocol" url:"protocol"`
+	Port         int                `json:"port" url:"port"`
+	RequireTLS   bool               `json:"require_tls" url:"require_tls"`
+	Enabled      bool               `json:"enabled" url:"enabled"`
+	Organization *FallBackServerOrg `json:"organization" url:"organization"`
 }
 
 // FallBackServerList holds users

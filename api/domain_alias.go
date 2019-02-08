@@ -16,17 +16,17 @@ import (
 
 // AliasDomain hold alias domain entries
 type AliasDomain struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
+	ID   int    `json:"id" url:"id"`
+	Name string `json:"name" url:"name"`
 }
 
 // DomainAlias holds domain aliases
 type DomainAlias struct {
-	ID            int          `json:"id,omitempty"`
-	Address       string       `json:"address"`
-	Enabled       bool         `json:"status"`
-	AcceptInbound bool         `json:"accept_inbound"`
-	Domain        *AliasDomain `json:"domain,omitempty"`
+	ID            int          `json:"id,omitempty" url:"id,omitempty"`
+	Address       string       `json:"address" url:"address"`
+	Enabled       bool         `json:"status" url:"status"`
+	AcceptInbound bool         `json:"accept_inbound" url:"accept_inbound"`
+	Domain        *AliasDomain `json:"domain,omitempty" url:"domain,omitempty"`
 }
 
 // GetDomainAlias returns a domain alias

@@ -17,9 +17,9 @@ import (
 // AliasAddress hosts alias addresses
 // https://www.baruwa.com/docs/api/#alias-addresses
 type AliasAddress struct {
-	ID      int    `json:"id,omitempty"`
-	Address string `json:"address"`
-	Enabled bool   `json:"enabled"`
+	ID      int    `json:"id,omitempty" url:"id,omitempty"`
+	Address string `json:"address" url:"address"`
+	Enabled bool   `json:"enabled" url:"enabled"`
 }
 
 // GetAliasAddress returns an alias address

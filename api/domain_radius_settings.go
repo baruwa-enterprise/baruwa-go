@@ -16,10 +16,10 @@ import (
 
 // RadiusSettings holds domain radius settings
 type RadiusSettings struct {
-	ID         int         `json:"id,omitempty"`
-	Secret     string      `json:"secret"`
-	Timeout    int         `json:"timeout"`
-	AuthServer *SettingsAS `json:"authserver"`
+	ID         int         `json:"id,omitempty" url:"id,omitempty"`
+	Secret     string      `json:"secret" url:"secret"`
+	Timeout    int         `json:"timeout" url:"timeout"`
+	AuthServer *SettingsAS `json:"authserver" url:"authserver"`
 }
 
 // GetRadiusSettings returns radius settings

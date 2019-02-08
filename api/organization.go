@@ -16,23 +16,23 @@ import (
 
 // OrgDomain hold alias domain entries
 type OrgDomain struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
+	ID   int    `json:"id" url:"id"`
+	Name string `json:"name" url:"name"`
 }
 
 // Organization holds organizations
 type Organization struct {
-	ID      int         `json:"id,omitempty"`
-	Name    string      `json:"name"`
-	Domains []OrgDomain `json:"domains,omitempty"`
+	ID      int         `json:"id,omitempty" url:"id,omitempty"`
+	Name    string      `json:"name" url:"name"`
+	Domains []OrgDomain `json:"domains,omitempty" url:"domains,omitempty"`
 }
 
 // OrganizationForm used for creation and update of organizations
 type OrganizationForm struct {
-	ID      int    `json:"id,omitempty"`
-	Name    string `json:"name"`
-	Domains []int  `json:"domains,omitempty"`
-	Admins  []int  `json:"admins,omitempty"`
+	ID      int    `json:"id,omitempty" url:"id,omitempty"`
+	Name    string `json:"name" url:"name"`
+	Domains []int  `json:"domains,omitempty" url:"domains,omitempty"`
+	Admins  []int  `json:"admins,omitempty" url:"admins,omitempty"`
 }
 
 // OrganizationList holds domain smarthosts

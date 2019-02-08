@@ -16,19 +16,19 @@ import (
 
 // LDAPSettings holds Domain LDAP settings
 type LDAPSettings struct {
-	ID                int        `json:"id,omitempty"`
-	Basedn            string     `json:"basedn"`
-	NameAttribute     string     `json:"nameattribute"`
-	EmailAttribute    string     `json:"emailattribute"`
-	BindDN            string     `json:"binddn"`
-	BindPw            string     `json:"bindpw"`
-	UseTLS            bool       `json:"usetls"`
-	UseSearch         bool       `json:"usesearch"`
-	SearchFilter      string     `json:"searchfilter"`
-	SearchScope       string     `json:"search_scope"`
-	EmailSearchFilter string     `json:"emailsearchfilter"`
-	EmailSearchScope  string     `json:"emailsearch_scope"`
-	AuthServer        SettingsAS `json:"authserver"`
+	ID                int        `json:"id,omitempty" url:"id,omitempty"`
+	Basedn            string     `json:"basedn" url:"basedn"`
+	NameAttribute     string     `json:"nameattribute" url:"nameattribute"`
+	EmailAttribute    string     `json:"emailattribute" url:"emailattribute"`
+	BindDN            string     `json:"binddn" url:"binddn"`
+	BindPw            string     `json:"bindpw" url:"bindpw"`
+	UseTLS            bool       `json:"usetls" url:"usetls"`
+	UseSearch         bool       `json:"usesearch" url:"usesearch"`
+	SearchFilter      string     `json:"searchfilter" url:"searchfilter"`
+	SearchScope       string     `json:"search_scope" url:"search_scope"`
+	EmailSearchFilter string     `json:"emailsearchfilter" url:"emailsearchfilter"`
+	EmailSearchScope  string     `json:"emailsearch_scope" url:"emailsearch_scope"`
+	AuthServer        SettingsAS `json:"authserver" url:"authserver"`
 }
 
 // GetLDAPSettings returns a domain LDAP settings

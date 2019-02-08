@@ -16,14 +16,14 @@ import (
 
 // DomainSmartHost holds domain smarthosts
 type DomainSmartHost struct {
-	ID          int    `json:"id,omitempty"`
-	Address     string `json:"address"`
-	Username    string `json:"username"`
-	Password    string `json:"password,omitempty"`
-	Port        int    `json:"port"`
-	RequireTLS  bool   `json:"require_tls"`
-	Enabled     bool   `json:"enabled"`
-	Description string `json:"description"`
+	ID          int    `json:"id,omitempty" url:"id,omitempty"`
+	Address     string `json:"address" url:"address"`
+	Username    string `json:"username" url:"username"`
+	Password    string `json:"password,omitempty" url:"password,omitempty"`
+	Port        int    `json:"port" url:"port"`
+	RequireTLS  bool   `json:"require_tls" url:"require_tls"`
+	Enabled     bool   `json:"enabled" url:"enabled"`
+	Description string `json:"description" url:"description"`
 }
 
 // DomainSmartHostList holds domain smarthosts

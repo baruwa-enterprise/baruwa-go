@@ -16,14 +16,14 @@ import (
 
 // UserDomain holds user domains
 type UserDomain struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
+	ID   int    `json:"id" url:"id"`
+	Name string `json:"name" url:"name"`
 }
 
 // UserOrganization holds user organizations
 type UserOrganization struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
+	ID   int    `json:"id" url:"id"`
+	Name string `json:"name" url:"name"`
 }
 
 // UserAddress addresses
@@ -32,25 +32,25 @@ type UserAddress struct {
 
 // User holds users
 type User struct {
-	ID            int                `json:"id,omitempty"`
-	Username      string             `json:"username"`
-	Firstname     string             `json:"firstname"`
-	Lastname      string             `json:"lastname"`
-	Password1     string             `json:"password1,omitempty"`
-	Password2     string             `json:"password2,omitempty"`
-	Email         string             `json:"email"`
-	Timezone      string             `json:"timezone"`
-	AccountType   int                `json:"account_type"`
-	Active        bool               `json:"active"`
-	SendReport    bool               `json:"send_report"`
-	SpamChecks    bool               `json:"spam_checks"`
-	LowScore      float64            `json:"low_score"`
-	HighScore     float64            `json:"high_score"`
-	BlockMacros   bool               `json:"block_macros"`
-	CreatedOn     MyTime             `json:"created_on"`
-	LastLogin     MyTime             `json:"last_login"`
-	Domains       []UserDomain       `json:"domains,omitempty"`
-	Organizations []UserOrganization `json:"organizations,omitempty"`
+	ID            int                `json:"id,omitempty" url:"id,omitempty"`
+	Username      string             `json:"username" url:"username"`
+	Firstname     string             `json:"firstname" url:"firstname"`
+	Lastname      string             `json:"lastname" url:"lastname"`
+	Password1     string             `json:"password1,omitempty" url:"password1,omitempty"`
+	Password2     string             `json:"password2,omitempty" url:"password2,omitempty"`
+	Email         string             `json:"email" url:"email"`
+	Timezone      string             `json:"timezone" url:"timezone"`
+	AccountType   int                `json:"account_type" url:"account_type"`
+	Active        bool               `json:"active" url:"active"`
+	SendReport    bool               `json:"send_report" url:"send_report"`
+	SpamChecks    bool               `json:"spam_checks" url:"spam_checks"`
+	LowScore      float64            `json:"low_score" url:"low_score"`
+	HighScore     float64            `json:"high_score" url:"high_score"`
+	BlockMacros   bool               `json:"block_macros" url:"block_macros"`
+	CreatedOn     MyTime             `json:"created_on" url:"created_on"`
+	LastLogin     MyTime             `json:"last_login" url:"last_login"`
+	Domains       []UserDomain       `json:"domains,omitempty" url:"domains,omitempty"`
+	Organizations []UserOrganization `json:"organizations,omitempty" url:"organizations,omitempty"`
 }
 
 // UserList holds users

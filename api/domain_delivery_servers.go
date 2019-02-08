@@ -16,14 +16,14 @@ import (
 
 // DomainDeliveryServer holds domain delivery servers
 type DomainDeliveryServer struct {
-	ID               int          `json:"id,omitempty"`
-	Address          string       `json:"address"`
-	Protocol         int          `json:"protocol"`
-	Port             int          `json:"port"`
-	RequireTLS       bool         `json:"require_tls"`
-	VerificationOnly bool         `json:"verification_only"`
-	Enabled          bool         `json:"enabled"`
-	Domain           *AliasDomain `json:"domain,omitempty"`
+	ID               int          `json:"id,omitempty" url:"id,omitempty"`
+	Address          string       `json:"address" url:"address"`
+	Protocol         int          `json:"protocol" url:"protocol"`
+	Port             int          `json:"port" url:"port"`
+	RequireTLS       bool         `json:"require_tls" url:"require_tls"`
+	VerificationOnly bool         `json:"verification_only" url:"verification_only"`
+	Enabled          bool         `json:"enabled" url:"enabled"`
+	Domain           *AliasDomain `json:"domain,omitempty" url:"domain,omitempty"`
 }
 
 // DomainDeliveryServerList holds domain delivery servers
