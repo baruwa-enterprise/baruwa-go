@@ -5,17 +5,15 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this file,
 // You can obtain one at http://mozilla.org/MPL/2.0/.
 
-// Package main cmdline client for the Baruwa REST API
-package main
+// Package cmd cmdline client for the Baruwa REST API
+package cmd
 
 import (
-	"os"
-
-	"github.com/baruwa-enterprise/baruwa-go/cmd"
+	"github.com/baruwa-enterprise/baruwa-go/api"
 )
 
-func main() {
-	cli := cmd.NewCLI()
-	cli.RegisterCommands()
-	cli.Run(os.Args)
+// GetClient returns a new Client
+func GetClient() (c *api.Client, err error) {
+	c, err = api.New(*serverURL, *apiToken, nil)
+	return
 }
