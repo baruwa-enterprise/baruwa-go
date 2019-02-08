@@ -46,8 +46,8 @@ type OrganizationList struct {
 // This contains a paginated list of Organizations and links
 // to the neighbouring pages.
 // https://www.baruwa.com/docs/api/#listing-all-organizations
-func (c *Client) GetOrganizations(opts *ListOptions) (l *OrgSmartHostList, err error) {
-	l = &OrgSmartHostList{}
+func (c *Client) GetOrganizations(opts *ListOptions) (l *OrganizationList, err error) {
+	l = &OrganizationList{}
 
 	err = c.get("organizations", opts, l)
 
