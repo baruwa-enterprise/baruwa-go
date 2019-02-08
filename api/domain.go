@@ -19,7 +19,7 @@ type Domain struct {
 	ID                int     `json:"id,omitempty" url:"id,omitempty"`
 	Name              string  `json:"name" url:"name"`
 	SiteURL           string  `json:"site_url" url:"site_url"`
-	Status            bool    `json:"status" url:"status"`
+	Enabled           bool    `json:"status" url:"status"`
 	AcceptInbound     bool    `json:"accept_inbound" url:"accept_inbound"`
 	DiscardMail       bool    `json:"discard_mail" url:"discard_mail"`
 	SMTPCallout       bool    `json:"smtp_callout" url:"smtp_callout"`

@@ -41,7 +41,7 @@ type User struct {
 	Email         string             `json:"email" url:"email"`
 	Timezone      string             `json:"timezone" url:"timezone"`
 	AccountType   int                `json:"account_type" url:"account_type"`
-	Active        bool               `json:"active" url:"active"`
+	Enabled       bool               `json:"active" url:"active"`
 	SendReport    bool               `json:"send_report" url:"send_report"`
 	SpamChecks    bool               `json:"spam_checks" url:"spam_checks"`
 	LowScore      float64            `json:"low_score" url:"low_score"`
