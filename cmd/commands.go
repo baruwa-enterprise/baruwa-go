@@ -8,7 +8,9 @@
 // Package cmd cmdline client for the Baruwa REST API
 package cmd
 
-import cli "github.com/jawher/mow.cli"
+import (
+	cli "github.com/jawher/mow.cli"
+)
 
 // RegisterCommands registers all CLI commands
 func (c *CLI) RegisterCommands() {
