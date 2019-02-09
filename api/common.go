@@ -9,6 +9,7 @@ package api
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -69,4 +70,17 @@ func (mt *MyTime) MarshalJSON() ([]byte, error) {
 	}
 
 	return []byte(fmt.Sprintf("\"%s\"", mt.Time.Format(timeFmt))), nil
+}
+
+// LocalFloat64 allow for overriding in cli
+type LocalFloat64 float64
+
+// Set is required by cli
+func (f *LocalFloat64) Set(v string) (err error) {
+	_, err = strconv.ParseFloat(v, 64)
+	return
+}
+
+func (f *LocalFloat64) String() string {
+	return fmt.Sprintf("%.1f", *f)
 }
