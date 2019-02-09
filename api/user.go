@@ -42,8 +42,8 @@ type User struct {
 	Enabled       bool               `json:"active" url:"active"`
 	SendReport    bool               `json:"send_report" url:"send_report"`
 	SpamChecks    bool               `json:"spam_checks" url:"spam_checks"`
-	LowScore      float64            `json:"low_score" url:"low_score"`
-	HighScore     float64            `json:"high_score" url:"high_score"`
+	LowScore      LocalFloat64       `json:"low_score" url:"low_score"`
+	HighScore     LocalFloat64       `json:"high_score" url:"high_score"`
 	BlockMacros   bool               `json:"block_macros" url:"block_macros"`
 	CreatedOn     MyTime             `json:"created_on" url:"created_on"`
 	LastLogin     MyTime             `json:"last_login" url:"last_login"`
@@ -54,20 +54,20 @@ type User struct {
 // UserForm holds users
 type UserForm struct {
 	ID            *int          `json:"id,omitempty" url:"id,omitempty"`
-	Username      *string       `json:"username" url:"username"`
-	Firstname     *string       `json:"firstname" url:"firstname"`
-	Lastname      *string       `json:"lastname" url:"lastname"`
-	Password1     *string       `json:"password1" url:"password1"`
-	Password2     *string       `json:"password2" url:"password2"`
-	Email         *string       `json:"email" url:"email"`
-	Timezone      *string       `json:"timezone" url:"timezone"`
-	AccountType   *int          `json:"account_type" url:"account_type"`
-	Enabled       *bool         `json:"active" url:"active"`
-	SendReport    *bool         `json:"send_report" url:"send_report"`
-	SpamChecks    *bool         `json:"spam_checks" url:"spam_checks"`
-	LowScore      *LocalFloat64 `json:"low_score" url:"low_score,omitempty"`
+	Username      *string       `json:"username" url:"username,omitempty"`
+	Firstname     *string       `json:"firstname" url:"firstname,omitempty"`
+	Lastname      *string       `json:"lastname" url:"lastname,omitempty"`
+	Password1     *string       `json:"password1" url:"password1,omitempty"`
+	Password2     *string       `json:"password2" url:"password2,omitempty"`
+	Email         *string       `json:"email" url:"email,omitempty"`
+	Timezone      *string       `json:"timezone" url:"timezone,omitempty"`
+	AccountType   *int          `json:"account_type" url:"account_type,omitempty"`
+	Enabled       *bool         `json:"active" url:"active,omitempty"`
+	SendReport    *bool         `json:"send_report" url:"send_report,omitempty"`
+	SpamChecks    *bool         `json:"spam_checks" url:"spam_checks,omitempty"`
+	LowScore      *LocalFloat64 `json:"low_score" url:"low_score,omitempty,omitempty"`
 	HighScore     *LocalFloat64 `json:"high_score" url:"high_score,omitempty"`
-	BlockMacros   *bool         `json:"block_macros" url:"block_macros"`
+	BlockMacros   *bool         `json:"block_macros" url:"block_macros,omitempty"`
 	Domains       []int         `json:"domains,omitempty" url:"domains,omitempty"`
 	Organizations []int         `json:"organizations,omitempty" url:"organizations,omitempty"`
 }
@@ -146,7 +146,7 @@ func (c *Client) UpdateUser(user *UserForm) (err error) {
 		return
 	}
 
-	err = c.put(fmt.Sprintf("users/%d", user.ID), v, nil)
+	err = c.put(fmt.Sprintf("users/%d", *user.ID), v, nil)
 
 	return
 }
