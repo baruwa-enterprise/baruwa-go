@@ -36,8 +36,6 @@ type User struct {
 	Username      string             `json:"username" url:"username"`
 	Firstname     string             `json:"firstname" url:"firstname"`
 	Lastname      string             `json:"lastname" url:"lastname"`
-	Password1     string             `json:"password1,omitempty" url:"password1,omitempty"`
-	Password2     string             `json:"password2,omitempty" url:"password2,omitempty"`
 	Email         string             `json:"email" url:"email"`
 	Timezone      string             `json:"timezone" url:"timezone"`
 	AccountType   int                `json:"account_type" url:"account_type"`
@@ -51,6 +49,27 @@ type User struct {
 	LastLogin     MyTime             `json:"last_login" url:"last_login"`
 	Domains       []UserDomain       `json:"domains,omitempty" url:"domains,omitempty"`
 	Organizations []UserOrganization `json:"organizations,omitempty" url:"organizations,omitempty"`
+}
+
+// UserForm holds users
+type UserForm struct {
+	ID            *int          `json:"id,omitempty" url:"id,omitempty"`
+	Username      *string       `json:"username" url:"username"`
+	Firstname     *string       `json:"firstname" url:"firstname"`
+	Lastname      *string       `json:"lastname" url:"lastname"`
+	Password1     *string       `json:"password1" url:"password1"`
+	Password2     *string       `json:"password2" url:"password2"`
+	Email         *string       `json:"email" url:"email"`
+	Timezone      *string       `json:"timezone" url:"timezone"`
+	AccountType   *int          `json:"account_type" url:"account_type"`
+	Enabled       *bool         `json:"active" url:"active"`
+	SendReport    *bool         `json:"send_report" url:"send_report"`
+	SpamChecks    *bool         `json:"spam_checks" url:"spam_checks"`
+	LowScore      *LocalFloat64 `json:"low_score" url:"low_score,omitempty"`
+	HighScore     *LocalFloat64 `json:"high_score" url:"high_score,omitempty"`
+	BlockMacros   *bool         `json:"block_macros" url:"block_macros"`
+	Domains       []int         `json:"domains,omitempty" url:"domains,omitempty"`
+	Organizations []int         `json:"organizations,omitempty" url:"organizations,omitempty"`
 }
 
 // UserList holds users
@@ -89,7 +108,7 @@ func (c *Client) GetUser(userID int) (user *User, err error) {
 
 // CreateUser creates a user account
 // https://www.baruwa.com/docs/api/#create-a-new-account
-func (c *Client) CreateUser(user *User) (err error) {
+func (c *Client) CreateUser(user *UserForm) (u *User, err error) {
 	var v url.Values
 
 	if user == nil {
@@ -101,14 +120,16 @@ func (c *Client) CreateUser(user *User) (err error) {
 		return
 	}
 
-	err = c.post("users", v, user)
+	u = &User{}
+
+	err = c.post("users", v, u)
 
 	return
 }
 
 // UpdateUser updates a user account
 // https://www.baruwa.com/docs/api/#update-an-account
-func (c *Client) UpdateUser(user *User) (err error) {
+func (c *Client) UpdateUser(user *UserForm) (err error) {
 	var v url.Values
 
 	if user == nil {
@@ -116,7 +137,7 @@ func (c *Client) UpdateUser(user *User) (err error) {
 		return
 	}
 
-	if user.ID <= 0 {
+	if user.ID == nil || *user.ID <= 0 {
 		err = fmt.Errorf(userIDError)
 		return
 	}

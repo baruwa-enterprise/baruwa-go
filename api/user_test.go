@@ -233,7 +233,7 @@ func Test_CreateUserError(t *testing.T) {
 		t.Fatalf("An error should not be returned")
 	}
 	defer server.Close()
-	err = client.CreateUser(nil)
+	_, err = client.CreateUser(nil)
 	if err == nil {
 		t.Fatalf("An error should be returned")
 	}
@@ -273,17 +273,20 @@ func Test_CreateUserOK(t *testing.T) {
 		t.Fatalf("An error should not be returned")
 	}
 	defer server.Close()
-	u := &User{
-		Username: "andrew",
-		Email:    "andrew@example.com",
-		Timezone: "Africa/Johannesburg",
+	n := "andrew"
+	e := "andrew@example.com"
+	tz := "Africa/Johannesburg"
+	u := &UserForm{
+		Username: &n,
+		Email:    &e,
+		Timezone: &tz,
 	}
-	err = client.CreateUser(u)
+	user, err := client.CreateUser(u)
 	if err != nil {
 		t.Fatalf("An error should not be returned: %s", err)
 	}
-	if u.ID != userID {
-		t.Errorf("Expected %d got %d", userID, u.ID)
+	if user.ID != userID {
+		t.Errorf("Expected %d got %d", userID, user.ID)
 	}
 }
 
@@ -301,10 +304,13 @@ func Test_UpdateUserError(t *testing.T) {
 	if err.Error() != userParamError {
 		t.Errorf("Expected '%s' got '%s'", userIDError, err)
 	}
-	u := &User{
-		Username: "andrew",
-		Email:    "andrew@example.com",
-		Timezone: "Africa/Johannesburg",
+	n := "andrew"
+	e := "andrew@example.com"
+	tz := "Africa/Johannesburg"
+	u := &UserForm{
+		Username: &n,
+		Email:    &e,
+		Timezone: &tz,
 	}
 	err = client.UpdateUser(u)
 	if err == nil {
@@ -322,11 +328,15 @@ func Test_UpdateUserOK(t *testing.T) {
 		t.Fatalf("An error should not be returned")
 	}
 	defer server.Close()
-	u := &User{
-		ID:       2,
-		Username: "andrew",
-		Email:    "andrew@example.com",
-		Timezone: "Africa/Johannesburg",
+	id := 2
+	n := "andrew"
+	e := "andrew@example.com"
+	tz := "Africa/Johannesburg"
+	u := &UserForm{
+		ID:       &id,
+		Username: &n,
+		Email:    &e,
+		Timezone: &tz,
 	}
 	err = client.UpdateUser(u)
 	if err != nil {
