@@ -17,9 +17,17 @@ func TestGetSystemStatus(t *testing.T) {
 	{
 		"inbound": 0,
 		"status": true,
-		"total": [19, 19, 0, 0, 0, 0, 0],
+		"total": {
+		  "spam": 0,
+		  "highspam": 0,
+		  "lowspam": 0,
+		  "infected": 0,
+		  "clean": 16,
+		  "total": 16,
+		  "virii": 0
+		},
 		"outbound": 0
-	}
+	  }
 	`
 	server, client, err := getTestServerAndClient(http.StatusOK, data)
 	if err != nil {
