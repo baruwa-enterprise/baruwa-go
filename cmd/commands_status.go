@@ -9,8 +9,32 @@
 package cmd
 
 import (
+	"fmt"
+	"log"
+
+	"github.com/baruwa-enterprise/baruwa-go/api"
+	prettyjson "github.com/hokaccha/go-prettyjson"
 	cli "github.com/jawher/mow.cli"
 )
 
 func systemStatus(cmd *cli.Cmd) {
+	cmd.Action = func() {
+		var b []byte
+		var err error
+		var c *api.Client
+		var s *api.SystemStatus
+
+		if c, err = GetClient(); err != nil {
+			log.Fatal(err)
+		}
+
+		if s, err = c.GetSystemStatus(); err != nil {
+			log.Fatal(err)
+		}
+
+		if b, err = prettyjson.Marshal(s); err != nil {
+			log.Fatal(err)
+		}
+		fmt.Printf("%s\n", b)
+	}
 }
