@@ -34,22 +34,22 @@ func organizationsList(cmd *cli.Cmd) {
 		var b []byte
 		var err error
 		var c *api.Client
-		var u *api.OrganizationList
+		var o *api.OrganizationList
 
 		if c, err = GetClient(); err != nil {
 			log.Fatal(err)
 		}
 
-		if u, err = c.GetOrganizations(nil); err != nil {
+		if o, err = c.GetOrganizations(nil); err != nil {
 			log.Fatal(err)
 		}
 
-		if len(u.Items) == 0 {
+		if len(o.Items) == 0 {
 			fmt.Println()
 			return
 		}
 
-		if b, err = prettyjson.Marshal(u); err != nil {
+		if b, err = prettyjson.Marshal(o); err != nil {
 			log.Fatal(err)
 		}
 		fmt.Printf("%s\n", b)
