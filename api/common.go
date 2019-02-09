@@ -77,10 +77,14 @@ type LocalFloat64 float64
 
 // Set is required by cli
 func (f *LocalFloat64) Set(v string) (err error) {
-	_, err = strconv.ParseFloat(v, 64)
+	val, err := strconv.ParseFloat(v, 64)
+	*f = LocalFloat64(val)
 	return
 }
 
 func (f *LocalFloat64) String() string {
+	if f == nil {
+		return "0.0"
+	}
 	return fmt.Sprintf("%.1f", *f)
 }
