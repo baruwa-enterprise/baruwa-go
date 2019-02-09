@@ -7,12 +7,23 @@
 
 package api
 
+// SystemTotal holds totals
+type SystemTotal struct {
+	Spam     int `json:"spam" url:"spam"`
+	HighSpam int `json:"highspam" url:"highspam"`
+	LowSpam  int `json:"lowspam" url:"lowspam"`
+	Infected int `json:"infected" url:"infected"`
+	Clean    int `json:"clean" url:"clean"`
+	Total    int `json:"total" url:"total"`
+	Virii    int `json:"virii" url:"virii"`
+}
+
 // SystemStatus holds system status
 type SystemStatus struct {
-	Inbound  int   `json:"inbound" url:"inbound"`
-	Status   bool  `json:"status" url:"status"`
-	Total    []int `json:"total" url:"total"`
-	Outbound int   `json:"outbound" url:"outbound"`
+	Inbound  int         `json:"inbound" url:"inbound"`
+	Status   bool        `json:"status" url:"status"`
+	Total    SystemTotal `json:"total" url:"total"`
+	Outbound int         `json:"outbound" url:"outbound"`
 }
 
 // GetSystemStatus returns radius settings
