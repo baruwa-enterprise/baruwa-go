@@ -345,9 +345,11 @@ func userDelete(cmd *cli.Cmd) {
 	var uid *int
 
 	uid = cmd.Int(cli.IntOpt{
-		Name: "uid",
+		Name: "u uid",
 		Desc: "The user id for the account",
 	})
+
+	cmd.Spec = "-u"
 
 	cmd.Action = func() {
 		var err error
