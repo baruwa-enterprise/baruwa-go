@@ -367,18 +367,6 @@ func userDelete(cmd *cli.Cmd) {
 	}
 }
 
-func aliasShow(cmd *cli.Cmd) {
-}
-
-func aliasCreate(cmd *cli.Cmd) {
-}
-
-func aliasUpdate(cmd *cli.Cmd) {
-}
-
-func aliasDelete(cmd *cli.Cmd) {
-}
-
 func usersList(cmd *cli.Cmd) {
 	cmd.Action = func() {
 		var b []byte
