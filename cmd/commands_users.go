@@ -18,11 +18,13 @@ import (
 )
 
 func userShow(cmd *cli.Cmd) {
-	var b []byte
-	var uid *int
-	var err error
-	var u *api.User
-	var c *api.Client
+	var (
+		b   []byte
+		uid *int
+		err error
+		u   *api.User
+		c   *api.Client
+	)
 
 	cmd.Spec = "--id"
 
@@ -48,16 +50,18 @@ func userShow(cmd *cli.Cmd) {
 }
 
 func userCreate(cmd *cli.Cmd) {
-	var b []byte
-	var err error
-	var f *api.UserForm
-	var c *api.Client
-	var u *api.User
-	var accountType *int
-	var domains, organizations *[]int
-	var lowScore, highScore api.LocalFloat64
-	var enabled, sendReports, spamChecks, blockMacros *bool
-	var username, firstname, lastname, password1, password2, email, timezone *string
+	var (
+		b                                                                    []byte
+		err                                                                  error
+		f                                                                    *api.UserForm
+		c                                                                    *api.Client
+		u                                                                    *api.User
+		accountType                                                          *int
+		domains, organizations                                               *[]int
+		lowScore, highScore                                                  api.LocalFloat64
+		enabled, sendReports, spamChecks, blockMacros                        *bool
+		username, firstname, lastname, password1, password2, email, timezone *string
+	)
 
 	cmd.Spec = "--username --password1 --password2 --email --timezone --domain... [--firstname][--lastname][--account-type][--enable][--send-reports][--spam-checks][--low-score][--high-score][--block-macros][--organization...]"
 
@@ -167,14 +171,14 @@ func userCreate(cmd *cli.Cmd) {
 }
 
 func userUpdate(cmd *cli.Cmd) {
-	var uid *int
-	var err error
-	var u *api.User
-	var c *api.Client
-	var domains *[]int
-	var f *api.UserForm
-	var lowScore, highScore api.LocalFloat64
 	var (
+		uid                                                                                        *int
+		err                                                                                        error
+		u                                                                                          *api.User
+		c                                                                                          *api.Client
+		domains                                                                                    *[]int
+		f                                                                                          *api.UserForm
+		lowScore, highScore                                                                        api.LocalFloat64
 		enabled, sendReports, spamChecks, blockMacros                                              *bool
 		isSetfirstname, isSetlastname, isSetemail, isSettimezone, isSetEnable, isEnableblockMacros bool
 		isSetEnableReports, isEnablespamChecks, isSetdomains, isSetlowScore, isSethighScore        bool
@@ -371,12 +375,14 @@ func userDelete(cmd *cli.Cmd) {
 }
 
 func usersList(cmd *cli.Cmd) {
-	cmd.Action = func() {
-		var b []byte
-		var err error
-		var c *api.Client
-		var u *api.UserList
+	var (
+		b   []byte
+		err error
+		c   *api.Client
+		u   *api.UserList
+	)
 
+	cmd.Action = func() {
 		if c, err = GetClient(); err != nil {
 			log.Fatal(err)
 		}
