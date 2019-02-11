@@ -24,9 +24,9 @@ func aliasShow(cmd *cli.Cmd) {
 	var a *api.AliasAddress
 	var c *api.Client
 
-	cmd.Spec = "-a"
+	cmd.Spec = "-id"
 	id = cmd.Int(cli.IntOpt{
-		Name: "a alias-id",
+		Name: "id",
 		Desc: "Alias address id",
 	})
 
@@ -101,7 +101,7 @@ func aliasUpdate(cmd *cli.Cmd) {
 	var enableSet, disableSet, emailSet bool
 
 	aid = cmd.Int(cli.IntOpt{
-		Name: "aid",
+		Name: "id",
 		Desc: "Alias address ID",
 	})
 	email = cmd.String(cli.StringOpt{
@@ -120,7 +120,7 @@ func aliasUpdate(cmd *cli.Cmd) {
 		SetByUser: &disableSet,
 	})
 
-	cmd.Spec = "--aid [--alias-address] --enable|--disable"
+	cmd.Spec = "--id [--alias-address] --enable|--disable"
 
 	cmd.Action = func() {
 		if c, err = GetClient(); err != nil {
@@ -161,11 +161,11 @@ func aliasDelete(cmd *cli.Cmd) {
 	var a *api.AliasAddress
 
 	aid = cmd.Int(cli.IntOpt{
-		Name: "aid",
+		Name: "id",
 		Desc: "Alias address ID",
 	})
 
-	cmd.Spec = "--aid"
+	cmd.Spec = "--id"
 
 	cmd.Action = func() {
 		if c, err = GetClient(); err != nil {
