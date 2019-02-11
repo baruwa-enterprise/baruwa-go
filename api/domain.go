@@ -16,29 +16,29 @@ import (
 
 // Domain holds domains
 type Domain struct {
-	ID                int     `json:"id,omitempty" url:"id,omitempty"`
-	Name              string  `json:"name" url:"name"`
-	SiteURL           string  `json:"site_url" url:"site_url"`
-	Enabled           bool    `json:"status" url:"status"`
-	AcceptInbound     bool    `json:"accept_inbound" url:"accept_inbound"`
-	DiscardMail       bool    `json:"discard_mail" url:"discard_mail"`
-	SMTPCallout       bool    `json:"smtp_callout" url:"smtp_callout"`
-	LdapCallout       bool    `json:"ldap_callout" url:"ldap_callout"`
-	VirusChecks       bool    `json:"virus_checks" url:"virus_checks"`
-	VirusChecksAtSMTP bool    `json:"virus_checks_at_smtp" url:"virus_checks_at_smtp"`
-	BlockMacros       bool    `json:"block_macros" url:"block_macros"`
-	SpamChecks        bool    `json:"spam_checks" url:"spam_checks"`
-	SpamActions       int     `json:"spam_actions" url:"spam_actions"`
-	HighspamActions   int     `json:"highspam_actions" url:"highspam_actions"`
-	VirusActions      int     `json:"virus_actions" url:"virus_actions"`
-	LowScore          float64 `json:"low_score" url:"low_score"`
-	HighScore         float64 `json:"high_score" url:"high_score"`
-	MessageSize       string  `json:"message_size" url:"message_size"`
-	DeliveryMode      int     `json:"delivery_mode" url:"delivery_mode"`
-	Language          string  `json:"language" url:"language"`
-	Timezone          string  `json:"timezone" url:"timezone"`
-	ReportEvery       int     `json:"report_every" url:"report_every"`
-	Organizations     int     `json:"organizations,omitempty" url:"organizations,omitempty"`
+	ID                int          `json:"id,omitempty" url:"id,omitempty"`
+	Name              string       `json:"name" url:"name"`
+	SiteURL           string       `json:"site_url" url:"site_url"`
+	Enabled           bool         `json:"status" url:"status"`
+	AcceptInbound     bool         `json:"accept_inbound" url:"accept_inbound"`
+	DiscardMail       bool         `json:"discard_mail" url:"discard_mail"`
+	SMTPCallout       bool         `json:"smtp_callout" url:"smtp_callout"`
+	LdapCallout       bool         `json:"ldap_callout" url:"ldap_callout"`
+	VirusChecks       bool         `json:"virus_checks" url:"virus_checks"`
+	VirusChecksAtSMTP bool         `json:"virus_checks_at_smtp" url:"virus_checks_at_smtp"`
+	BlockMacros       bool         `json:"block_macros" url:"block_macros"`
+	SpamChecks        bool         `json:"spam_checks" url:"spam_checks"`
+	SpamActions       int          `json:"spam_actions" url:"spam_actions"`
+	HighspamActions   int          `json:"highspam_actions" url:"highspam_actions"`
+	VirusActions      int          `json:"virus_actions" url:"virus_actions"`
+	LowScore          LocalFloat64 `json:"low_score" url:"low_score"`
+	HighScore         LocalFloat64 `json:"high_score" url:"high_score"`
+	MessageSize       string       `json:"message_size" url:"message_size"`
+	DeliveryMode      int          `json:"delivery_mode" url:"delivery_mode"`
+	Language          string       `json:"language" url:"language"`
+	Timezone          string       `json:"timezone" url:"timezone"`
+	ReportEvery       int          `json:"report_every" url:"report_every"`
+	Organizations     []int        `json:"organizations,omitempty" url:"organizations,omitempty"`
 }
 
 // DomainList holds domain smarthosts
