@@ -130,6 +130,8 @@ func (c *Client) get(path string, opts *ListOptions, data interface{}) (err erro
 func (c *Client) post(p string, v url.Values, data interface{}) (err error) {
 	var req *http.Request
 
+	// fmt.Println(v.Encode())
+
 	if req, err = c.newRequest(http.MethodPost, apiPath(p), nil, strings.NewReader(v.Encode())); err != nil {
 		return
 	}
@@ -141,6 +143,8 @@ func (c *Client) post(p string, v url.Values, data interface{}) (err error) {
 
 func (c *Client) put(p string, v url.Values, data interface{}) (err error) {
 	var req *http.Request
+
+	fmt.Println(v.Encode())
 
 	if req, err = c.newRequest(http.MethodPut, apiPath(p), nil, strings.NewReader(v.Encode())); err != nil {
 		return

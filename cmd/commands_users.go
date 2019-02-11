@@ -280,26 +280,10 @@ func userUpdate(cmd *cli.Cmd) {
 			doms = append(doms, dom.ID)
 		}
 
-		if isSetEnable {
-			*enabled = true
-		} else {
-			*enabled = false
-		}
-		if isSetEnableReports {
-			*sendReports = true
-		} else {
-			*sendReports = false
-		}
-		if isEnablespamChecks {
-			*spamChecks = true
-		} else {
-			*spamChecks = false
-		}
-		if isEnableblockMacros {
-			*blockMacros = true
-		} else {
-			*blockMacros = false
-		}
+		*enabled = isSetEnable
+		*sendReports = isSetEnableReports
+		*spamChecks = isEnablespamChecks
+		*blockMacros = isEnableblockMacros
 
 		f = &api.UserForm{
 			ID:          uid,
