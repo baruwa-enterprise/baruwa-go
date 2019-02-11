@@ -111,8 +111,6 @@ func userCreate(cmd *cli.Cmd) {
 		Desc:  "Enable spam checking",
 		Value: true,
 	})
-	// cmd.VarOpt("low-score", lowScore, "The score at which an email is considered to be suspected spam, 0.0 uses system defaults")
-	// cmd.VarOpt("high-score", highScore, "The score at which an email is considered to be definitely spam, 0.0 uses system defaults")
 	cmd.Var(cli.VarOpt{
 		Name:  "low-score",
 		Desc:  "The score at which an email is considered to be suspected spam, 0.0 uses system defaults",
