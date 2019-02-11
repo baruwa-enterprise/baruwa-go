@@ -24,9 +24,10 @@ func userShow(cmd *cli.Cmd) {
 	var u *api.User
 	var c *api.Client
 
-	cmd.Spec = "-u"
+	cmd.Spec = "--id"
+
 	uid = cmd.Int(cli.IntOpt{
-		Name: "u uid",
+		Name: "id",
 		Desc: "User ID",
 	})
 
@@ -54,11 +55,11 @@ func userCreate(cmd *cli.Cmd) {
 	var u *api.User
 	var accountType *int
 	var domains, organizations *[]int
-	var lowScore, highScore *api.LocalFloat64
+	var lowScore, highScore api.LocalFloat64
 	var enabled, sendReports, spamChecks, blockMacros *bool
 	var username, firstname, lastname, password1, password2, email, timezone *string
 
-	cmd.Spec = "--username --password1 --password2 --email --timezone --domain... [--firstname][--lastname][--accountType][--enabled][--sendReports][--spamChecks][--lowScore][--highScore][--blockMacros][--organization...]"
+	cmd.Spec = "--username --password1 --password2 --email --timezone --domain... [--firstname][--lastname][--account-type][--enable][--send-reports][--spam-checks][--low-score][--high-score][--block-macros][--organization...]"
 
 	username = cmd.String(cli.StringOpt{
 		Name: "username",
@@ -89,28 +90,38 @@ func userCreate(cmd *cli.Cmd) {
 		Desc: "Users timezone, all dates and times will be displayed in this timezone",
 	})
 	accountType = cmd.Int(cli.IntOpt{
-		Name:  "accountType",
+		Name:  "account-type",
 		Desc:  "The account type",
 		Value: 3,
 	})
 	enabled = cmd.Bool(cli.BoolOpt{
-		Name: "enabled",
-		Desc: "Enable or disable this account",
+		Name: "enable",
+		Desc: "Enable this account",
 	})
 	sendReports = cmd.Bool(cli.BoolOpt{
-		Name: "sendReports",
+		Name: "send-reports",
 		Desc: "If enabled the user will receive reports from the system",
 	})
 	spamChecks = cmd.Bool(cli.BoolOpt{
-		Name:  "spamChecks",
-		Desc:  "Enable or disable spam checking",
+		Name:  "spam-checks",
+		Desc:  "Enable spam checking",
 		Value: true,
 	})
-	cmd.VarOpt("lowScore", lowScore, "The score at which an email is considered to be suspected spam, 0.0 uses system defaults")
-	cmd.VarOpt("highScore", highScore, "The score at which an email is considered to be definitely spam, 0.0 uses system defaults")
+	// cmd.VarOpt("low-score", lowScore, "The score at which an email is considered to be suspected spam, 0.0 uses system defaults")
+	// cmd.VarOpt("high-score", highScore, "The score at which an email is considered to be definitely spam, 0.0 uses system defaults")
+	cmd.Var(cli.VarOpt{
+		Name:  "low-score",
+		Desc:  "The score at which an email is considered to be suspected spam, 0.0 uses system defaults",
+		Value: &lowScore,
+	})
+	cmd.Var(cli.VarOpt{
+		Name:  "high-score",
+		Desc:  "The score at which an email is considered to be definitely spam, 0.0 uses system defaults",
+		Value: &highScore,
+	})
 	blockMacros = cmd.Bool(cli.BoolOpt{
-		Name: "blockMacros",
-		Desc: "Enable or disable blocking Attachments with Macros",
+		Name: "block-macros",
+		Desc: "Enable blocking Attachments with Macros",
 	})
 	domains = cmd.Ints(cli.IntsOpt{
 		Name: "domain",
@@ -133,8 +144,8 @@ func userCreate(cmd *cli.Cmd) {
 			Enabled:       enabled,
 			SendReport:    sendReports,
 			SpamChecks:    spamChecks,
-			LowScore:      lowScore,
-			HighScore:     highScore,
+			LowScore:      &lowScore,
+			HighScore:     &highScore,
 			BlockMacros:   blockMacros,
 			Domains:       *domains,
 			Organizations: *organizations,
@@ -164,16 +175,16 @@ func userUpdate(cmd *cli.Cmd) {
 	var f *api.UserForm
 	var lowScore, highScore api.LocalFloat64
 	var (
-		enabled, sendReports, spamChecks, blockMacros                                                                                  *bool
-		isSetfirstname, isSetlastname, isSetemail, isSettimezone, isSetEnable, isSetDisable, isEnableblockMacros, isDisableblockMacros bool
-		isSetEnableReports, isSetDisableReports, isDisablespamChecks, isEnablespamChecks, isSetdomains, isSetlowScore, isSethighScore  bool
-		username, firstname, lastname, email, timezone                                                                                 *string
+		enabled, sendReports, spamChecks, blockMacros                                              *bool
+		isSetfirstname, isSetlastname, isSetemail, isSettimezone, isSetEnable, isEnableblockMacros bool
+		isSetEnableReports, isEnablespamChecks, isSetdomains, isSetlowScore, isSethighScore        bool
+		username, firstname, lastname, email, timezone                                             *string
 	)
 
-	cmd.Spec = "--uid --username --enable|--disable --enable-reports|--disable-reports --enable-spamChecks|--disable-spamChecks --enable-blockMacros|--disable-blockMacros [--email][--domain...][--timezone][--firstname][--lastname][--lowScore][--highScore]"
+	cmd.Spec = "--id --username --enable|--disable --enable-reports|--disable-reports --enable-spam-checks|--disable-spam-checks --enable-block-macros|--disable-block-macros [--email][--domain...][--timezone][--firstname][--lastname][--low-score][--high-score]"
 
 	uid = cmd.Int(cli.IntOpt{
-		Name: "uid",
+		Name: "id",
 		Desc: "The user id for the account",
 	})
 	username = cmd.String(cli.StringOpt{
@@ -206,9 +217,8 @@ func userUpdate(cmd *cli.Cmd) {
 		SetByUser: &isSetEnable,
 	})
 	enabled = cmd.Bool(cli.BoolOpt{
-		Name:      "disable",
-		Desc:      "Disable this account",
-		SetByUser: &isSetDisable,
+		Name: "disable",
+		Desc: "Disable this account",
 	})
 	sendReports = cmd.Bool(cli.BoolOpt{
 		Name:      "enable-reports",
@@ -216,41 +226,38 @@ func userUpdate(cmd *cli.Cmd) {
 		SetByUser: &isSetEnableReports,
 	})
 	sendReports = cmd.Bool(cli.BoolOpt{
-		Name:      "disable-reports",
-		Desc:      "Disable reports for this account",
-		SetByUser: &isSetDisableReports,
+		Name: "disable-reports",
+		Desc: "Disable reports for this account",
 	})
 	spamChecks = cmd.Bool(cli.BoolOpt{
-		Name:      "enable-spamChecks",
+		Name:      "enable-spam-checks",
 		Desc:      "Enable spam checking",
 		SetByUser: &isEnablespamChecks,
 	})
 	spamChecks = cmd.Bool(cli.BoolOpt{
-		Name:      "disable-spamChecks",
-		Desc:      "Disable spam checking",
-		SetByUser: &isDisablespamChecks,
+		Name: "disable-spam-checks",
+		Desc: "Disable spam checking",
 	})
 	cmd.Var(cli.VarOpt{
-		Name:      "lowScore",
+		Name:      "low-score",
 		Desc:      "The score at which an email is considered to be suspected spam, 0.0 uses system defaults",
 		Value:     &lowScore,
 		SetByUser: &isSetlowScore,
 	})
 	cmd.Var(cli.VarOpt{
-		Name:      "highScore",
+		Name:      "high-score",
 		Desc:      "The score at which an email is considered to be definitely spam, 0.0 uses system defaults",
 		Value:     &highScore,
 		SetByUser: &isSethighScore,
 	})
 	blockMacros = cmd.Bool(cli.BoolOpt{
-		Name:      "enable-blockMacros",
+		Name:      "enable-block-macros",
 		Desc:      "Enable or disable blocking Attachments with Macros",
 		SetByUser: &isEnableblockMacros,
 	})
 	blockMacros = cmd.Bool(cli.BoolOpt{
-		Name:      "disable-blockMacros",
-		Desc:      "Enable or disable blocking Attachments with Macros",
-		SetByUser: &isDisableblockMacros,
+		Name: "disable-block-macros",
+		Desc: "Enable or disable blocking Attachments with Macros",
 	})
 	domains = cmd.Ints(cli.IntsOpt{
 		Name:      "domain",
@@ -273,26 +280,22 @@ func userUpdate(cmd *cli.Cmd) {
 
 		if isSetEnable {
 			*enabled = true
-		}
-		if isSetDisable {
+		} else {
 			*enabled = false
 		}
 		if isSetEnableReports {
 			*sendReports = true
-		}
-		if isSetDisableReports {
+		} else {
 			*sendReports = false
 		}
 		if isEnablespamChecks {
 			*spamChecks = true
-		}
-		if isDisablespamChecks {
+		} else {
 			*spamChecks = false
 		}
 		if isEnableblockMacros {
 			*blockMacros = true
-		}
-		if isDisableblockMacros {
+		} else {
 			*blockMacros = false
 		}
 
@@ -345,11 +348,11 @@ func userDelete(cmd *cli.Cmd) {
 	var uid *int
 
 	uid = cmd.Int(cli.IntOpt{
-		Name: "u uid",
+		Name: "id",
 		Desc: "The user id for the account",
 	})
 
-	cmd.Spec = "-u"
+	cmd.Spec = "--id"
 
 	cmd.Action = func() {
 		var err error
