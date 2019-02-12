@@ -134,14 +134,14 @@ func TestCreateUserDeliveryServerError(t *testing.T) {
 		t.Fatalf("An error should not be returned")
 	}
 	defer server.Close()
-	err = client.CreateUserDeliveryServer(0, nil)
+	_, err = client.CreateUserDeliveryServer(0, nil)
 	if err == nil {
 		t.Fatalf("An error should be returned")
 	}
 	if err.Error() != domainIDError {
 		t.Errorf("Expected '%s' got '%s'", domainIDError, err)
 	}
-	err = client.CreateUserDeliveryServer(1, nil)
+	_, err = client.CreateUserDeliveryServer(1, nil)
 	if err == nil {
 		t.Fatalf("An error should be returned")
 	}
@@ -173,16 +173,16 @@ func TestCreateUserDeliveryServerOK(t *testing.T) {
 		t.Fatalf("An error should not be returned")
 	}
 	defer server.Close()
-	ds := &UserDeliveryServer{
+	f := &UserDeliveryServerForm{
 		Address:          "192.168.1.151",
 		Protocol:         1,
 		Enabled:          true,
 		RequireTLS:       false,
 		VerificationOnly: false,
 		Port:             25,
-		Domain:           &AliasDomain{Name: "example.com", ID: domainID},
+		Domain:           domainID,
 	}
-	err = client.CreateUserDeliveryServer(domainID, ds)
+	ds, err := client.CreateUserDeliveryServer(domainID, f)
 	if err != nil {
 		t.Fatalf("An error should not be returned: %s", err)
 	}
@@ -215,7 +215,7 @@ func TestUpdateUserDeliveryServerError(t *testing.T) {
 	if err.Error() != serverParamError {
 		t.Errorf("Expected '%s' got '%s'", serverParamError, err)
 	}
-	ds := &UserDeliveryServer{
+	f := &UserDeliveryServerForm{
 		Address:          "192.168.1.151",
 		Protocol:         1,
 		Enabled:          true,
@@ -223,7 +223,7 @@ func TestUpdateUserDeliveryServerError(t *testing.T) {
 		VerificationOnly: false,
 		Port:             25,
 	}
-	err = client.UpdateUserDeliveryServer(1, ds)
+	err = client.UpdateUserDeliveryServer(1, f)
 	if err == nil {
 		t.Fatalf("An error should be returned")
 	}
@@ -255,7 +255,7 @@ func TestUpdateUserDeliveryServerOK(t *testing.T) {
 		t.Fatalf("An error should not be returned")
 	}
 	defer server.Close()
-	ds := &UserDeliveryServer{
+	f := &UserDeliveryServerForm{
 		ID:               serverID,
 		Address:          "192.168.1.151",
 		Protocol:         1,
@@ -264,15 +264,9 @@ func TestUpdateUserDeliveryServerOK(t *testing.T) {
 		VerificationOnly: false,
 		Port:             25,
 	}
-	err = client.UpdateUserDeliveryServer(domainID, ds)
+	err = client.UpdateUserDeliveryServer(domainID, f)
 	if err != nil {
 		t.Fatalf("An error should not be returned: %s", err)
-	}
-	if ds.ID != serverID {
-		t.Errorf("Expected %d got %d", serverID, ds.ID)
-	}
-	if ds.Enabled {
-		t.Errorf("Expected %t got %t", false, ds.Enabled)
 	}
 }
 
@@ -297,7 +291,7 @@ func TestDeleteUserDeliveryServerError(t *testing.T) {
 	if err.Error() != serverParamError {
 		t.Errorf("Expected '%s' got '%s'", serverParamError, err)
 	}
-	ds := &UserDeliveryServer{
+	f := &UserDeliveryServerForm{
 		Address:          "192.168.1.151",
 		Protocol:         1,
 		Enabled:          true,
@@ -305,7 +299,7 @@ func TestDeleteUserDeliveryServerError(t *testing.T) {
 		VerificationOnly: false,
 		Port:             25,
 	}
-	err = client.DeleteUserDeliveryServer(1, ds)
+	err = client.DeleteUserDeliveryServer(1, f)
 	if err == nil {
 		t.Fatalf("An error should be returned")
 	}
@@ -323,7 +317,7 @@ func TestDeleteUserDeliveryServerOK(t *testing.T) {
 		t.Fatalf("An error should not be returned")
 	}
 	defer server.Close()
-	ds := &UserDeliveryServer{
+	f := &UserDeliveryServerForm{
 		ID:               serverID,
 		Address:          "192.168.1.151",
 		Protocol:         1,
@@ -332,7 +326,7 @@ func TestDeleteUserDeliveryServerOK(t *testing.T) {
 		VerificationOnly: false,
 		Port:             25,
 	}
-	err = client.DeleteUserDeliveryServer(domainID, ds)
+	err = client.DeleteUserDeliveryServer(domainID, f)
 	if err != nil {
 		t.Fatalf("An error should not be returned: %s", err)
 	}

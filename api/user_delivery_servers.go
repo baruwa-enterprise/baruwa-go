@@ -26,6 +26,18 @@ type UserDeliveryServer struct {
 	Domain           *AliasDomain `json:"domain,omitempty" url:"domain,omitempty"`
 }
 
+// UserDeliveryServerForm holds user delivery servers
+type UserDeliveryServerForm struct {
+	ID               int    `json:"id,omitempty" url:"id,omitempty"`
+	Address          string `json:"address" url:"address"`
+	Protocol         int    `json:"protocol" url:"protocol"`
+	Port             int    `json:"port" url:"port"`
+	RequireTLS       bool   `json:"require_tls" url:"require_tls"`
+	VerificationOnly bool   `json:"verification_only" url:"verification_only"`
+	Enabled          bool   `json:"enabled" url:"enabled"`
+	Domain           int    `json:"domain,omitempty" url:"domain,omitempty"`
+}
+
 // UserDeliveryServerList holds user delivery servers
 type UserDeliveryServerList struct {
 	Items []UserDeliveryServer `json:"items"`
@@ -72,7 +84,7 @@ func (c *Client) GetUserDeliveryServer(domainID, serverID int) (server *UserDeli
 
 // CreateUserDeliveryServer creates a user delivery server
 // https://www.baruwa.com/docs/api/#create-a-user-delivery-server
-func (c *Client) CreateUserDeliveryServer(domainID int, server *UserDeliveryServer) (err error) {
+func (c *Client) CreateUserDeliveryServer(domainID int, form *UserDeliveryServerForm) (server *UserDeliveryServer, err error) {
 	var v url.Values
 
 	if domainID <= 0 {
@@ -80,14 +92,16 @@ func (c *Client) CreateUserDeliveryServer(domainID int, server *UserDeliveryServ
 		return
 	}
 
-	if server == nil {
+	if form == nil {
 		err = fmt.Errorf(serverParamError)
 		return
 	}
 
-	if v, err = query.Values(server); err != nil {
+	if v, err = query.Values(form); err != nil {
 		return
 	}
+
+	server = &UserDeliveryServer{}
 
 	err = c.post(fmt.Sprintf("userdeliveryservers/%d", domainID), v, server)
 
@@ -96,7 +110,7 @@ func (c *Client) CreateUserDeliveryServer(domainID int, server *UserDeliveryServ
 
 // UpdateUserDeliveryServer updates a user delivery server
 // https://www.baruwa.com/docs/api/#update-a-user-delivery-server
-func (c *Client) UpdateUserDeliveryServer(domainID int, server *UserDeliveryServer) (err error) {
+func (c *Client) UpdateUserDeliveryServer(domainID int, form *UserDeliveryServerForm) (err error) {
 	var v url.Values
 
 	if domainID <= 0 {
@@ -104,28 +118,28 @@ func (c *Client) UpdateUserDeliveryServer(domainID int, server *UserDeliveryServ
 		return
 	}
 
-	if server == nil {
+	if form == nil {
 		err = fmt.Errorf(serverParamError)
 		return
 	}
 
-	if server.ID <= 0 {
+	if form.ID <= 0 {
 		err = fmt.Errorf(serverSIDError)
 		return
 	}
 
-	if v, err = query.Values(server); err != nil {
+	if v, err = query.Values(form); err != nil {
 		return
 	}
 
-	err = c.put(fmt.Sprintf("userdeliveryservers/%d/%d", domainID, server.ID), v, server)
+	err = c.put(fmt.Sprintf("userdeliveryservers/%d/%d", domainID, form.ID), v, nil)
 
 	return
 }
 
 // DeleteUserDeliveryServer deletes a user delivery server
 // https://www.baruwa.com/docs/api/#delete-a-user-delivery-server
-func (c *Client) DeleteUserDeliveryServer(domainID int, server *UserDeliveryServer) (err error) {
+func (c *Client) DeleteUserDeliveryServer(domainID int, form *UserDeliveryServerForm) (err error) {
 	var v url.Values
 
 	if domainID <= 0 {
@@ -133,21 +147,21 @@ func (c *Client) DeleteUserDeliveryServer(domainID int, server *UserDeliveryServ
 		return
 	}
 
-	if server == nil {
+	if form == nil {
 		err = fmt.Errorf(serverParamError)
 		return
 	}
 
-	if server.ID <= 0 {
+	if form.ID <= 0 {
 		err = fmt.Errorf(serverSIDError)
 		return
 	}
 
-	if v, err = query.Values(server); err != nil {
+	if v, err = query.Values(form); err != nil {
 		return
 	}
 
-	err = c.delete(fmt.Sprintf("userdeliveryservers/%d/%d", domainID, server.ID), v)
+	err = c.delete(fmt.Sprintf("userdeliveryservers/%d/%d", domainID, form.ID), v)
 
 	return
 }
