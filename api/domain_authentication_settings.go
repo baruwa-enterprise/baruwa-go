@@ -18,6 +18,7 @@ import (
 type AuthServer struct {
 	ID              int    `json:"id,omitempty" url:"id,omitempty"`
 	Address         string `json:"address" url:"address"`
+	Port            int    `json:"port" url:"port"`
 	Protocol        int    `json:"protocol" url:"protocol"`
 	Enabled         bool   `json:"enabled" url:"enabled"`
 	SplitAddress    bool   `json:"split_address" url:"split_address"`
