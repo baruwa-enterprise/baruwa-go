@@ -136,7 +136,7 @@ func domainDSUpdate(cmd *cli.Cmd) {
 		addressSet, enabledSet, requireTLSSet, verificationOnlySet, protocolSet, portSet bool
 	)
 
-	cmd.Spec = "--id --domain-id --enable|--disable --require-tls|--disable-require-tls --verification-only|--disable-verification-only [--protocol][--port]"
+	cmd.Spec = "--id --domain-id --enable|--disable --require-tls|--disable-require-tls --verification-only|--disable-verification-only [--address][--protocol][--port]"
 
 	id = cmd.Int(cli.IntOpt{
 		Name: "id",
