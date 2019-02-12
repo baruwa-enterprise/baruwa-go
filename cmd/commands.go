@@ -49,6 +49,13 @@ func (c *CLI) RegisterCommands() {
 			cmd.Command("delete", "delete a domain delivery server", domainDSDelete)
 		})
 		cmd.Command("deliveryservers", "list domain delivery servers", domainDSList)
+		cmd.Command("userdeliveryserver", "manage user delivery servers", func(cmd *cli.Cmd) {
+			cmd.Command("show", "show detailed information of a user delivery server", userDSShow)
+			cmd.Command("create", "create a new user delivery server", userDSCreate)
+			cmd.Command("update", "update a user delivery server", userDSUpdate)
+			cmd.Command("delete", "delete a user delivery server", userDSDelete)
+		})
+		cmd.Command("userdeliveryservers", "list user delivery servers", userDSList)
 	})
 	// domains
 	c.Command("domains", "list domains", domainsList)
