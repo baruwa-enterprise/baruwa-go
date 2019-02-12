@@ -23,10 +23,38 @@ type AliasDomain struct {
 // DomainAlias holds domain aliases
 type DomainAlias struct {
 	ID            int          `json:"id,omitempty" url:"id,omitempty"`
-	Address       string       `json:"address" url:"address"`
+	Name          string       `json:"name" url:"name"`
 	Enabled       bool         `json:"status" url:"status"`
 	AcceptInbound bool         `json:"accept_inbound" url:"accept_inbound"`
 	Domain        *AliasDomain `json:"domain,omitempty" url:"domain,omitempty"`
+}
+
+// DomainAliasForm holds domain aliases
+type DomainAliasForm struct {
+	ID            int    `json:"id,omitempty" url:"id,omitempty"`
+	Name          string `json:"name" url:"name"`
+	Enabled       bool   `json:"status" url:"status"`
+	AcceptInbound bool   `json:"accept_inbound" url:"accept_inbound"`
+	Domain        int    `json:"domain,omitempty" url:"domain,omitempty"`
+}
+
+// DomainAliasList holds domain smarthosts
+type DomainAliasList struct {
+	Items []DomainAlias `json:"items"`
+	Links Links         `json:"links"`
+	Meta  Meta          `json:"meta"`
+}
+
+// GetDomainAliases returns a DomainList object
+// This contains a paginated list of domain aliases and links
+// to the neighbouring pages.
+// https://www.baruwa.com/docs/api/#domain-aliases
+func (c *Client) GetDomainAliases(domainID int, opts *ListOptions) (l *DomainAliasList, err error) {
+	l = &DomainAliasList{}
+
+	err = c.get(fmt.Sprintf("domainaliases/%d", domainID), opts, l)
+
+	return
 }
 
 // GetDomainAlias returns a domain alias
@@ -51,7 +79,7 @@ func (c *Client) GetDomainAlias(domainID, aliasID int) (alias *DomainAlias, err 
 
 // CreateDomainAlias creates a domain alias
 // https://www.baruwa.com/docs/api/#create-a-domain-alias
-func (c *Client) CreateDomainAlias(domainID int, alias *DomainAlias) (err error) {
+func (c *Client) CreateDomainAlias(domainID int, form *DomainAliasForm) (alias *DomainAlias, err error) {
 	var v url.Values
 
 	if domainID <= 0 {
@@ -59,14 +87,16 @@ func (c *Client) CreateDomainAlias(domainID int, alias *DomainAlias) (err error)
 		return
 	}
 
-	if alias == nil {
+	if form == nil {
 		err = fmt.Errorf(aliasParamError)
 		return
 	}
 
-	if v, err = query.Values(alias); err != nil {
+	if v, err = query.Values(form); err != nil {
 		return
 	}
+
+	alias = &DomainAlias{}
 
 	err = c.post(fmt.Sprintf("domainaliases/%d", domainID), v, alias)
 
@@ -75,7 +105,7 @@ func (c *Client) CreateDomainAlias(domainID int, alias *DomainAlias) (err error)
 
 // UpdateDomainAlias updates a domain alias
 // https://www.baruwa.com/docs/api/#update-a-domain-alias
-func (c *Client) UpdateDomainAlias(domainID int, alias *DomainAlias) (err error) {
+func (c *Client) UpdateDomainAlias(domainID int, form *DomainAliasForm) (err error) {
 	var v url.Values
 
 	if domainID <= 0 {
@@ -83,28 +113,28 @@ func (c *Client) UpdateDomainAlias(domainID int, alias *DomainAlias) (err error)
 		return
 	}
 
-	if alias == nil {
+	if form == nil {
 		err = fmt.Errorf(aliasParamError)
 		return
 	}
 
-	if alias.ID <= 0 {
+	if form.ID <= 0 {
 		err = fmt.Errorf(aliasSIDError)
 		return
 	}
 
-	if v, err = query.Values(alias); err != nil {
+	if v, err = query.Values(form); err != nil {
 		return
 	}
 
-	err = c.put(fmt.Sprintf("domainaliases/%d/%d", domainID, alias.ID), v, nil)
+	err = c.put(fmt.Sprintf("domainaliases/%d/%d", domainID, form.ID), v, nil)
 
 	return
 }
 
 // DeleteDomainAlias deletes an domain alias
 // https://www.baruwa.com/docs/api/#delete-a-domain-alias
-func (c *Client) DeleteDomainAlias(domainID int, alias *DomainAlias) (err error) {
+func (c *Client) DeleteDomainAlias(domainID int, form *DomainAliasForm) (err error) {
 	var v url.Values
 
 	if domainID <= 0 {
@@ -112,21 +142,21 @@ func (c *Client) DeleteDomainAlias(domainID int, alias *DomainAlias) (err error)
 		return
 	}
 
-	if alias == nil {
+	if form == nil {
 		err = fmt.Errorf(aliasParamError)
 		return
 	}
 
-	if alias.ID <= 0 {
+	if form.ID <= 0 {
 		err = fmt.Errorf(aliasSIDError)
 		return
 	}
 
-	if v, err = query.Values(alias); err != nil {
+	if v, err = query.Values(form); err != nil {
 		return
 	}
 
-	err = c.delete(fmt.Sprintf("domainaliases/%d/%d", domainID, alias.ID), v)
+	err = c.delete(fmt.Sprintf("domainaliases/%d/%d", domainID, form.ID), v)
 
 	return
 }

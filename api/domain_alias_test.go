@@ -13,6 +13,44 @@ import (
 	"testing"
 )
 
+func TestGetDomainAliasesOK(t *testing.T) {
+	data := `
+	{
+		"items": [{
+			"status": true,
+			"domain": {
+				"name": "example.com",
+				"id": 2
+			},
+			"accept_inbound": true,
+			"id": 2,
+			"name": "example.net"
+		}],
+		"meta": {
+			"total": 1
+		}
+	}
+	`
+	server, client, err := getTestServerAndClient(http.StatusOK, data)
+	if err != nil {
+		t.Fatalf("An error should not be returned")
+	}
+	defer server.Close()
+	u, err := client.GetDomainAliases(2, nil)
+	if err != nil {
+		t.Fatalf("An error should not be returned: %s", err.Error())
+	}
+	if len(u.Items) != 1 {
+		t.Errorf("Expected %d got %d", 1, len(u.Items))
+	}
+	if u.Meta.Total != 1 {
+		t.Errorf("Expected %d got %d", 1, u.Meta.Total)
+	}
+	if u.Links.Pages.First != "" {
+		t.Errorf("Expected '' got '%s'", u.Links.Pages.First)
+	}
+}
+
 func TestGetDomainAliasError(t *testing.T) {
 	data := ``
 	server, client, err := getTestServerAndClient(http.StatusOK, data)
@@ -78,14 +116,14 @@ func TestCreateDomainAliasError(t *testing.T) {
 		t.Fatalf("An error should not be returned")
 	}
 	defer server.Close()
-	err = client.CreateDomainAlias(0, nil)
+	_, err = client.CreateDomainAlias(0, nil)
 	if err == nil {
 		t.Fatalf("An error should be returned")
 	}
 	if err.Error() != domainIDError {
 		t.Errorf("Expected '%s' got '%s'", domainIDError, err)
 	}
-	err = client.CreateDomainAlias(1, nil)
+	_, err = client.CreateDomainAlias(1, nil)
 	if err == nil {
 		t.Fatalf("An error should be returned")
 	}
@@ -114,13 +152,13 @@ func TestCreateDomainAliasOK(t *testing.T) {
 		t.Fatalf("An error should not be returned")
 	}
 	defer server.Close()
-	a := &DomainAlias{
-		Address:       "example.net",
+	f := &DomainAliasForm{
+		Name:          "example.net",
 		Enabled:       true,
 		AcceptInbound: true,
-		Domain:        &AliasDomain{ID: 2, Name: "example.com"},
+		Domain:        2,
 	}
-	err = client.CreateDomainAlias(2, a)
+	a, err := client.CreateDomainAlias(2, f)
 	if err != nil {
 		t.Fatalf("An error should not be returned: %s", err)
 	}
@@ -150,11 +188,11 @@ func TestUpdateDomainAliasError(t *testing.T) {
 	if err.Error() != aliasParamError {
 		t.Errorf("Expected '%s' got '%s'", aliasParamError, err)
 	}
-	a := &DomainAlias{
-		Address:       "example.net",
+	a := &DomainAliasForm{
+		Name:          "example.net",
 		Enabled:       true,
 		AcceptInbound: false,
-		Domain:        &AliasDomain{ID: 2, Name: "example.com"},
+		Domain:        2,
 	}
 	err = client.UpdateDomainAlias(1, a)
 	if err == nil {
@@ -185,12 +223,12 @@ func TestUpdateDomainAliasOK(t *testing.T) {
 		t.Fatalf("An error should not be returned")
 	}
 	defer server.Close()
-	a := &DomainAlias{
+	a := &DomainAliasForm{
 		ID:            aliasID,
-		Address:       "example.net",
+		Name:          "example.net",
 		Enabled:       true,
 		AcceptInbound: false,
-		Domain:        &AliasDomain{ID: domainID, Name: "example.com"},
+		Domain:        domainID,
 	}
 	err = client.UpdateDomainAlias(2, a)
 	if err != nil {
@@ -219,11 +257,11 @@ func TestDeleteDomainAliasError(t *testing.T) {
 	if err.Error() != aliasParamError {
 		t.Errorf("Expected '%s' got '%s'", aliasParamError, err)
 	}
-	a := &DomainAlias{
-		Address:       "example.net",
+	a := &DomainAliasForm{
+		Name:          "example.net",
 		Enabled:       true,
 		AcceptInbound: false,
-		Domain:        &AliasDomain{ID: 2, Name: "example.com"},
+		Domain:        2,
 	}
 	err = client.DeleteDomainAlias(1, a)
 	if err == nil {
@@ -243,12 +281,12 @@ func TestDeleteDomainAliasOK(t *testing.T) {
 		t.Fatalf("An error should not be returned")
 	}
 	defer server.Close()
-	a := &DomainAlias{
+	a := &DomainAliasForm{
 		ID:            aliasID,
-		Address:       "example.net",
+		Name:          "example.net",
 		Enabled:       true,
 		AcceptInbound: false,
-		Domain:        &AliasDomain{ID: domainID, Name: "example.com"},
+		Domain:        domainID,
 	}
 	err = client.DeleteDomainAlias(2, a)
 	if err != nil {
