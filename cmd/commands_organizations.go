@@ -201,18 +201,35 @@ func organizationDelete(cmd *cli.Cmd) {
 
 func organizationsList(cmd *cli.Cmd) {
 	var (
-		b   []byte
-		err error
-		c   *api.Client
-		o   *api.OrganizationList
+		page    *int
+		b       []byte
+		err     error
+		pageSet bool
+		c       *api.Client
+		opts    *api.ListOptions
+		o       *api.OrganizationList
 	)
+
+	cmd.Spec = "[--page]"
+
+	page = cmd.Int(cli.IntOpt{
+		Name:      "page",
+		Desc:      "Page number",
+		SetByUser: &pageSet,
+	})
 
 	cmd.Action = func() {
 		if c, err = GetClient(); err != nil {
 			log.Fatal(err)
 		}
 
-		if o, err = c.GetOrganizations(nil); err != nil {
+		if pageSet {
+			opts = &api.ListOptions{
+				Page: fmt.Sprintf("%s/api/%s/organizations?page=%d", *serverURL, api.APIVersion, *page),
+			}
+		}
+
+		if o, err = c.GetOrganizations(opts); err != nil {
 			log.Fatal(err)
 		}
 

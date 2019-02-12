@@ -504,18 +504,35 @@ func domainDelete(cmd *cli.Cmd) {
 
 func domainsList(cmd *cli.Cmd) {
 	var (
-		b   []byte
-		err error
-		c   *api.Client
-		d   *api.DomainList
+		page    *int
+		b       []byte
+		err     error
+		pageSet bool
+		c       *api.Client
+		d       *api.DomainList
+		opts    *api.ListOptions
 	)
+
+	cmd.Spec = "[--page]"
+
+	page = cmd.Int(cli.IntOpt{
+		Name:      "page",
+		Desc:      "Page number",
+		SetByUser: &pageSet,
+	})
 
 	cmd.Action = func() {
 		if c, err = GetClient(); err != nil {
 			log.Fatal(err)
 		}
 
-		if d, err = c.GetDomains(nil); err != nil {
+		if pageSet {
+			opts = &api.ListOptions{
+				Page: fmt.Sprintf("%s/api/%s/domains?page=%d", *serverURL, api.APIVersion, *page),
+			}
+		}
+
+		if d, err = c.GetDomains(opts); err != nil {
 			log.Fatal(err)
 		}
 

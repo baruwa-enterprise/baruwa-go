@@ -358,18 +358,35 @@ func userDelete(cmd *cli.Cmd) {
 
 func usersList(cmd *cli.Cmd) {
 	var (
-		b   []byte
-		err error
-		c   *api.Client
-		u   *api.UserList
+		page    *int
+		b       []byte
+		err     error
+		pageSet bool
+		c       *api.Client
+		u       *api.UserList
+		opts    *api.ListOptions
 	)
+
+	cmd.Spec = "[--page]"
+
+	page = cmd.Int(cli.IntOpt{
+		Name:      "page",
+		Desc:      "Page number",
+		SetByUser: &pageSet,
+	})
 
 	cmd.Action = func() {
 		if c, err = GetClient(); err != nil {
 			log.Fatal(err)
 		}
 
-		if u, err = c.GetUsers(nil); err != nil {
+		if pageSet {
+			opts = &api.ListOptions{
+				Page: fmt.Sprintf("%s/api/%s/users?page=%d", *serverURL, api.APIVersion, *page),
+			}
+		}
+
+		if u, err = c.GetUsers(opts); err != nil {
 			log.Fatal(err)
 		}
 

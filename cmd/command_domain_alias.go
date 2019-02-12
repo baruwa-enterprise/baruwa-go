@@ -231,18 +231,25 @@ func domainAliasDelete(cmd *cli.Cmd) {
 
 func domainAliasList(cmd *cli.Cmd) {
 	var (
-		id  *int
-		b   []byte
-		err error
-		c   *api.Client
-		d   *api.DomainAliasList
+		id, page *int
+		b        []byte
+		err      error
+		pageSet  bool
+		opts     *api.ListOptions
+		c        *api.Client
+		d        *api.DomainAliasList
 	)
 
-	cmd.Spec = "--id"
+	cmd.Spec = "--id [--page]"
 
 	id = cmd.Int(cli.IntOpt{
 		Name: "id",
 		Desc: "Domain ID",
+	})
+	page = cmd.Int(cli.IntOpt{
+		Name:      "page",
+		Desc:      "Page number",
+		SetByUser: &pageSet,
 	})
 
 	cmd.Action = func() {
@@ -250,7 +257,13 @@ func domainAliasList(cmd *cli.Cmd) {
 			log.Fatal(err)
 		}
 
-		if d, err = c.GetDomainAliases(*id, nil); err != nil {
+		if pageSet {
+			opts = &api.ListOptions{
+				Page: fmt.Sprintf("%s/api/%s/domainaliases/%d?page=%d", *serverURL, api.APIVersion, *id, *page),
+			}
+		}
+
+		if d, err = c.GetDomainAliases(*id, opts); err != nil {
 			log.Fatal(err)
 		}
 
