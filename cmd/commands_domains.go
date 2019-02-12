@@ -498,7 +498,7 @@ func domainDelete(cmd *cli.Cmd) {
 			log.Fatal(err)
 		}
 
-		fmt.Printf("The domain: %d has been updated\n", *id)
+		fmt.Printf("The domain: %d has been deleted\n", *id)
 	}
 }
 
