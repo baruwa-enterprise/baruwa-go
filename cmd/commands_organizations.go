@@ -18,24 +18,197 @@ import (
 )
 
 func organizationShow(cmd *cli.Cmd) {
+	var (
+		b   []byte
+		id  *int
+		err error
+		c   *api.Client
+		o   *api.Organization
+	)
+
+	cmd.Spec = "--id"
+
+	id = cmd.Int(cli.IntOpt{
+		Name: "id",
+		Desc: "User ID",
+	})
+
+	cmd.Action = func() {
+		if c, err = GetClient(); err != nil {
+			log.Fatal(err)
+		}
+
+		if o, err = c.GetOrganization(*id); err != nil {
+			log.Fatal(err)
+		}
+
+		if b, err = prettyjson.Marshal(o); err != nil {
+			log.Fatal(err)
+		}
+		fmt.Printf("%s\n", b)
+	}
 }
 
 func organizationCreate(cmd *cli.Cmd) {
+	var (
+		b               []byte
+		err             error
+		f               *api.OrganizationForm
+		o               *api.Organization
+		c               *api.Client
+		name            *string
+		domains, admins *[]int
+	)
+
+	cmd.Spec = "--name [--domain...][--admin...]"
+
+	name = cmd.String(cli.StringOpt{
+		Name: "name",
+		Desc: "Organization name",
+	})
+	domains = cmd.Ints(cli.IntsOpt{
+		Name: "domain",
+		Desc: "The domains to add to this organization",
+	})
+	admins = cmd.Ints(cli.IntsOpt{
+		Name: "admin",
+		Desc: "The admins who manage the domains under this organization",
+	})
+
+	cmd.Action = func() {
+		if c, err = GetClient(); err != nil {
+			log.Fatal(err)
+		}
+
+		f = &api.OrganizationForm{
+			Name:    *name,
+			Domains: *domains,
+			Admins:  *admins,
+		}
+
+		if o, err = c.CreateOrganization(f); err != nil {
+			log.Fatal(err)
+		}
+
+		if b, err = prettyjson.Marshal(o); err != nil {
+			log.Fatal(err)
+		}
+		fmt.Printf("%s\n", b)
+	}
 }
 
 func organizationUpdate(cmd *cli.Cmd) {
+	var (
+		id                             *int
+		b                              []byte
+		err                            error
+		td                             []int
+		f                              *api.OrganizationForm
+		o                              *api.Organization
+		c                              *api.Client
+		name                           *string
+		domains, admins                *[]int
+		nameSet, domainsSet, adminsSet bool
+	)
+
+	cmd.Spec = "--id [--name][--domain...][--admin...]"
+
+	id = cmd.Int(cli.IntOpt{
+		Name: "id",
+		Desc: "User ID",
+	})
+	name = cmd.String(cli.StringOpt{
+		Name:      "name",
+		Desc:      "Organization name",
+		SetByUser: &nameSet,
+	})
+	domains = cmd.Ints(cli.IntsOpt{
+		Name:      "domain",
+		Desc:      "The domains to add to this organization",
+		SetByUser: &domainsSet,
+	})
+	admins = cmd.Ints(cli.IntsOpt{
+		Name:      "admin",
+		Desc:      "The admins who manage the domains under this organization",
+		SetByUser: &adminsSet,
+	})
+
+	cmd.Action = func() {
+		if c, err = GetClient(); err != nil {
+			log.Fatal(err)
+		}
+
+		if o, err = c.GetOrganization(*id); err != nil {
+			log.Fatal(err)
+		}
+
+		for _, dm := range o.Domains {
+			td = append(td, dm.ID)
+		}
+
+		f = &api.OrganizationForm{
+			ID:      *id,
+			Name:    o.Name,
+			Domains: td,
+		}
+		if nameSet {
+			f.Name = *name
+		}
+		if domainsSet {
+			f.Domains = *domains
+		}
+		if adminsSet {
+			f.Admins = *admins
+		}
+
+		if err = c.UpdateOrganization(f, o); err != nil {
+			log.Fatal(err)
+		}
+
+		if b, err = prettyjson.Marshal(o); err != nil {
+			log.Fatal(err)
+		}
+		fmt.Printf("%s\n", b)
+		fmt.Printf("The organization: %s has been updated\n", o.Name)
+	}
 }
 
 func organizationDelete(cmd *cli.Cmd) {
+	var (
+		id  *int
+		err error
+		c   *api.Client
+	)
+
+	id = cmd.Int(cli.IntOpt{
+		Name: "id",
+		Desc: "User ID",
+	})
+
+	cmd.Spec = "--id"
+
+	cmd.Action = func() {
+		if c, err = GetClient(); err != nil {
+			log.Fatal(err)
+		}
+
+		if err = c.DeleteOrganization(*id); err != nil {
+			log.Fatal(err)
+		}
+
+		fmt.Printf("The organization: %d has been deleted\n", *id)
+	}
 }
 
 func organizationsList(cmd *cli.Cmd) {
-	cmd.Action = func() {
-		var b []byte
-		var err error
-		var c *api.Client
-		var o *api.OrganizationList
+	var (
+		b   []byte
+		err error
+		c   *api.Client
+		o   *api.OrganizationList
+	)
 
+	cmd.Action = func() {
 		if c, err = GetClient(); err != nil {
 			log.Fatal(err)
 		}
