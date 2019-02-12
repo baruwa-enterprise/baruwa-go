@@ -56,6 +56,13 @@ func (c *CLI) RegisterCommands() {
 			cmd.Command("delete", "delete a user delivery server", userDSDelete)
 		})
 		cmd.Command("userdeliveryservers", "list user delivery servers", userDSList)
+		cmd.Command("authsetting", "manage authentication settings", func(cmd *cli.Cmd) {
+			cmd.Command("show", "show detailed information of an authentication setting", domainASShow)
+			cmd.Command("create", "create a new authentication setting", domainASCreate)
+			cmd.Command("update", "update a authentication setting", domainASUpdate)
+			cmd.Command("delete", "delete a authentication setting", domainASDelete)
+		})
+		cmd.Command("authsettings", "list authentication settings", domainASList)
 	})
 	// domains
 	c.Command("domains", "list domains", domainsList)
