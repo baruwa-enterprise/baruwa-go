@@ -227,9 +227,8 @@ func (c *Client) do(req *http.Request, v interface{}) (err error) {
 		data, err = ioutil.ReadAll(resp.Body)
 
 		if err == nil && len(data) > 0 {
-			if err = json.Unmarshal(data, errResp); err == nil {
-				err = errResp
-			}
+			json.Unmarshal(data, errResp)
+			err = errResp
 		} else {
 			err = errResp
 		}
