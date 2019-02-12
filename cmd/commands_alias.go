@@ -150,7 +150,6 @@ func aliasUpdate(cmd *cli.Cmd) {
 			log.Fatal(err)
 		}
 		fmt.Printf("%s\n", b)
-		fmt.Printf("The alias address: %s has been updated\n", a.Address)
 	}
 }
 

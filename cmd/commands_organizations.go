@@ -169,7 +169,6 @@ func organizationUpdate(cmd *cli.Cmd) {
 			log.Fatal(err)
 		}
 		fmt.Printf("%s\n", b)
-		fmt.Printf("The organization: %s has been updated\n", o.Name)
 	}
 }
 
