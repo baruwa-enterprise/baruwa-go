@@ -41,6 +41,7 @@ func (c *CLI) RegisterCommands() {
 			cmd.Command("update", "update a domain alias", domainAliasUpdate)
 			cmd.Command("delete", "delete a domain alias", domainAliasDelete)
 		})
+		cmd.Command("aliases", "list domain aliases", domainAliasList)
 	})
 	// domains
 	c.Command("domains", "list domains", domainsList)
