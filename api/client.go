@@ -144,7 +144,7 @@ func (c *Client) post(p string, v url.Values, data interface{}) (err error) {
 func (c *Client) put(p string, v url.Values, data interface{}) (err error) {
 	var req *http.Request
 
-	fmt.Println(v.Encode())
+	// fmt.Println(v.Encode())
 
 	if req, err = c.newRequest(http.MethodPut, apiPath(p), nil, strings.NewReader(v.Encode())); err != nil {
 		return
