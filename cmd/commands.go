@@ -79,6 +79,13 @@ func (c *CLI) RegisterCommands() {
 		cmd.Command("create", "create a new organization", organizationCreate)
 		cmd.Command("update", "update a organization", organizationUpdate)
 		cmd.Command("delete", "delete a organization", organizationDelete)
+		cmd.Command("smarthost", "manage smarthosts", func(cmd *cli.Cmd) {
+			cmd.Command("show", "show detailed information of a smarthost", organizationSMShow)
+			cmd.Command("create", "create a new smarthost", organizationSMCreate)
+			cmd.Command("update", "update a smarthost", organizationSMUpdate)
+			cmd.Command("delete", "delete a smarthost", organizationSMDelete)
+		})
+		cmd.Command("smarthosts", "list smarthosts", organizationSMList)
 	})
 	// organizations
 	c.Command("organizations", "list organizations", organizationsList)
