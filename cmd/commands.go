@@ -63,6 +63,13 @@ func (c *CLI) RegisterCommands() {
 			cmd.Command("delete", "delete a authentication setting", domainASDelete)
 		})
 		cmd.Command("authsettings", "list authentication settings", domainASList)
+		cmd.Command("smarthost", "manage smarthosts", func(cmd *cli.Cmd) {
+			cmd.Command("show", "show detailed information of a smarthost", domainSMShow)
+			cmd.Command("create", "create a new smarthost", domainSMCreate)
+			cmd.Command("update", "update a smarthost", domainSMUpdate)
+			cmd.Command("delete", "delete a smarthost", domainSMDelete)
+		})
+		cmd.Command("smarthosts", "list smarthosts", domainSMList)
 	})
 	// domains
 	c.Command("domains", "list domains", domainsList)
