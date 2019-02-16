@@ -86,6 +86,13 @@ func (c *CLI) RegisterCommands() {
 			cmd.Command("delete", "delete a smarthost", organizationSMDelete)
 		})
 		cmd.Command("smarthosts", "list smarthosts", organizationSMList)
+		cmd.Command("fallbackserver", "manage fallback servers", func(cmd *cli.Cmd) {
+			cmd.Command("show", "show detailed information of a fallback server", organizationFSShow)
+			cmd.Command("create", "create a new fallback server", organizationFSCreate)
+			cmd.Command("update", "update a fallback server", organizationFSUpdate)
+			cmd.Command("delete", "delete a fallback server", organizationFSDelete)
+		})
+		cmd.Command("fallbackservers", "list fallback servers", organizationFSList)
 	})
 	// organizations
 	c.Command("organizations", "list organizations", organizationsList)
