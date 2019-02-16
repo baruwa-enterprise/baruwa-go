@@ -22,13 +22,14 @@ type FallBackServerOrg struct {
 
 // FallBackServer holds organization fallback servers
 type FallBackServer struct {
-	ID           int                `json:"id,omitempty" url:"id,omitempty"`
-	Address      string             `json:"address" url:"address"`
-	Protocol     int                `json:"protocol" url:"protocol"`
-	Port         int                `json:"port" url:"port"`
-	RequireTLS   bool               `json:"require_tls" url:"require_tls"`
-	Enabled      bool               `json:"enabled" url:"enabled"`
-	Organization *FallBackServerOrg `json:"organization" url:"organization"`
+	ID               int                `json:"id,omitempty" url:"id,omitempty"`
+	Address          string             `json:"address" url:"address"`
+	Protocol         int                `json:"protocol" url:"protocol"`
+	Port             int                `json:"port" url:"port"`
+	RequireTLS       bool               `json:"require_tls" url:"require_tls"`
+	VerificationOnly bool               `json:"verification_only" url:"verification_only"`
+	Enabled          bool               `json:"enabled" url:"enabled"`
+	Organization     *FallBackServerOrg `json:"organization" url:"organization"`
 }
 
 // FallBackServerList holds users
@@ -50,7 +51,7 @@ func (c *Client) GetFallBackServers(organizationID int, opts *ListOptions) (l *F
 
 	l = &FallBackServerList{}
 
-	err = c.get(fmt.Sprintf("failbackservers/%d", organizationID), opts, l)
+	err = c.get(fmt.Sprintf("fallbackservers/list/%d", organizationID), opts, l)
 
 	return
 }
@@ -65,7 +66,7 @@ func (c *Client) GetFallBackServer(serverID int) (server *FallBackServer, err er
 
 	server = &FallBackServer{}
 
-	err = c.get(fmt.Sprintf("failbackservers/%d", serverID), nil, server)
+	err = c.get(fmt.Sprintf("fallbackservers/%d", serverID), nil, server)
 
 	return
 }
@@ -89,7 +90,7 @@ func (c *Client) CreateFallBackServer(organizationID int, server *FallBackServer
 		return
 	}
 
-	err = c.post(fmt.Sprintf("failbackservers/%d", organizationID), v, server)
+	err = c.post(fmt.Sprintf("fallbackservers/%d", organizationID), v, server)
 
 	return
 }
@@ -113,7 +114,7 @@ func (c *Client) UpdateFallBackServer(server *FallBackServer) (err error) {
 		return
 	}
 
-	err = c.put(fmt.Sprintf("failbackservers/%d", server.ID), v, server)
+	err = c.put(fmt.Sprintf("fallbackservers/%d", server.ID), v, server)
 
 	return
 }
@@ -137,7 +138,7 @@ func (c *Client) DeleteFallBackServer(server *FallBackServer) (err error) {
 		return
 	}
 
-	err = c.delete(fmt.Sprintf("failbackservers/%d", server.ID), v)
+	err = c.delete(fmt.Sprintf("fallbackservers/%d", server.ID), v)
 
 	return
 }
