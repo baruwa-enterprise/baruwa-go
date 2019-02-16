@@ -93,6 +93,12 @@ func (c *CLI) RegisterCommands() {
 			cmd.Command("delete", "delete a fallback server", organizationFSDelete)
 		})
 		cmd.Command("fallbackservers", "list fallback servers", organizationFSList)
+		cmd.Command("relaysetting", "manage relay settings", func(cmd *cli.Cmd) {
+			cmd.Command("show", "show detailed information of a relay setting", organizationRelayShow)
+			cmd.Command("create", "create a new relay setting", organizationRelayCreate)
+			cmd.Command("update", "update a relay setting", organizationRelayUpdate)
+			cmd.Command("delete", "delete a relay setting", organizationRelayDelete)
+		})
 	})
 	// organizations
 	c.Command("organizations", "list organizations", organizationsList)
