@@ -16,20 +16,21 @@ import (
 
 // RelaySetting holds relay settings
 type RelaySetting struct {
-	ID              int     `json:"id,omitempty" url:"id,omitempty"`
-	Address         string  `json:"address" url:"address"`
-	Username        string  `json:"username" url:"username"`
-	Enabled         bool    `json:"enabled" url:"enabled"`
-	RequireTLS      bool    `json:"require_tls" url:"require_tls"`
-	Password1       string  `json:"password1,omitempty" url:"password1,omitempty"`
-	Password2       string  `json:"password2,omitempty" url:"password2,omitempty"`
-	Description     string  `json:"description" url:"description"`
-	LowScore        float64 `json:"low_score" url:"low_score"`
-	HighScore       float64 `json:"high_score" url:"high_score"`
-	SpamActions     int     `json:"spam_actions" url:"spam_actions"`
-	HighSpamActions int     `json:"highspam_actions" url:"highspam_actions"`
-	BlockMacros     bool    `json:"block_macros" url:"block_macros"`
-	RateLimit       int     `json:"ratelimit" url:"ratelimit"`
+	ID              int          `json:"id,omitempty" url:"id,omitempty"`
+	Address         string       `json:"address" url:"address"`
+	Username        string       `json:"username" url:"username"`
+	Enabled         bool         `json:"enabled" url:"enabled"`
+	RequireTLS      bool         `json:"require_tls" url:"require_tls"`
+	Password1       string       `json:"password1,omitempty" url:"password1,omitempty"`
+	Password2       string       `json:"password2,omitempty" url:"password2,omitempty"`
+	Description     string       `json:"description" url:"description"`
+	LowScore        LocalFloat64 `json:"low_score" url:"low_score"`
+	HighScore       LocalFloat64 `json:"high_score" url:"high_score"`
+	SpamActions     int          `json:"spam_actions" url:"spam_actions"`
+	HighSpamActions int          `json:"highspam_actions" url:"highspam_actions"`
+	BlockMacros     bool         `json:"block_macros" url:"block_macros"`
+	RateLimit       int          `json:"ratelimit" url:"ratelimit"`
+	AllowAllSenders bool         `json:"allow_allsenders" url:"allow_allsenders"`
 }
 
 // GetRelaySetting returns radius settings
