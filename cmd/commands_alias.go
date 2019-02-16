@@ -98,7 +98,7 @@ func aliasUpdate(cmd *cli.Cmd) {
 	var enabled *bool
 	var c *api.Client
 	var a *api.AliasAddress
-	var enableSet, disableSet, emailSet bool
+	var enableSet, emailSet bool
 
 	aid = cmd.Int(cli.IntOpt{
 		Name: "id",
@@ -110,14 +110,13 @@ func aliasUpdate(cmd *cli.Cmd) {
 		SetByUser: &emailSet,
 	})
 	enabled = cmd.Bool(cli.BoolOpt{
+		Name: "disable",
+		Desc: "Disable this alias",
+	})
+	enabled = cmd.Bool(cli.BoolOpt{
 		Name:      "enable",
 		Desc:      "Enable this alias",
 		SetByUser: &enableSet,
-	})
-	enabled = cmd.Bool(cli.BoolOpt{
-		Name:      "disable",
-		Desc:      "Disable this alias",
-		SetByUser: &disableSet,
 	})
 
 	cmd.Spec = "--id [--alias-address] --enable|--disable"
@@ -134,12 +133,7 @@ func aliasUpdate(cmd *cli.Cmd) {
 		if emailSet {
 			a.Address = *email
 		}
-		if enableSet {
-			*enabled = true
-		}
-		if disableSet {
-			*enabled = false
-		}
+		*enabled = enableSet
 		a.Enabled = *enabled
 
 		if err = c.UpdateAliasAddress(a); err != nil {

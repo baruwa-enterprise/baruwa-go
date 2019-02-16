@@ -154,22 +154,22 @@ func domainASUpdate(cmd *cli.Cmd) {
 		SetByUser: &usmSet,
 	})
 	enabled = cmd.Bool(cli.BoolOpt{
+		Name: "disable",
+		Desc: "Disable this authentication setting",
+	})
+	enabled = cmd.Bool(cli.BoolOpt{
 		Name:      "enable",
 		Desc:      "Enable this authentication setting",
 		SetByUser: &enabledSet,
 	})
-	enabled = cmd.Bool(cli.BoolOpt{
-		Name: "disable",
-		Desc: "Disable this authentication setting",
+	splitAddress = cmd.Bool(cli.BoolOpt{
+		Name: "disable-split-address",
+		Desc: "Disable split the address",
 	})
 	splitAddress = cmd.Bool(cli.BoolOpt{
 		Name:      "split-address",
 		Desc:      "Split the address",
 		SetByUser: &splitAddressSet,
-	})
-	splitAddress = cmd.Bool(cli.BoolOpt{
-		Name: "disable-split-address",
-		Desc: "Disable split the address",
 	})
 	protocol = cmd.Int(cli.IntOpt{
 		Name:      "protocol",

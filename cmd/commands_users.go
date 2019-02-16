@@ -214,31 +214,31 @@ func userUpdate(cmd *cli.Cmd) {
 		SetByUser: &isSettimezone,
 	})
 	enabled = cmd.Bool(cli.BoolOpt{
+		Name: "disable",
+		Desc: "Disable this account",
+	})
+	enabled = cmd.Bool(cli.BoolOpt{
 		Name:      "enable",
 		Desc:      "Enable this account",
 		SetByUser: &isSetEnable,
 	})
-	enabled = cmd.Bool(cli.BoolOpt{
-		Name: "disable",
-		Desc: "Disable this account",
+	sendReports = cmd.Bool(cli.BoolOpt{
+		Name: "disable-reports",
+		Desc: "Disable reports for this account",
 	})
 	sendReports = cmd.Bool(cli.BoolOpt{
 		Name:      "enable-reports",
 		Desc:      "Enable reports for this account",
 		SetByUser: &isSetEnableReports,
 	})
-	sendReports = cmd.Bool(cli.BoolOpt{
-		Name: "disable-reports",
-		Desc: "Disable reports for this account",
+	spamChecks = cmd.Bool(cli.BoolOpt{
+		Name: "disable-spam-checks",
+		Desc: "Disable spam checking",
 	})
 	spamChecks = cmd.Bool(cli.BoolOpt{
 		Name:      "enable-spam-checks",
 		Desc:      "Enable spam checking",
 		SetByUser: &isEnablespamChecks,
-	})
-	spamChecks = cmd.Bool(cli.BoolOpt{
-		Name: "disable-spam-checks",
-		Desc: "Disable spam checking",
 	})
 	cmd.Var(cli.VarOpt{
 		Name:      "low-score",
@@ -253,19 +253,20 @@ func userUpdate(cmd *cli.Cmd) {
 		SetByUser: &isSethighScore,
 	})
 	blockMacros = cmd.Bool(cli.BoolOpt{
+		Name: "disable-block-macros",
+		Desc: "Enable or disable blocking Attachments with Macros",
+	})
+	blockMacros = cmd.Bool(cli.BoolOpt{
 		Name:      "enable-block-macros",
 		Desc:      "Enable or disable blocking Attachments with Macros",
 		SetByUser: &isEnableblockMacros,
-	})
-	blockMacros = cmd.Bool(cli.BoolOpt{
-		Name: "disable-block-macros",
-		Desc: "Enable or disable blocking Attachments with Macros",
 	})
 	domains = cmd.Ints(cli.IntsOpt{
 		Name:      "domain",
 		Desc:      "The domains to which this user belongs",
 		SetByUser: &isSetdomains,
 	})
+
 	cmd.Action = func() {
 		if c, err = GetClient(); err != nil {
 			log.Fatal(err)

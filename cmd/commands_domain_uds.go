@@ -152,31 +152,31 @@ func userDSUpdate(cmd *cli.Cmd) {
 		SetByUser: &addressSet,
 	})
 	enabled = cmd.Bool(cli.BoolOpt{
+		Name: "disable",
+		Desc: "Disable this delivery server",
+	})
+	enabled = cmd.Bool(cli.BoolOpt{
 		Name:      "enable",
 		Desc:      "Enable this delivery server",
 		SetByUser: &enabledSet,
 	})
-	enabled = cmd.Bool(cli.BoolOpt{
-		Name: "disable",
-		Desc: "Disable this delivery server",
+	requireTLS = cmd.Bool(cli.BoolOpt{
+		Name: "disable-require-tls",
+		Desc: "Disable Require TLS",
 	})
 	requireTLS = cmd.Bool(cli.BoolOpt{
 		Name:      "require-tls",
 		Desc:      "Require TLS",
 		SetByUser: &requireTLSSet,
 	})
-	requireTLS = cmd.Bool(cli.BoolOpt{
-		Name: "disable-require-tls",
-		Desc: "Disable Require TLS",
+	verificationOnly = cmd.Bool(cli.BoolOpt{
+		Name: "disable-verification-only",
+		Desc: "Disable Verification only",
 	})
 	verificationOnly = cmd.Bool(cli.BoolOpt{
 		Name:      "verification-only",
 		Desc:      "Verification only",
 		SetByUser: &verificationOnlySet,
-	})
-	verificationOnly = cmd.Bool(cli.BoolOpt{
-		Name: "disable-verification-only",
-		Desc: "Disable Verification only",
 	})
 	protocol = cmd.Int(cli.IntOpt{
 		Name:      "protocol",

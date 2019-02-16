@@ -271,85 +271,85 @@ func domainUpdate(cmd *cli.Cmd) {
 		SetByUser: &timeZoneSet,
 	})
 	enabled = cmd.Bool(cli.BoolOpt{
+		Name: "disable",
+		Desc: "Disable this domain",
+	})
+	enabled = cmd.Bool(cli.BoolOpt{
 		Name:      "enable",
 		Desc:      "Enable this domain",
 		SetByUser: &enabledSet,
 	})
-	enabled = cmd.Bool(cli.BoolOpt{
-		Name: "disable",
-		Desc: "Disable this domain",
+	acceptInbound = cmd.Bool(cli.BoolOpt{
+		Name: "disable-inbound",
+		Desc: "Disable accepting of inbound mail to this domain",
 	})
 	acceptInbound = cmd.Bool(cli.BoolOpt{
 		Name:      "accept-inbound",
 		Desc:      "Enable accepting of inbound mail to this domain",
 		SetByUser: &acceptInboundSet,
 	})
-	acceptInbound = cmd.Bool(cli.BoolOpt{
-		Name: "disable-inbound",
-		Desc: "Disable accepting of inbound mail to this domain",
+	discardMail = cmd.Bool(cli.BoolOpt{
+		Name: "disable-discard-mail",
+		Desc: "Disable discarding of all mail sent to this domain",
 	})
 	discardMail = cmd.Bool(cli.BoolOpt{
 		Name:      "discard-mail",
 		Desc:      "Enable discarding of all mail sent to this domain",
 		SetByUser: &discardMailSet,
 	})
-	discardMail = cmd.Bool(cli.BoolOpt{
-		Name: "disable-discard-mail",
-		Desc: "Disable discarding of all mail sent to this domain",
+	smtpCallout = cmd.Bool(cli.BoolOpt{
+		Name: "disable-smtp-callout",
+		Desc: "Disable SMTP callout based recipient verification",
 	})
 	smtpCallout = cmd.Bool(cli.BoolOpt{
 		Name:      "smtp-callout",
 		Desc:      "Enable SMTP callout based recipient verification",
 		SetByUser: &smtpCalloutSet,
 	})
-	smtpCallout = cmd.Bool(cli.BoolOpt{
-		Name: "disable-smtp-callout",
-		Desc: "Disable SMTP callout based recipient verification",
+	ldapCallout = cmd.Bool(cli.BoolOpt{
+		Name: "disable-ldap-callout",
+		Desc: "Disable LDAP email address verification for this domain",
 	})
 	ldapCallout = cmd.Bool(cli.BoolOpt{
 		Name:      "ldap-callout",
 		Desc:      "Enable LDAP email address verification for this domain",
 		SetByUser: &ldapCalloutSet,
 	})
-	ldapCallout = cmd.Bool(cli.BoolOpt{
-		Name: "disable-ldap-callout",
-		Desc: "Disable LDAP email address verification for this domain",
+	virusChecks = cmd.Bool(cli.BoolOpt{
+		Name: "disable-virus-checks",
+		Desc: "Disable virus checks for this domain",
 	})
 	virusChecks = cmd.Bool(cli.BoolOpt{
 		Name:      "virus-checks",
 		Desc:      "Enable virus checks for this domain",
 		SetByUser: &virusChecksSet,
 	})
-	virusChecks = cmd.Bool(cli.BoolOpt{
-		Name: "disable-virus-checks",
-		Desc: "Disable virus checks for this domain",
+	virusChecksAtSMTP = cmd.Bool(cli.BoolOpt{
+		Name: "disable-virus-checks-at-smtp",
+		Desc: "Disable run Virus Checks at SMTP time",
 	})
 	virusChecksAtSMTP = cmd.Bool(cli.BoolOpt{
 		Name:      "virus-checks-at-smtp",
 		Desc:      "Run Virus Checks at SMTP time",
 		SetByUser: &virusChecksAtSMTPSet,
 	})
-	virusChecksAtSMTP = cmd.Bool(cli.BoolOpt{
-		Name: "disable-virus-checks-at-smtp",
-		Desc: "Disable run Virus Checks at SMTP time",
+	blockMacros = cmd.Bool(cli.BoolOpt{
+		Name: "disable-block-macros",
+		Desc: "Disable blocking Attachments with Macros",
 	})
 	blockMacros = cmd.Bool(cli.BoolOpt{
 		Name:      "block-macros",
 		Desc:      "Enable blocking Attachments with Macros",
 		SetByUser: &blockMacrosSet,
 	})
-	blockMacros = cmd.Bool(cli.BoolOpt{
-		Name: "disable-block-macros",
-		Desc: "Disable blocking Attachments with Macros",
+	spamChecks = cmd.Bool(cli.BoolOpt{
+		Name: "disable-spam-checks",
+		Desc: "Disable spam checks for this domain",
 	})
 	spamChecks = cmd.Bool(cli.BoolOpt{
 		Name:      "spam-checks",
 		Desc:      "Enable spam checks for this domain",
 		SetByUser: &spamChecksSet,
-	})
-	spamChecks = cmd.Bool(cli.BoolOpt{
-		Name: "disable-spam-checks",
-		Desc: "Disable spam checks for this domain",
 	})
 	spamActions = cmd.Int(cli.IntOpt{
 		Name:      "spam-actions",

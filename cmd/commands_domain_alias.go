@@ -134,22 +134,22 @@ func domainAliasUpdate(cmd *cli.Cmd) {
 		SetByUser: &nameSet,
 	})
 	enabled = cmd.Bool(cli.BoolOpt{
+		Name: "disable",
+		Desc: "Disable this domain alias",
+	})
+	enabled = cmd.Bool(cli.BoolOpt{
 		Name:      "enable",
 		Desc:      "Enable this domain alias",
 		SetByUser: &enabledSet,
 	})
-	enabled = cmd.Bool(cli.BoolOpt{
-		Name: "disable",
-		Desc: "Disable this domain alias",
+	acceptInbound = cmd.Bool(cli.BoolOpt{
+		Name: "disable-accept-inbound",
+		Desc: "Disable accepting of inbound mail to this domain alias",
 	})
 	acceptInbound = cmd.Bool(cli.BoolOpt{
 		Name:      "accept-inbound",
 		Desc:      "Enable accepting of inbound mail to this domain alias",
 		SetByUser: &acceptInboundSet,
-	})
-	acceptInbound = cmd.Bool(cli.BoolOpt{
-		Name: "disable-accept-inbound",
-		Desc: "Disable accepting of inbound mail to this domain alias",
 	})
 
 	cmd.Action = func() {
