@@ -383,7 +383,7 @@ func usersList(cmd *cli.Cmd) {
 
 		if pageSet {
 			opts = &api.ListOptions{
-				Page: fmt.Sprintf("%s/api/%s/users?page=%d", *serverURL, api.APIVersion, *page),
+				Page: fmt.Sprintf(api.UserListURL, *serverURL, api.APIVersion, *page),
 			}
 		}
 

@@ -38,4 +38,24 @@ const (
 	clientIDError        = "clientID is required"
 	clientSecretError    = "secret is required"
 	pwFormError          = "The form param is required"
+	// UserListURL - users list paging url fmt string
+	UserListURL = "%s/api/%s/users?page=%d"
+	// OrgListURL - organization list paging url fmt string
+	OrgListURL = "%s/api/%s/organizations?page=%d"
+	// OrgSMListURL - organization smarthosts list paging url fmt string
+	OrgSMListURL = "%s/api/%s/organizations/smarthosts/%d?page=%d"
+	// OrgFSListURL - fallback servers list paging url fmt string
+	OrgFSListURL = "%s/api/%s/failbackservers/%d?page=%d"
+	// DomainListURL - domains list paging url fmt string
+	DomainListURL = "%s/api/%s/domains?page=%d"
+	// UDSListURL - user delivery servers list paging url fmt string
+	UDSListURL = "%s/api/%s/userdeliveryservers/%d?page=%d"
+	// DSMListURL - domain smarthosts list paging url fmt string
+	DSMListURL = "%s/api/%s/domains/smarthosts/%d?page=%d"
+	// DDSListURL - delivery servers list paging url fmt string
+	DDSListURL = "%s/api/%s/deliveryservers/%d?page=%d"
+	// DASListURL - domain smarthosts list paging url fmt string
+	DASListURL = "%s/api/%s/authservers/%d?page=%d"
+	// DAliasListURL - domain aliases list paging url fmt string
+	DAliasListURL = "%s/api/%s/domainaliases/%d?page=%d"
 )

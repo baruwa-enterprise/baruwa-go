@@ -309,7 +309,7 @@ func domainDSList(cmd *cli.Cmd) {
 
 		if pageSet {
 			opts = &api.ListOptions{
-				Page: fmt.Sprintf("%s/api/%s/deliveryservers/%d?page=%d", *serverURL, api.APIVersion, *id, *page),
+				Page: fmt.Sprintf(api.DDSListURL, *serverURL, api.APIVersion, *id, *page),
 			}
 		}
 

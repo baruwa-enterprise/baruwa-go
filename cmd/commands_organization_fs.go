@@ -275,7 +275,7 @@ func organizationFSList(cmd *cli.Cmd) {
 
 		if pageSet {
 			opts = &api.ListOptions{
-				Page: fmt.Sprintf("%s/api/%s/failbackservers/%d?page=%d", *serverURL, api.APIVersion, *id, *page),
+				Page: fmt.Sprintf(api.OrgFSListURL, *serverURL, api.APIVersion, *id, *page),
 			}
 		}
 

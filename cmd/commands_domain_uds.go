@@ -309,7 +309,7 @@ func userDSList(cmd *cli.Cmd) {
 
 		if pageSet {
 			opts = &api.ListOptions{
-				Page: fmt.Sprintf("%s/api/%s/userdeliveryservers/%d?page=%d", *serverURL, api.APIVersion, *id, *page),
+				Page: fmt.Sprintf(api.UDSListURL, *serverURL, api.APIVersion, *id, *page),
 			}
 		}
 

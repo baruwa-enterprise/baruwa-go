@@ -299,7 +299,7 @@ func domainSMList(cmd *cli.Cmd) {
 
 		if pageSet {
 			opts = &api.ListOptions{
-				Page: fmt.Sprintf("%s/api/%s/domains/smarthosts/%d?page=%d", *serverURL, api.APIVersion, *id, *page),
+				Page: fmt.Sprintf(api.DSMListURL, *serverURL, api.APIVersion, *id, *page),
 			}
 		}
 

@@ -225,7 +225,7 @@ func organizationsList(cmd *cli.Cmd) {
 
 		if pageSet {
 			opts = &api.ListOptions{
-				Page: fmt.Sprintf("%s/api/%s/organizations?page=%d", *serverURL, api.APIVersion, *page),
+				Page: fmt.Sprintf(api.OrgListURL, *serverURL, api.APIVersion, *page),
 			}
 		}
 

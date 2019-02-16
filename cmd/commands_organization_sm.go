@@ -298,7 +298,7 @@ func organizationSMList(cmd *cli.Cmd) {
 
 		if pageSet {
 			opts = &api.ListOptions{
-				Page: fmt.Sprintf("%s/api/%s/organizations/smarthosts/%d?page=%d", *serverURL, api.APIVersion, *id, *page),
+				Page: fmt.Sprintf(api.OrgSMListURL, *serverURL, api.APIVersion, *id, *page),
 			}
 		}
 

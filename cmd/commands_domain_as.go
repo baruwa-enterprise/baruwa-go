@@ -284,7 +284,7 @@ func domainASList(cmd *cli.Cmd) {
 
 		if pageSet {
 			opts = &api.ListOptions{
-				Page: fmt.Sprintf("%s/api/%s/authservers/%d?page=%d", *serverURL, api.APIVersion, *id, *page),
+				Page: fmt.Sprintf(api.DASListURL, *serverURL, api.APIVersion, *id, *page),
 			}
 		}
 

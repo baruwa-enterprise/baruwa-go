@@ -259,7 +259,7 @@ func domainAliasList(cmd *cli.Cmd) {
 
 		if pageSet {
 			opts = &api.ListOptions{
-				Page: fmt.Sprintf("%s/api/%s/domainaliases/%d?page=%d", *serverURL, api.APIVersion, *id, *page),
+				Page: fmt.Sprintf(api.DAliasListURL, *serverURL, api.APIVersion, *id, *page),
 			}
 		}
 

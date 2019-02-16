@@ -528,7 +528,7 @@ func domainsList(cmd *cli.Cmd) {
 
 		if pageSet {
 			opts = &api.ListOptions{
-				Page: fmt.Sprintf("%s/api/%s/domains?page=%d", *serverURL, api.APIVersion, *page),
+				Page: fmt.Sprintf(api.DomainListURL, *serverURL, api.APIVersion, *page),
 			}
 		}
 
