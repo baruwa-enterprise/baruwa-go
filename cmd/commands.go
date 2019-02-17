@@ -61,6 +61,18 @@ func (c *CLI) RegisterCommands() {
 			cmd.Command("create", "create a new authentication setting", domainASCreate)
 			cmd.Command("update", "update a authentication setting", domainASUpdate)
 			cmd.Command("delete", "delete a authentication setting", domainASDelete)
+			cmd.Command("ldapsetting", "manage ldap settings", func(cmd *cli.Cmd) {
+				cmd.Command("show", "show detailed information of an ldap setting", ldapShow)
+				cmd.Command("create", "create a new ldap setting", ldapCreate)
+				cmd.Command("update", "update a ldap setting", ldapUpdate)
+				cmd.Command("delete", "delete a ldap setting", ldapDelete)
+			})
+			cmd.Command("radiussetting", "manage radius settings", func(cmd *cli.Cmd) {
+				cmd.Command("show", "show detailed information of an radius setting", radiusShow)
+				cmd.Command("create", "create a new radius setting", radiusCreate)
+				cmd.Command("update", "update a radius setting", radiusUpdate)
+				cmd.Command("delete", "delete a radius setting", radiusDelete)
+			})
 		})
 		cmd.Command("authsettings", "list authentication settings", domainASList)
 		cmd.Command("smarthost", "manage smarthosts", func(cmd *cli.Cmd) {
