@@ -19,7 +19,7 @@ type RadiusSettings struct {
 	ID         int         `json:"id,omitempty" url:"id,omitempty"`
 	Secret     string      `json:"secret" url:"secret"`
 	Timeout    int         `json:"timeout" url:"timeout"`
-	AuthServer *SettingsAS `json:"authserver" url:"authserver"`
+	AuthServer *SettingsAS `json:"authserver,omitempty" url:"authserver,omitempty"`
 }
 
 // GetRadiusSettings returns radius settings
