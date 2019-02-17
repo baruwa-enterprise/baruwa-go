@@ -21,14 +21,14 @@ type LDAPSettings struct {
 	NameAttribute     string     `json:"nameattribute" url:"nameattribute"`
 	EmailAttribute    string     `json:"emailattribute" url:"emailattribute"`
 	BindDN            string     `json:"binddn" url:"binddn"`
-	BindPw            string     `json:"bindpw" url:"bindpw"`
+	BindPw            string     `json:"bindpw,omitempty" url:"bindpw,omitempty"`
 	UseTLS            bool       `json:"usetls" url:"usetls"`
 	UseSearch         bool       `json:"usesearch" url:"usesearch"`
 	SearchFilter      string     `json:"searchfilter" url:"searchfilter"`
 	SearchScope       string     `json:"search_scope" url:"search_scope"`
 	EmailSearchFilter string     `json:"emailsearchfilter" url:"emailsearchfilter"`
 	EmailSearchScope  string     `json:"emailsearch_scope" url:"emailsearch_scope"`
-	AuthServer        SettingsAS `json:"authserver" url:"authserver"`
+	AuthServer        SettingsAS `json:"authserver,omitempty" url:"authserver,omitempty"`
 }
 
 // GetLDAPSettings returns a domain LDAP settings
