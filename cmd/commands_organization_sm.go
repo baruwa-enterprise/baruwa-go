@@ -19,7 +19,7 @@ import (
 
 func organizationSMShow(cmd *cli.Cmd) {
 	var (
-		id, did *int
+		id, oid *int
 		err     error
 		b       []byte
 		c       *api.Client
@@ -32,7 +32,7 @@ func organizationSMShow(cmd *cli.Cmd) {
 		Name: "id",
 		Desc: "Smarthost ID",
 	})
-	did = cmd.Int(cli.IntOpt{
+	oid = cmd.Int(cli.IntOpt{
 		Name: "organization-id",
 		Desc: "Organization ID",
 	})
@@ -42,25 +42,25 @@ func organizationSMShow(cmd *cli.Cmd) {
 			log.Fatal(err)
 		}
 
-		if s, err = c.GetOrgSmartHost(*did, *id); err != nil {
+		if s, err = c.GetOrgSmartHost(*oid, *id); err != nil {
 			log.Fatal(err)
 		}
 
 		if b, err = prettyjson.Marshal(s); err != nil {
 			log.Fatal(err)
 		}
+
 		fmt.Printf("%s\n", b)
 	}
 }
 
 func organizationSMCreate(cmd *cli.Cmd) {
 	var (
-		oid                                      *int
 		err                                      error
 		b                                        []byte
 		c                                        *api.Client
 		s                                        *api.OrgSmartHost
-		port                                     *int
+		oid, port                                *int
 		enabled, requireTLS                      *bool
 		address, username, password, description *string
 	)
@@ -123,17 +123,17 @@ func organizationSMCreate(cmd *cli.Cmd) {
 		if b, err = prettyjson.Marshal(s); err != nil {
 			log.Fatal(err)
 		}
+
 		fmt.Printf("%s\n", b)
 	}
 }
 
 func organizationSMUpdate(cmd *cli.Cmd) {
 	var (
-		id, oid                                              *int
 		err                                                  error
 		c                                                    *api.Client
 		s                                                    *api.OrgSmartHost
-		port                                                 *int
+		id, oid, port                                        *int
 		enabled, requireTLS                                  *bool
 		address, username, password, description             *string
 		addressSet, usernameSet, passwordSet, descriptionSet bool

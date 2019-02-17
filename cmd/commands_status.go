@@ -19,10 +19,12 @@ import (
 
 func systemStatus(cmd *cli.Cmd) {
 	cmd.Action = func() {
-		var b []byte
-		var err error
-		var c *api.Client
-		var s *api.SystemStatus
+		var (
+			b   []byte
+			err error
+			c   *api.Client
+			s   *api.SystemStatus
+		)
 
 		if c, err = GetClient(); err != nil {
 			log.Fatal(err)
@@ -35,6 +37,7 @@ func systemStatus(cmd *cli.Cmd) {
 		if b, err = prettyjson.Marshal(s); err != nil {
 			log.Fatal(err)
 		}
+
 		fmt.Printf("%s\n", b)
 	}
 }

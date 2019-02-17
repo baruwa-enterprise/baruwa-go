@@ -49,18 +49,18 @@ func domainASShow(cmd *cli.Cmd) {
 		if b, err = prettyjson.Marshal(s); err != nil {
 			log.Fatal(err)
 		}
+
 		fmt.Printf("%s\n", b)
 	}
 }
 
 func domainASCreate(cmd *cli.Cmd) {
 	var (
-		did                   *int
 		err                   error
 		b                     []byte
 		c                     *api.Client
 		s                     *api.AuthServer
-		protocol, port        *int
+		did, protocol, port   *int
 		address, usm          *string
 		enabled, splitAddress *bool
 	)
@@ -117,17 +117,17 @@ func domainASCreate(cmd *cli.Cmd) {
 		if b, err = prettyjson.Marshal(s); err != nil {
 			log.Fatal(err)
 		}
+
 		fmt.Printf("%s\n", b)
 	}
 }
 
 func domainASUpdate(cmd *cli.Cmd) {
 	var (
-		id, did                                                               *int
 		err                                                                   error
 		c                                                                     *api.Client
 		s                                                                     *api.AuthServer
-		protocol, port                                                        *int
+		id, did, protocol, port                                               *int
 		address, usm                                                          *string
 		enabled, splitAddress                                                 *bool
 		addressSet, usmSet, enabledSet, splitAddressSet, protocolSet, portSet bool

@@ -45,6 +45,7 @@ func organizationRelayShow(cmd *cli.Cmd) {
 		if b, err = prettyjson.Marshal(r); err != nil {
 			log.Fatal(err)
 		}
+
 		fmt.Printf("%s\n", b)
 	}
 }
@@ -153,6 +154,7 @@ func organizationRelayCreate(cmd *cli.Cmd) {
 		if b, err = prettyjson.Marshal(r); err != nil {
 			log.Fatal(err)
 		}
+
 		fmt.Printf("%s\n", b)
 	}
 }

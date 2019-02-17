@@ -18,11 +18,13 @@ import (
 )
 
 func aliasShow(cmd *cli.Cmd) {
-	var b []byte
-	var id *int
-	var err error
-	var a *api.AliasAddress
-	var c *api.Client
+	var (
+		b   []byte
+		id  *int
+		err error
+		a   *api.AliasAddress
+		c   *api.Client
+	)
 
 	cmd.Spec = "--id"
 	id = cmd.Int(cli.IntOpt{
@@ -42,18 +44,21 @@ func aliasShow(cmd *cli.Cmd) {
 		if b, err = prettyjson.Marshal(a); err != nil {
 			log.Fatal(err)
 		}
+
 		fmt.Printf("%s\n", b)
 	}
 }
 
 func aliasCreate(cmd *cli.Cmd) {
-	var uid *int
-	var b []byte
-	var err error
-	var email *string
-	var enabled *bool
-	var c *api.Client
-	var a *api.AliasAddress
+	var (
+		uid     *int
+		b       []byte
+		err     error
+		email   *string
+		enabled *bool
+		c       *api.Client
+		a       *api.AliasAddress
+	)
 
 	cmd.Spec = "--uid --alias-address --enabled"
 
@@ -71,13 +76,13 @@ func aliasCreate(cmd *cli.Cmd) {
 	})
 
 	cmd.Action = func() {
+		if c, err = GetClient(); err != nil {
+			log.Fatal(err)
+		}
+
 		a = &api.AliasAddress{
 			Address: *email,
 			Enabled: *enabled,
-		}
-
-		if c, err = GetClient(); err != nil {
-			log.Fatal(err)
 		}
 
 		if err = c.CreateAliasAddress(*uid, a); err != nil {
@@ -87,19 +92,21 @@ func aliasCreate(cmd *cli.Cmd) {
 		if b, err = prettyjson.Marshal(a); err != nil {
 			log.Fatal(err)
 		}
+
 		fmt.Printf("%s\n", b)
 	}
 }
 
 func aliasUpdate(cmd *cli.Cmd) {
-	var b []byte
-	var err error
-	var aid *int
-	var email *string
-	var enabled *bool
-	var c *api.Client
-	var a *api.AliasAddress
-	var enableSet, emailSet bool
+	var (
+		err                 error
+		aid                 *int
+		email               *string
+		enabled             *bool
+		c                   *api.Client
+		a                   *api.AliasAddress
+		enableSet, emailSet bool
+	)
 
 	cmd.Spec = "--id [--alias-address] --enable|--disable"
 
@@ -141,18 +148,17 @@ func aliasUpdate(cmd *cli.Cmd) {
 			log.Fatal(err)
 		}
 
-		if b, err = prettyjson.Marshal(a); err != nil {
-			log.Fatal(err)
-		}
-		fmt.Printf("%s\n", b)
+		fmt.Printf("The alias address: %s has been updated\n", a.Address)
 	}
 }
 
 func aliasDelete(cmd *cli.Cmd) {
-	var err error
-	var aid *int
-	var c *api.Client
-	var a *api.AliasAddress
+	var (
+		err error
+		aid *int
+		c   *api.Client
+		a   *api.AliasAddress
+	)
 
 	cmd.Spec = "--id"
 

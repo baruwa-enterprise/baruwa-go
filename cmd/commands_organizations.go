@@ -45,6 +45,7 @@ func organizationShow(cmd *cli.Cmd) {
 		if b, err = prettyjson.Marshal(o); err != nil {
 			log.Fatal(err)
 		}
+
 		fmt.Printf("%s\n", b)
 	}
 }
@@ -93,6 +94,7 @@ func organizationCreate(cmd *cli.Cmd) {
 		if b, err = prettyjson.Marshal(o); err != nil {
 			log.Fatal(err)
 		}
+
 		fmt.Printf("%s\n", b)
 	}
 }
@@ -168,6 +170,7 @@ func organizationUpdate(cmd *cli.Cmd) {
 		if b, err = prettyjson.Marshal(o); err != nil {
 			log.Fatal(err)
 		}
+
 		fmt.Printf("%s\n", b)
 	}
 }

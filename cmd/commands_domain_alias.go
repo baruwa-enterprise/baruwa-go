@@ -103,6 +103,7 @@ func domainAliasCreate(cmd *cli.Cmd) {
 		if b, err = prettyjson.Marshal(d); err != nil {
 			log.Fatal(err)
 		}
+
 		fmt.Printf("%s\n", b)
 	}
 }

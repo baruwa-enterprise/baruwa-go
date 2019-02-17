@@ -45,6 +45,7 @@ func userShow(cmd *cli.Cmd) {
 		if b, err = prettyjson.Marshal(u); err != nil {
 			log.Fatal(err)
 		}
+
 		fmt.Printf("%s\n", b)
 	}
 }
@@ -164,6 +165,7 @@ func userCreate(cmd *cli.Cmd) {
 		if b, err = prettyjson.Marshal(u); err != nil {
 			log.Fatal(err)
 		}
+
 		fmt.Printf("%s\n", b)
 	}
 }
@@ -399,6 +401,7 @@ func usersList(cmd *cli.Cmd) {
 		if b, err = prettyjson.Marshal(u); err != nil {
 			log.Fatal(err)
 		}
+
 		fmt.Printf("%s\n", b)
 	}
 }

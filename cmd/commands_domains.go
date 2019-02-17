@@ -58,6 +58,7 @@ func domainShow(cmd *cli.Cmd) {
 		if b, err = prettyjson.Marshal(d); err != nil {
 			log.Fatal(err)
 		}
+
 		fmt.Printf("%s\n", b)
 	}
 }
@@ -214,6 +215,7 @@ func domainCreate(cmd *cli.Cmd) {
 		if b, err = prettyjson.Marshal(d); err != nil {
 			log.Fatal(err)
 		}
+
 		fmt.Printf("%s\n", b)
 	}
 }
@@ -221,12 +223,11 @@ func domainCreate(cmd *cli.Cmd) {
 func domainUpdate(cmd *cli.Cmd) {
 	var (
 		d                                                                                        *api.Domain
-		id                                                                                       *int
 		err                                                                                      error
 		c                                                                                        *api.Client
 		organizations                                                                            *[]int
 		lowScore, highScore                                                                      api.LocalFloat64
-		spamActions, highSpamActions, virusActions, deliveryMode, reportEvery                    *int
+		id, spamActions, highSpamActions, virusActions, deliveryMode, reportEvery                *int
 		name, siteURL, messageSize, language, timeZone                                           *string
 		enabled, acceptInbound, discardMail, smtpCallout, ldapCallout                            *bool
 		virusChecks, virusChecksAtSMTP, blockMacros, spamChecks                                  *bool
