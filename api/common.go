@@ -84,9 +84,9 @@ func (f *LocalFloat64) Set(v string) (err error) {
 }
 
 func (f *LocalFloat64) String() string {
-	if f == nil {
-		return "0.0"
-	}
+	// if f == nil {
+	// 	return "0.0"
+	// }
 	return fmt.Sprintf("%.1f", *f)
 }
 
