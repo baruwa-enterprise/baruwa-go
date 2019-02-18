@@ -9,11 +9,21 @@
 package cmd
 
 import (
+	"fmt"
+
 	"github.com/baruwa-enterprise/baruwa-go/api"
+)
+
+const (
+	unsetVarsErr = "Endpoint or token variables not set"
 )
 
 // GetClient returns a new Client
 func GetClient() (c *api.Client, err error) {
+	if *serverURL == "" || *apiToken == "" {
+		err = fmt.Errorf(unsetVarsErr)
+		return
+	}
 	c, err = api.New(*serverURL, *apiToken, nil)
 	return
 }
