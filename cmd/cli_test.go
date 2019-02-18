@@ -7,3 +7,31 @@
 
 // Package cmd cmdline client for the Baruwa REST API
 package cmd
+
+import (
+	"os"
+	"testing"
+)
+
+func TestNewCLI(t *testing.T) {
+	token := "test-token"
+	su := "https://baruwa.example.com"
+	os.Unsetenv("BARUWA_API_TOKEN")
+	os.Unsetenv("BARUWA_API_SERVER")
+	_ = NewCLI()
+	if *apiToken != "" {
+		t.Errorf("Expected %s got %s", "", *apiToken)
+	}
+	if *serverURL != "" {
+		t.Errorf("Expected %s got %s", "", *serverURL)
+	}
+	os.Setenv("BARUWA_API_TOKEN", token)
+	os.Setenv("BARUWA_API_SERVER", su)
+	_ = NewCLI()
+	if *apiToken != token {
+		t.Errorf("Expected %s got %s", token, *apiToken)
+	}
+	if *serverURL != su {
+		t.Errorf("Expected %s got %s", su, *serverURL)
+	}
+}
