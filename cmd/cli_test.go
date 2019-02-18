@@ -16,15 +16,6 @@ import (
 func TestNewCLI(t *testing.T) {
 	token := "test-token"
 	su := "https://baruwa.example.com"
-	os.Unsetenv("BARUWA_API_TOKEN")
-	os.Unsetenv("BARUWA_API_SERVER")
-	_ = NewCLI()
-	if *apiToken != "" {
-		t.Errorf("Expected %s got %s", "", *apiToken)
-	}
-	if *serverURL != "" {
-		t.Errorf("Expected %s got %s", "", *serverURL)
-	}
 	os.Setenv("BARUWA_API_TOKEN", token)
 	os.Setenv("BARUWA_API_SERVER", su)
 	_ = NewCLI()
@@ -33,5 +24,14 @@ func TestNewCLI(t *testing.T) {
 	}
 	if *serverURL != su {
 		t.Errorf("Expected %s got %s", su, *serverURL)
+	}
+	os.Unsetenv("BARUWA_API_TOKEN")
+	os.Unsetenv("BARUWA_API_SERVER")
+	_ = NewCLI()
+	if *apiToken != "" {
+		t.Errorf("Expected %s got %s", "", *apiToken)
+	}
+	if *serverURL != "" {
+		t.Errorf("Expected %s got %s", "", *serverURL)
 	}
 }
