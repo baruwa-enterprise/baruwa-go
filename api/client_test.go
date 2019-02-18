@@ -92,14 +92,14 @@ func TestRequestOptions(t *testing.T) {
 	}
 	page := "https://baruwa.example.com/api/v1/users?page=2"
 	opts := &ListOptions{
-		Page: page,
+		Page: page + "&?test=1",
 	}
 	req, e := c.newRequest(http.MethodGet, apiPath("users"), opts, nil)
 	if e != nil {
 		t.Fatalf("An error should not be returned")
 	}
 	if req.URL.String() != page {
-		t.Errorf("Expected %s got %s", page, req.RequestURI)
+		t.Errorf("Expected %s got %s", page, req.URL.String())
 	}
 	opts.Page = "https://b2.example.com/api/v1/users?page=2"
 	req, e = c.newRequest(http.MethodGet, apiPath("users"), opts, nil)
@@ -107,7 +107,7 @@ func TestRequestOptions(t *testing.T) {
 		t.Fatalf("An error should not be returned")
 	}
 	if req.URL.String() == page {
-		t.Errorf("Expected %s got %s", "https://baruwa.example.com/api/v1/users", req.RequestURI)
+		t.Errorf("Expected %s got %s", "https://baruwa.example.com/api/v1/users", req.URL.String())
 	}
 }
 
@@ -176,5 +176,22 @@ func TestApiPath(t *testing.T) {
 	g := apiPath(p)
 	if g != expected {
 		t.Errorf("Expected %s got %s", expected, g)
+	}
+}
+
+func TestNewRequestErrors(t *testing.T) {
+	tp := "../dir/"
+	bu := "https://baruwa.example.com"
+	c, e := New(bu, "test-token", nil)
+	if e != nil {
+		t.Fatalf("An error should not be returned")
+	}
+	_, e = c.newRequest(http.MethodGet, tp, nil, nil)
+	if e == nil {
+		t.Fatalf("An error should be returned")
+	}
+	e = c.get(tp, nil, nil)
+	if e == nil {
+		t.Fatalf("An error should be returned")
 	}
 }

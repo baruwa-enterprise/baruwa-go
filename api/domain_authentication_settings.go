@@ -84,9 +84,7 @@ func (c *Client) CreateAuthServer(domainID int, server *AuthServer) (err error) 
 		return
 	}
 
-	if v, err = query.Values(server); err != nil {
-		return
-	}
+	v, _ = query.Values(server)
 
 	err = c.post(fmt.Sprintf("authservers/%d", domainID), v, server)
 
@@ -113,9 +111,7 @@ func (c *Client) UpdateAuthServer(domainID int, server *AuthServer) (err error) 
 		return
 	}
 
-	if v, err = query.Values(server); err != nil {
-		return
-	}
+	v, _ = query.Values(server)
 
 	err = c.put(fmt.Sprintf("authservers/%d/%d", domainID, server.ID), v, nil)
 
@@ -142,9 +138,7 @@ func (c *Client) DeleteAuthServer(domainID int, server *AuthServer) (err error) 
 		return
 	}
 
-	if v, err = query.Values(server); err != nil {
-		return
-	}
+	v, _ = query.Values(server)
 
 	err = c.delete(fmt.Sprintf("authservers/%d/%d", domainID, server.ID), v)
 

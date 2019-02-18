@@ -19,22 +19,6 @@ import (
 	"strings"
 )
 
-type expirationTime int64
-
-func (e *expirationTime) UnmarshalJSON(b []byte) error {
-	var n json.Number
-	err := json.Unmarshal(b, &n)
-	if err != nil {
-		return err
-	}
-	i, err := n.Int64()
-	if err != nil {
-		return err
-	}
-	*e = expirationTime(i)
-	return nil
-}
-
 // Client represents the Baruwa API client
 type Client struct {
 	BaseURL   *url.URL
@@ -77,7 +61,7 @@ func (c *Client) newRequest(method, path string, opts *ListOptions, body io.Read
 	var q url.Values
 	var u, nu, rel *url.URL
 
-	if rel, err = url.Parse(path); err != nil {
+	if rel, err = url.ParseRequestURI(path); err != nil {
 		return
 	}
 
@@ -189,7 +173,7 @@ func (c *Client) GetAccessToken(clientID, secret string) (token *TokenResponse, 
 	}
 
 	buf = bytes.NewBuffer([]byte("grant_type=password"))
-	if req, err = c.newRequest(http.MethodPost, "oauth2/token", nil, buf); err != nil {
+	if req, err = c.newRequest(http.MethodPost, apiPath("oauth2/token"), nil, buf); err != nil {
 		return
 	}
 

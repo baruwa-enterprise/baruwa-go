@@ -35,9 +35,7 @@ func (c *Client) ChangeUserPassword(userID int, form *PasswordForm) (err error) 
 		return
 	}
 
-	if v, err = query.Values(form); err != nil {
-		return
-	}
+	v, _ = query.Values(form)
 
 	err = c.post(fmt.Sprintf("users/chpw/%d", userID), v, nil)
 

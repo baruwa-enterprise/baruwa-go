@@ -79,9 +79,7 @@ func (c *Client) CreateOrganization(form *OrganizationForm) (org *Organization, 
 		return
 	}
 
-	if v, err = query.Values(form); err != nil {
-		return
-	}
+	v, _ = query.Values(form)
 
 	org = &Organization{}
 
@@ -115,9 +113,7 @@ func (c *Client) UpdateOrganization(form *OrganizationForm, org *Organization) (
 		return
 	}
 
-	if v, err = query.Values(form); err != nil {
-		return
-	}
+	v, _ = query.Values(form)
 
 	err = c.put(fmt.Sprintf("organizations/%d", form.ID), v, org)
 

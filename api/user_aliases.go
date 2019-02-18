@@ -52,9 +52,7 @@ func (c *Client) CreateAliasAddress(userID int, alias *AliasAddress) (err error)
 		return
 	}
 
-	if v, err = query.Values(alias); err != nil {
-		return
-	}
+	v, _ = query.Values(alias)
 
 	err = c.post(fmt.Sprintf("aliasaddresses/%d", userID), v, alias)
 
@@ -76,9 +74,7 @@ func (c *Client) UpdateAliasAddress(alias *AliasAddress) (err error) {
 		return
 	}
 
-	if v, err = query.Values(alias); err != nil {
-		return
-	}
+	v, _ = query.Values(alias)
 
 	err = c.put(fmt.Sprintf("aliasaddresses/%d", alias.ID), v, nil)
 
@@ -100,9 +96,7 @@ func (c *Client) DeleteAliasAddress(alias *AliasAddress) (err error) {
 		return
 	}
 
-	if v, err = query.Values(alias); err != nil {
-		return
-	}
+	v, _ = query.Values(alias)
 
 	err = c.delete(fmt.Sprintf("aliasaddresses/%d", alias.ID), v)
 

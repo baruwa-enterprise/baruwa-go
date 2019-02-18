@@ -97,9 +97,7 @@ func (c *Client) CreateUserDeliveryServer(domainID int, form *UserDeliveryServer
 		return
 	}
 
-	if v, err = query.Values(form); err != nil {
-		return
-	}
+	v, _ = query.Values(form)
 
 	server = &UserDeliveryServer{}
 
@@ -128,9 +126,7 @@ func (c *Client) UpdateUserDeliveryServer(domainID int, form *UserDeliveryServer
 		return
 	}
 
-	if v, err = query.Values(form); err != nil {
-		return
-	}
+	v, _ = query.Values(form)
 
 	err = c.put(fmt.Sprintf("userdeliveryservers/%d/%d", domainID, form.ID), v, nil)
 
@@ -157,9 +153,7 @@ func (c *Client) DeleteUserDeliveryServer(domainID int, form *UserDeliveryServer
 		return
 	}
 
-	if v, err = query.Values(form); err != nil {
-		return
-	}
+	v, _ = query.Values(form)
 
 	err = c.delete(fmt.Sprintf("userdeliveryservers/%d/%d", domainID, form.ID), v)
 

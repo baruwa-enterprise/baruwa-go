@@ -53,7 +53,7 @@ func TestGetDomainAliasesOK(t *testing.T) {
 
 func TestGetDomainAliasError(t *testing.T) {
 	data := ``
-	server, client, err := getTestServerAndClient(http.StatusOK, data)
+	server, client, err := getTestServerAndClient(http.StatusInternalServerError, data)
 	if err != nil {
 		t.Fatalf("An error should not be returned")
 	}
@@ -74,6 +74,17 @@ func TestGetDomainAliasError(t *testing.T) {
 	}
 	if err.Error() != aliasIDError {
 		t.Errorf("Expected '%s' got '%s'", aliasIDError, err)
+	}
+	domainID := 1
+	aliasID := 1
+	_, err = client.GetDomainAlias(domainID, aliasID)
+	if err == nil {
+		t.Fatalf("An error should be returned")
+	}
+	path := fmt.Sprintf("domainaliases/%d/%d", domainID, aliasID)
+	expected := fmt.Sprintf("GET %s%s: %d 500 Internal Server Error", server.URL, apiPath(path), http.StatusInternalServerError)
+	if err.Error() != expected {
+		t.Errorf("Expected '%s' got '%s'", expected, err)
 	}
 }
 

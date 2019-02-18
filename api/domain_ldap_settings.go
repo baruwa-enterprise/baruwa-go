@@ -76,9 +76,7 @@ func (c *Client) CreateLDAPSettings(domainID, serverID int, settings *LDAPSettin
 		return
 	}
 
-	if v, err = query.Values(settings); err != nil {
-		return
-	}
+	v, _ = query.Values(settings)
 
 	err = c.post(fmt.Sprintf("ldapsettings/%d/%d", domainID, serverID), v, settings)
 
@@ -110,9 +108,7 @@ func (c *Client) UpdateLDAPSettings(domainID, serverID int, settings *LDAPSettin
 		return
 	}
 
-	if v, err = query.Values(settings); err != nil {
-		return
-	}
+	v, _ = query.Values(settings)
 
 	err = c.put(fmt.Sprintf("ldapsettings/%d/%d/%d", domainID, serverID, settings.ID), v, nil)
 
@@ -144,9 +140,7 @@ func (c *Client) DeleteLDAPSettings(domainID, serverID int, settings *LDAPSettin
 		return
 	}
 
-	if v, err = query.Values(settings); err != nil {
-		return
-	}
+	v, _ = query.Values(settings)
 
 	err = c.delete(fmt.Sprintf("ldapsettings/%d/%d/%d", domainID, serverID, settings.ID), v)
 

@@ -63,9 +63,7 @@ func (c *Client) CreateRelaySetting(organizationID int, server *RelaySetting) (e
 		return
 	}
 
-	if v, err = query.Values(server); err != nil {
-		return
-	}
+	v, _ = query.Values(server)
 
 	err = c.post(fmt.Sprintf("relays/%d", organizationID), v, server)
 
@@ -87,9 +85,7 @@ func (c *Client) UpdateRelaySetting(server *RelaySetting) (err error) {
 		return
 	}
 
-	if v, err = query.Values(server); err != nil {
-		return
-	}
+	v, _ = query.Values(server)
 
 	err = c.put(fmt.Sprintf("relays/%d", server.ID), v, server)
 
@@ -111,9 +107,7 @@ func (c *Client) DeleteRelaySetting(server *RelaySetting) (err error) {
 		return
 	}
 
-	if v, err = query.Values(server); err != nil {
-		return
-	}
+	v, _ = query.Values(server)
 
 	err = c.delete(fmt.Sprintf("relays/%d", server.ID), v)
 

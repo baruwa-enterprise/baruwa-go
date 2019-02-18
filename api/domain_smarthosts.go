@@ -85,9 +85,7 @@ func (c *Client) CreateDomainSmartHost(domainID int, server *DomainSmartHost) (e
 		return
 	}
 
-	if v, err = query.Values(server); err != nil {
-		return
-	}
+	v, _ = query.Values(server)
 
 	err = c.post(fmt.Sprintf("domains/smarthosts/%d", domainID), v, server)
 
@@ -114,9 +112,7 @@ func (c *Client) UpdateDomainSmartHost(domainID int, server *DomainSmartHost) (e
 		return
 	}
 
-	if v, err = query.Values(server); err != nil {
-		return
-	}
+	v, _ = query.Values(server)
 
 	err = c.put(fmt.Sprintf("domains/smarthosts/%d/%d", domainID, server.ID), v, server)
 
@@ -143,9 +139,7 @@ func (c *Client) DeleteDomainSmartHost(domainID int, server *DomainSmartHost) (e
 		return
 	}
 
-	if v, err = query.Values(server); err != nil {
-		return
-	}
+	v, _ = query.Values(server)
 
 	err = c.delete(fmt.Sprintf("domains/smarthosts/%d/%d", domainID, server.ID), v)
 

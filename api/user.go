@@ -116,9 +116,7 @@ func (c *Client) CreateUser(user *UserForm) (u *User, err error) {
 		return
 	}
 
-	if v, err = query.Values(user); err != nil {
-		return
-	}
+	v, _ = query.Values(user)
 
 	u = &User{}
 
@@ -142,9 +140,7 @@ func (c *Client) UpdateUser(user *UserForm) (err error) {
 		return
 	}
 
-	if v, err = query.Values(user); err != nil {
-		return
-	}
+	v, _ = query.Values(user)
 
 	err = c.put(fmt.Sprintf("users/%d", *user.ID), v, nil)
 

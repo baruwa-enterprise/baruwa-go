@@ -35,3 +35,36 @@ func TestMyTime(t *testing.T) {
 		t.Fatalf("An error should not be returned")
 	}
 }
+
+func TestExpirationTime(t *testing.T) {
+	var et expirationTime
+	err := json.Unmarshal([]byte(""), &et)
+	if err == nil {
+		t.Fatalf("An error should be returned")
+	}
+	err = json.Unmarshal([]byte("200"), &et)
+	if err != nil {
+		t.Fatalf("An error should not be returned")
+	}
+}
+
+func TestLocalFloat64(t *testing.T) {
+	var err error
+	var lf LocalFloat64
+
+	if s := lf.String(); s != "0.0" {
+		t.Errorf("Expected %s got %s", "0.0", s)
+	}
+	if err = lf.Set("xxxx"); err == nil {
+		t.Fatalf("An error should be returned")
+	}
+	if s := lf.String(); s != "0.0" {
+		t.Errorf("Expected %s got %s", "0.0", s)
+	}
+	if err = lf.Set("0.124"); err != nil {
+		t.Fatalf("An error should not be returned")
+	}
+	if s := lf.String(); s != "0.1" {
+		t.Errorf("Expected %s got %s", "0.1", s)
+	}
+}

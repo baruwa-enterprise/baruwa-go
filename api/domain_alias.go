@@ -92,9 +92,7 @@ func (c *Client) CreateDomainAlias(domainID int, form *DomainAliasForm) (alias *
 		return
 	}
 
-	if v, err = query.Values(form); err != nil {
-		return
-	}
+	v, _ = query.Values(form)
 
 	alias = &DomainAlias{}
 
@@ -123,9 +121,7 @@ func (c *Client) UpdateDomainAlias(domainID int, form *DomainAliasForm) (err err
 		return
 	}
 
-	if v, err = query.Values(form); err != nil {
-		return
-	}
+	v, _ = query.Values(form)
 
 	err = c.put(fmt.Sprintf("domainaliases/%d/%d", domainID, form.ID), v, nil)
 
@@ -152,9 +148,7 @@ func (c *Client) DeleteDomainAlias(domainID int, form *DomainAliasForm) (err err
 		return
 	}
 
-	if v, err = query.Values(form); err != nil {
-		return
-	}
+	v, _ = query.Values(form)
 
 	err = c.delete(fmt.Sprintf("domainaliases/%d/%d", domainID, form.ID), v)
 

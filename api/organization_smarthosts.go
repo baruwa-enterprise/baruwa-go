@@ -85,9 +85,7 @@ func (c *Client) CreateOrgSmartHost(organizationID int, server *OrgSmartHost) (e
 		return
 	}
 
-	if v, err = query.Values(server); err != nil {
-		return
-	}
+	v, _ = query.Values(server)
 
 	err = c.post(fmt.Sprintf("organizations/smarthosts/%d", organizationID), v, server)
 
@@ -114,9 +112,7 @@ func (c *Client) UpdateOrgSmartHost(organizationID int, server *OrgSmartHost) (e
 		return
 	}
 
-	if v, err = query.Values(server); err != nil {
-		return
-	}
+	v, _ = query.Values(server)
 
 	err = c.put(fmt.Sprintf("organizations/smarthosts/%d/%d", organizationID, server.ID), v, server)
 
@@ -143,9 +139,7 @@ func (c *Client) DeleteOrgSmartHost(organizationID int, server *OrgSmartHost) (e
 		return
 	}
 
-	if v, err = query.Values(server); err != nil {
-		return
-	}
+	v, _ = query.Values(server)
 
 	err = c.delete(fmt.Sprintf("organizations/smarthosts/%d/%d", organizationID, server.ID), v)
 

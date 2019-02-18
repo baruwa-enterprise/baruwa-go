@@ -86,9 +86,7 @@ func (c *Client) CreateFallBackServer(organizationID int, server *FallBackServer
 		return
 	}
 
-	if v, err = query.Values(server); err != nil {
-		return
-	}
+	v, _ = query.Values(server)
 
 	err = c.post(fmt.Sprintf("fallbackservers/%d", organizationID), v, server)
 
@@ -110,9 +108,7 @@ func (c *Client) UpdateFallBackServer(server *FallBackServer) (err error) {
 		return
 	}
 
-	if v, err = query.Values(server); err != nil {
-		return
-	}
+	v, _ = query.Values(server)
 
 	err = c.put(fmt.Sprintf("fallbackservers/%d", server.ID), v, server)
 
@@ -134,9 +130,7 @@ func (c *Client) DeleteFallBackServer(server *FallBackServer) (err error) {
 		return
 	}
 
-	if v, err = query.Values(server); err != nil {
-		return
-	}
+	v, _ = query.Values(server)
 
 	err = c.delete(fmt.Sprintf("fallbackservers/%d", server.ID), v)
 

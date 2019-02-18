@@ -67,9 +67,7 @@ func (c *Client) CreateRadiusSettings(domainID, serverID int, settings *RadiusSe
 		return
 	}
 
-	if v, err = query.Values(settings); err != nil {
-		return
-	}
+	v, _ = query.Values(settings)
 
 	err = c.post(fmt.Sprintf("radiussettings/%d/%d", domainID, serverID), v, settings)
 
@@ -101,9 +99,7 @@ func (c *Client) UpdateRadiusSettings(domainID, serverID int, settings *RadiusSe
 		return
 	}
 
-	if v, err = query.Values(settings); err != nil {
-		return
-	}
+	v, _ = query.Values(settings)
 
 	err = c.put(fmt.Sprintf("radiussettings/%d/%d/%d", domainID, serverID, settings.ID), v, nil)
 
@@ -135,9 +131,7 @@ func (c *Client) DeleteRadiusSettings(domainID, serverID int, settings *RadiusSe
 		return
 	}
 
-	if v, err = query.Values(settings); err != nil {
-		return
-	}
+	v, _ = query.Values(settings)
 
 	err = c.delete(fmt.Sprintf("radiussettings/%d/%d/%d", domainID, serverID, settings.ID), v)
 

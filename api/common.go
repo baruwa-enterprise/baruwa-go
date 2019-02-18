@@ -8,6 +8,7 @@
 package api
 
 import (
+	"encoding/json"
 	"fmt"
 	"strconv"
 	"strings"
@@ -87,4 +88,20 @@ func (f *LocalFloat64) String() string {
 		return "0.0"
 	}
 	return fmt.Sprintf("%.1f", *f)
+}
+
+type expirationTime int64
+
+func (e *expirationTime) UnmarshalJSON(b []byte) error {
+	var n json.Number
+	err := json.Unmarshal(b, &n)
+	if err != nil {
+		return err
+	}
+	i, err := n.Int64()
+	if err != nil {
+		return err
+	}
+	*e = expirationTime(i)
+	return nil
 }

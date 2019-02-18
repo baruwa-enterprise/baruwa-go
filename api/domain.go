@@ -100,9 +100,7 @@ func (c *Client) CreateDomain(domain *Domain) (err error) {
 		return
 	}
 
-	if v, err = query.Values(domain); err != nil {
-		return
-	}
+	v, _ = query.Values(domain)
 
 	err = c.post("domains", v, domain)
 
@@ -124,9 +122,7 @@ func (c *Client) UpdateDomain(domain *Domain) (err error) {
 		return
 	}
 
-	if v, err = query.Values(domain); err != nil {
-		return
-	}
+	v, _ = query.Values(domain)
 
 	err = c.put(fmt.Sprintf("domains/%d", domain.ID), v, domain)
 
