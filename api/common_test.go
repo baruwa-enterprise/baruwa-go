@@ -37,13 +37,16 @@ func TestMyTime(t *testing.T) {
 }
 
 func TestExpirationTime(t *testing.T) {
+	var b []byte
 	var et expirationTime
-	err := json.Unmarshal([]byte(""), &et)
-	if err == nil {
+
+	if err := et.UnmarshalJSON(b); err == nil {
 		t.Fatalf("An error should be returned")
 	}
-	err = json.Unmarshal([]byte("200"), &et)
-	if err != nil {
+	if err := et.UnmarshalJSON([]byte("18446744073709551616")); err == nil {
+		t.Fatalf("An error should be returned")
+	}
+	if err := et.UnmarshalJSON([]byte("200")); err != nil {
 		t.Fatalf("An error should not be returned")
 	}
 }
