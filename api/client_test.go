@@ -194,4 +194,8 @@ func TestNewRequestErrors(t *testing.T) {
 	if e == nil {
 		t.Fatalf("An error should be returned")
 	}
+	_, e = c.newRequest("[]", "/test", nil, nil)
+	if e == nil {
+		t.Fatalf("An error should be returned")
+	}
 }
