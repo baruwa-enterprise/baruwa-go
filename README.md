@@ -8,27 +8,6 @@
 [![GoDoc](https://godoc.org/github.com/baruwa-enterprise/baruwa-go?status.svg)](https://godoc.org/github.com/baruwa-enterprise/baruwa-go)
 [![MPLv2 License](https://img.shields.io/badge/license-MPLv2-blue.svg?style=flat-square)](https://www.mozilla.org/MPL/2.0/)
 
-```
-Usage: baruwa -k -s COMMAND [arg...]
-
-A cmdline client for the Baruwa REST API.
-                     
-Options:             
-  -k, --api-token    Baruwa API OAUTH Token (env $BARUWA_API_TOKEN)
-  -s, --server-url   Baruwa server url (env $BARUWA_API_SERVER)
-                     
-Commands:            
-  user               manage user accounts
-  users              list user accounts
-  domain             manage domains
-  domains            list domains
-  organization       manage organizations
-  organizations      list organizations
-  systemstatus       show system status
-                     
-Run 'baruwa COMMAND --help' for more information on a command.
-```
-
 ## Requirements
 
 * Golang 1.10.x or higher
