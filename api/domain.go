@@ -51,7 +51,8 @@ type DomainList struct {
 // GetDomains returns a DomainList object
 // This contains a paginated list of domains and links
 // to the neighbouring pages.
-// https://www.baruwa.com/docs/api/#list-all-domains
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#list-all-domains
 func (c *Client) GetDomains(opts *ListOptions) (l *DomainList, err error) {
 	l = &DomainList{}
 
@@ -61,7 +62,8 @@ func (c *Client) GetDomains(opts *ListOptions) (l *DomainList, err error) {
 }
 
 // GetDomain returns a domain
-// https://www.baruwa.com/docs/api/#retrieve-a-domain
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#retrieve-a-domain
 func (c *Client) GetDomain(domainID int) (domain *Domain, err error) {
 	if domainID <= 0 {
 		err = fmt.Errorf(domainIDError)
@@ -76,7 +78,8 @@ func (c *Client) GetDomain(domainID int) (domain *Domain, err error) {
 }
 
 // GetDomainByName returns a domain
-// https://www.baruwa.com/docs/api/#retrieve-a-domain-by-name
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#retrieve-a-domain-by-name
 func (c *Client) GetDomainByName(domainName string) (domain *Domain, err error) {
 	if domainName == "" {
 		err = fmt.Errorf(domainNameParamError)
@@ -91,7 +94,8 @@ func (c *Client) GetDomainByName(domainName string) (domain *Domain, err error) 
 }
 
 // CreateDomain creates a domain
-// https://www.baruwa.com/docs/api/#create-a-new-domain
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#create-a-new-domain
 func (c *Client) CreateDomain(domain *Domain) (err error) {
 	var v url.Values
 
@@ -108,7 +112,8 @@ func (c *Client) CreateDomain(domain *Domain) (err error) {
 }
 
 // UpdateDomain updates a domain
-// https://www.baruwa.com/docs/api/#update-a-domain
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#update-a-domain
 func (c *Client) UpdateDomain(domain *Domain) (err error) {
 	var v url.Values
 
@@ -130,7 +135,8 @@ func (c *Client) UpdateDomain(domain *Domain) (err error) {
 }
 
 // DeleteDomain deletes a domain
-// https://www.baruwa.com/docs/api/#delete-a-domain
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#delete-a-domain
 func (c *Client) DeleteDomain(domainID int) (err error) {
 	if domainID <= 0 {
 		err = fmt.Errorf(domainIDError)

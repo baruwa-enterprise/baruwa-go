@@ -45,7 +45,8 @@ type OrganizationList struct {
 // GetOrganizations returns a OrganizationList object
 // This contains a paginated list of Organizations and links
 // to the neighbouring pages.
-// https://www.baruwa.com/docs/api/#listing-all-organizations
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#listing-all-organizations
 func (c *Client) GetOrganizations(opts *ListOptions) (l *OrganizationList, err error) {
 	l = &OrganizationList{}
 
@@ -55,7 +56,8 @@ func (c *Client) GetOrganizations(opts *ListOptions) (l *OrganizationList, err e
 }
 
 // GetOrganization returns an organization
-// https://www.baruwa.com/docs/api/#retrieve-an-existing-organization
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#retrieve-an-existing-organization
 func (c *Client) GetOrganization(organizationID int) (org *Organization, err error) {
 	if organizationID <= 0 {
 		err = fmt.Errorf(organizationIDError)
@@ -70,7 +72,8 @@ func (c *Client) GetOrganization(organizationID int) (org *Organization, err err
 }
 
 // CreateOrganization creates an organization
-// https://www.baruwa.com/docs/api/#create-an-organization
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#create-an-organization
 func (c *Client) CreateOrganization(form *OrganizationForm) (org *Organization, err error) {
 	var v url.Values
 
@@ -89,7 +92,8 @@ func (c *Client) CreateOrganization(form *OrganizationForm) (org *Organization, 
 }
 
 // UpdateOrganization updates an organization
-// https://www.baruwa.com/docs/api/#update-an-organization
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#update-an-organization
 func (c *Client) UpdateOrganization(form *OrganizationForm, org *Organization) (err error) {
 	var v url.Values
 
@@ -121,7 +125,8 @@ func (c *Client) UpdateOrganization(form *OrganizationForm, org *Organization) (
 }
 
 // DeleteOrganization deletes an organization
-// https://www.baruwa.com/docs/api/#delete-an-organization
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#delete-an-organization
 func (c *Client) DeleteOrganization(organizationID int) (err error) {
 	if organizationID <= 0 {
 		err = fmt.Errorf(organizationIDError)

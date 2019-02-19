@@ -48,7 +48,8 @@ type DomainAliasList struct {
 // GetDomainAliases returns a DomainList object
 // This contains a paginated list of domain aliases and links
 // to the neighbouring pages.
-// https://www.baruwa.com/docs/api/#domain-aliases
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#domain-aliases
 func (c *Client) GetDomainAliases(domainID int, opts *ListOptions) (l *DomainAliasList, err error) {
 	l = &DomainAliasList{}
 
@@ -58,7 +59,8 @@ func (c *Client) GetDomainAliases(domainID int, opts *ListOptions) (l *DomainAli
 }
 
 // GetDomainAlias returns a domain alias
-// https://www.baruwa.com/docs/api/#retrieve-domain-alias
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#retrieve-domain-alias
 func (c *Client) GetDomainAlias(domainID, aliasID int) (alias *DomainAlias, err error) {
 	if domainID <= 0 {
 		err = fmt.Errorf(domainIDError)
@@ -78,7 +80,8 @@ func (c *Client) GetDomainAlias(domainID, aliasID int) (alias *DomainAlias, err 
 }
 
 // CreateDomainAlias creates a domain alias
-// https://www.baruwa.com/docs/api/#create-a-domain-alias
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#create-a-domain-alias
 func (c *Client) CreateDomainAlias(domainID int, form *DomainAliasForm) (alias *DomainAlias, err error) {
 	var v url.Values
 
@@ -102,7 +105,8 @@ func (c *Client) CreateDomainAlias(domainID int, form *DomainAliasForm) (alias *
 }
 
 // UpdateDomainAlias updates a domain alias
-// https://www.baruwa.com/docs/api/#update-a-domain-alias
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#update-a-domain-alias
 func (c *Client) UpdateDomainAlias(domainID int, form *DomainAliasForm) (err error) {
 	var v url.Values
 
@@ -129,7 +133,8 @@ func (c *Client) UpdateDomainAlias(domainID int, form *DomainAliasForm) (err err
 }
 
 // DeleteDomainAlias deletes an domain alias
-// https://www.baruwa.com/docs/api/#delete-a-domain-alias
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#delete-a-domain-alias
 func (c *Client) DeleteDomainAlias(domainID int, form *DomainAliasForm) (err error) {
 	var v url.Values
 

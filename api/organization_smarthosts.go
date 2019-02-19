@@ -36,7 +36,8 @@ type OrgSmartHostList struct {
 // GetOrgSmartHosts returns a OrgSmartHostList object
 // This contains a paginated list of Organization smarthosts and links
 // to the neighbouring pages.
-// https://www.baruwa.com/docs/api/#listing-organization-smarthosts
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#listing-organization-smarthosts
 func (c *Client) GetOrgSmartHosts(organizationID int, opts *ListOptions) (l *OrgSmartHostList, err error) {
 	if organizationID <= 0 {
 		err = fmt.Errorf(organizationIDError)
@@ -51,7 +52,8 @@ func (c *Client) GetOrgSmartHosts(organizationID int, opts *ListOptions) (l *Org
 }
 
 // GetOrgSmartHost returns a domain smarthost
-// https://www.baruwa.com/docs/api/#retrieve-a-organization-smarthost
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#retrieve-a-organization-smarthost
 func (c *Client) GetOrgSmartHost(organizationID, serverID int) (server *OrgSmartHost, err error) {
 	if organizationID <= 0 {
 		err = fmt.Errorf(organizationIDError)
@@ -71,7 +73,8 @@ func (c *Client) GetOrgSmartHost(organizationID, serverID int) (server *OrgSmart
 }
 
 // CreateOrgSmartHost creates a domain smarthost
-// https://www.baruwa.com/docs/api/#create-an-organization-smarthost
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#create-an-organization-smarthost
 func (c *Client) CreateOrgSmartHost(organizationID int, server *OrgSmartHost) (err error) {
 	var v url.Values
 
@@ -93,7 +96,8 @@ func (c *Client) CreateOrgSmartHost(organizationID int, server *OrgSmartHost) (e
 }
 
 // UpdateOrgSmartHost updates a domain smarthost
-// https://www.baruwa.com/docs/api/#update-a-organization-smarthost
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#update-a-organization-smarthost
 func (c *Client) UpdateOrgSmartHost(organizationID int, server *OrgSmartHost) (err error) {
 	var v url.Values
 
@@ -120,7 +124,8 @@ func (c *Client) UpdateOrgSmartHost(organizationID int, server *OrgSmartHost) (e
 }
 
 // DeleteOrgSmartHost deletes a domain smarthost
-// https://www.baruwa.com/docs/api/#retrieve-system-status
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#retrieve-system-status
 func (c *Client) DeleteOrgSmartHost(organizationID int, server *OrgSmartHost) (err error) {
 	var v url.Values
 

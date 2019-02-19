@@ -42,7 +42,8 @@ type FallBackServerList struct {
 // GetFallBackServers returns a FallBackServerList object
 // This contains a paginated list of fallback servers and links
 // to the neighbouring pages.
-// https://www.baruwa.com/docs/api/#fallback-servers
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#fallback-servers
 func (c *Client) GetFallBackServers(organizationID int, opts *ListOptions) (l *FallBackServerList, err error) {
 	if organizationID <= 0 {
 		err = fmt.Errorf(organizationIDError)
@@ -57,7 +58,8 @@ func (c *Client) GetFallBackServers(organizationID int, opts *ListOptions) (l *F
 }
 
 // GetFallBackServer returns radius settings
-// https://www.baruwa.com/docs/api/#retrieve-a-fallback-server
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#retrieve-a-fallback-server
 func (c *Client) GetFallBackServer(serverID int) (server *FallBackServer, err error) {
 	if serverID <= 0 {
 		err = fmt.Errorf(serverIDError)
@@ -72,7 +74,8 @@ func (c *Client) GetFallBackServer(serverID int) (server *FallBackServer, err er
 }
 
 // CreateFallBackServer creates radius settings
-// https://www.baruwa.com/docs/api/#create-a-fallback-server
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#create-a-fallback-server
 func (c *Client) CreateFallBackServer(organizationID int, server *FallBackServer) (err error) {
 	var v url.Values
 
@@ -94,7 +97,8 @@ func (c *Client) CreateFallBackServer(organizationID int, server *FallBackServer
 }
 
 // UpdateFallBackServer updates radius settings
-// https://www.baruwa.com/docs/api/#update-a-fallback-server
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#update-a-fallback-server
 func (c *Client) UpdateFallBackServer(server *FallBackServer) (err error) {
 	var v url.Values
 
@@ -116,7 +120,8 @@ func (c *Client) UpdateFallBackServer(server *FallBackServer) (err error) {
 }
 
 // DeleteFallBackServer deletes radius settings
-// https://www.baruwa.com/docs/api/#delete-a-fallback-server
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#delete-a-fallback-server
 func (c *Client) DeleteFallBackServer(server *FallBackServer) (err error) {
 	var v url.Values
 

@@ -48,7 +48,8 @@ type UserDeliveryServerList struct {
 // GetUserDeliveryServers returns a UserDeliveryServerList object
 // This contains a paginated list of domain delivery servers and links
 // to the neighbouring pages.
-// https://www.baruwa.com/docs/api/#listing-user-delivery-servers
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#listing-user-delivery-servers
 func (c *Client) GetUserDeliveryServers(domainID int, opts *ListOptions) (l *UserDeliveryServerList, err error) {
 	if domainID <= 0 {
 		err = fmt.Errorf(domainIDError)
@@ -63,7 +64,8 @@ func (c *Client) GetUserDeliveryServers(domainID int, opts *ListOptions) (l *Use
 }
 
 // GetUserDeliveryServer returns a user delivery server
-// https://www.baruwa.com/docs/api/#retrieve-a-user-delivery-server
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#retrieve-a-user-delivery-server
 func (c *Client) GetUserDeliveryServer(domainID, serverID int) (server *UserDeliveryServer, err error) {
 	if domainID <= 0 {
 		err = fmt.Errorf(domainIDError)
@@ -83,7 +85,8 @@ func (c *Client) GetUserDeliveryServer(domainID, serverID int) (server *UserDeli
 }
 
 // CreateUserDeliveryServer creates a user delivery server
-// https://www.baruwa.com/docs/api/#create-a-user-delivery-server
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#create-a-user-delivery-server
 func (c *Client) CreateUserDeliveryServer(domainID int, form *UserDeliveryServerForm) (server *UserDeliveryServer, err error) {
 	var v url.Values
 
@@ -107,7 +110,8 @@ func (c *Client) CreateUserDeliveryServer(domainID int, form *UserDeliveryServer
 }
 
 // UpdateUserDeliveryServer updates a user delivery server
-// https://www.baruwa.com/docs/api/#update-a-user-delivery-server
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#update-a-user-delivery-server
 func (c *Client) UpdateUserDeliveryServer(domainID int, form *UserDeliveryServerForm) (err error) {
 	var v url.Values
 
@@ -134,7 +138,8 @@ func (c *Client) UpdateUserDeliveryServer(domainID int, form *UserDeliveryServer
 }
 
 // DeleteUserDeliveryServer deletes a user delivery server
-// https://www.baruwa.com/docs/api/#delete-a-user-delivery-server
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#delete-a-user-delivery-server
 func (c *Client) DeleteUserDeliveryServer(domainID int, form *UserDeliveryServerForm) (err error) {
 	var v url.Values
 

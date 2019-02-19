@@ -15,7 +15,8 @@ import (
 )
 
 // AliasAddress hosts alias addresses
-// https://www.baruwa.com/docs/api/#alias-addresses
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#alias-addresses
 type AliasAddress struct {
 	ID      int    `json:"id,omitempty" url:"id,omitempty"`
 	Address string `json:"address" url:"address"`
@@ -23,7 +24,8 @@ type AliasAddress struct {
 }
 
 // GetAliasAddress returns an alias address
-// https://www.baruwa.com/docs/api/#retrieve-an-existing-alias-address
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#retrieve-an-existing-alias-address
 func (c *Client) GetAliasAddress(aliasID int) (alias *AliasAddress, err error) {
 	if aliasID <= 0 {
 		err = fmt.Errorf(aliasIDError)
@@ -38,7 +40,8 @@ func (c *Client) GetAliasAddress(aliasID int) (alias *AliasAddress, err error) {
 }
 
 // CreateAliasAddress creates an alias address
-// https://www.baruwa.com/docs/api/#create-an-alias-address
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#create-an-alias-address
 func (c *Client) CreateAliasAddress(userID int, alias *AliasAddress) (err error) {
 	var v url.Values
 
@@ -60,7 +63,8 @@ func (c *Client) CreateAliasAddress(userID int, alias *AliasAddress) (err error)
 }
 
 // UpdateAliasAddress updates an alias address
-// https://www.baruwa.com/docs/api/#update-an-alias-address
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#update-an-alias-address
 func (c *Client) UpdateAliasAddress(alias *AliasAddress) (err error) {
 	var v url.Values
 
@@ -82,7 +86,8 @@ func (c *Client) UpdateAliasAddress(alias *AliasAddress) (err error) {
 }
 
 // DeleteAliasAddress deletes an alias address
-// https://www.baruwa.com/docs/api/#delete-an-alias-address
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#delete-an-alias-address
 func (c *Client) DeleteAliasAddress(alias *AliasAddress) (err error) {
 	var v url.Values
 

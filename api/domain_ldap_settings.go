@@ -32,7 +32,8 @@ type LDAPSettings struct {
 }
 
 // GetLDAPSettings returns a domain LDAP settings
-// https://www.baruwa.com/docs/api/#retrieve-ad-ldap-settings
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#retrieve-ad-ldap-settings
 func (c *Client) GetLDAPSettings(domainID, serverID, settingsID int) (settings *LDAPSettings, err error) {
 	if domainID <= 0 {
 		err = fmt.Errorf(domainIDError)
@@ -57,7 +58,8 @@ func (c *Client) GetLDAPSettings(domainID, serverID, settingsID int) (settings *
 }
 
 // CreateLDAPSettings creates a domain LDAP settings
-// https://www.baruwa.com/docs/api/#create-ad-ldap-settings
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#create-ad-ldap-settings
 func (c *Client) CreateLDAPSettings(domainID, serverID int, settings *LDAPSettings) (err error) {
 	var v url.Values
 
@@ -84,7 +86,8 @@ func (c *Client) CreateLDAPSettings(domainID, serverID int, settings *LDAPSettin
 }
 
 // UpdateLDAPSettings updates a domain LDAP settings
-// https://www.baruwa.com/docs/api/#update-ad-ldap-settings
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#update-ad-ldap-settings
 func (c *Client) UpdateLDAPSettings(domainID, serverID int, settings *LDAPSettings) (err error) {
 	var v url.Values
 
@@ -116,7 +119,8 @@ func (c *Client) UpdateLDAPSettings(domainID, serverID int, settings *LDAPSettin
 }
 
 // DeleteLDAPSettings deletes a domain LDAP settings
-// https://www.baruwa.com/docs/api/#delete-ad-ldap-settings
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#delete-ad-ldap-settings
 func (c *Client) DeleteLDAPSettings(domainID, serverID int, settings *LDAPSettings) (err error) {
 	var v url.Values
 

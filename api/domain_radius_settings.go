@@ -23,7 +23,8 @@ type RadiusSettings struct {
 }
 
 // GetRadiusSettings returns radius settings
-// https://www.baruwa.com/docs/api/#retrieve-radius-settings
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#retrieve-radius-settings
 func (c *Client) GetRadiusSettings(domainID, serverID, settingsID int) (settings *RadiusSettings, err error) {
 	if domainID <= 0 {
 		err = fmt.Errorf(domainIDError)
@@ -48,7 +49,8 @@ func (c *Client) GetRadiusSettings(domainID, serverID, settingsID int) (settings
 }
 
 // CreateRadiusSettings creates radius settings
-// https://www.baruwa.com/docs/api/#create-radius-settings
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#create-radius-settings
 func (c *Client) CreateRadiusSettings(domainID, serverID int, settings *RadiusSettings) (err error) {
 	var v url.Values
 
@@ -75,7 +77,8 @@ func (c *Client) CreateRadiusSettings(domainID, serverID int, settings *RadiusSe
 }
 
 // UpdateRadiusSettings updates radius settings
-// https://www.baruwa.com/docs/api/#update-radius-settings
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#update-radius-settings
 func (c *Client) UpdateRadiusSettings(domainID, serverID int, settings *RadiusSettings) (err error) {
 	var v url.Values
 
@@ -107,7 +110,8 @@ func (c *Client) UpdateRadiusSettings(domainID, serverID int, settings *RadiusSe
 }
 
 // DeleteRadiusSettings deletes radius settings
-// https://www.baruwa.com/docs/api/#delete-radius-settings
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#delete-radius-settings
 func (c *Client) DeleteRadiusSettings(domainID, serverID int, settings *RadiusSettings) (err error) {
 	var v url.Values
 

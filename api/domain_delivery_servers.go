@@ -48,7 +48,8 @@ type DomainDeliveryServerList struct {
 // GetDomainDeliveryServers returns a DomainDeliveryServerList object
 // This contains a paginated list of domain delivery servers and links
 // to the neighbouring pages.
-// https://www.baruwa.com/docs/api/#listing-delivery-servers
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#listing-delivery-servers
 func (c *Client) GetDomainDeliveryServers(domainID int, opts *ListOptions) (l *DomainDeliveryServerList, err error) {
 	if domainID <= 0 {
 		err = fmt.Errorf(domainIDError)
@@ -63,7 +64,8 @@ func (c *Client) GetDomainDeliveryServers(domainID int, opts *ListOptions) (l *D
 }
 
 // GetDomainDeliveryServer returns a domain delivery server
-// https://www.baruwa.com/docs/api/#retrieve-a-delivery-server
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#retrieve-a-delivery-server
 func (c *Client) GetDomainDeliveryServer(domainID, serverID int) (server *DomainDeliveryServer, err error) {
 	if domainID <= 0 {
 		err = fmt.Errorf(domainIDError)
@@ -83,7 +85,8 @@ func (c *Client) GetDomainDeliveryServer(domainID, serverID int) (server *Domain
 }
 
 // CreateDomainDeliveryServer creates a domain delivery server
-// https://www.baruwa.com/docs/api/#create-a-delivery-server
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#create-a-delivery-server
 func (c *Client) CreateDomainDeliveryServer(domainID int, form *DomainDeliveryServerForm) (server *DomainDeliveryServer, err error) {
 	var v url.Values
 
@@ -107,7 +110,8 @@ func (c *Client) CreateDomainDeliveryServer(domainID int, form *DomainDeliverySe
 }
 
 // UpdateDomainDeliveryServer updates a domain delivery server
-// https://www.baruwa.com/docs/api/#update-a-delivery-server
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#update-a-delivery-server
 func (c *Client) UpdateDomainDeliveryServer(domainID int, form *DomainDeliveryServerForm) (err error) {
 	var v url.Values
 
@@ -134,7 +138,8 @@ func (c *Client) UpdateDomainDeliveryServer(domainID int, form *DomainDeliverySe
 }
 
 // DeleteDomainDeliveryServer deletes a domain delivery server
-// https://www.baruwa.com/docs/api/#delete-a-delivery-server
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#delete-a-delivery-server
 func (c *Client) DeleteDomainDeliveryServer(domainID int, form *DomainDeliveryServerForm) (err error) {
 	var v url.Values
 

@@ -34,7 +34,8 @@ type RelaySetting struct {
 }
 
 // GetRelaySetting returns radius settings
-// https://www.baruwa.com/docs/api/#retrieve-relay-settings
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#retrieve-relay-settings
 func (c *Client) GetRelaySetting(relayID int) (server *RelaySetting, err error) {
 	if relayID <= 0 {
 		err = fmt.Errorf(relayIDError)
@@ -49,7 +50,8 @@ func (c *Client) GetRelaySetting(relayID int) (server *RelaySetting, err error) 
 }
 
 // CreateRelaySetting creates radius settings
-// https://www.baruwa.com/docs/api/#create-relay-settings
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#create-relay-settings
 func (c *Client) CreateRelaySetting(organizationID int, server *RelaySetting) (err error) {
 	var v url.Values
 
@@ -71,7 +73,8 @@ func (c *Client) CreateRelaySetting(organizationID int, server *RelaySetting) (e
 }
 
 // UpdateRelaySetting updates radius settings
-// https://www.baruwa.com/docs/api/#update-relay-settings
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#update-relay-settings
 func (c *Client) UpdateRelaySetting(server *RelaySetting) (err error) {
 	var v url.Values
 
@@ -93,7 +96,8 @@ func (c *Client) UpdateRelaySetting(server *RelaySetting) (err error) {
 }
 
 // DeleteRelaySetting deletes radius settings
-// https://www.baruwa.com/docs/api/#delete-relay-settings
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#delete-relay-settings
 func (c *Client) DeleteRelaySetting(server *RelaySetting) (err error) {
 	var v url.Values
 

@@ -21,7 +21,8 @@ type PasswordForm struct {
 }
 
 // ChangeUserPassword changes a users account password
-// https://www.baruwa.com/docs/api/#change-a-password
+//
+// Baruwa API Docs: https://www.baruwa.com/docs/api/#change-a-password
 func (c *Client) ChangeUserPassword(userID int, form *PasswordForm) (err error) {
 	var v url.Values
 
