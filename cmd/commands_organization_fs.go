@@ -5,7 +5,6 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this file,
 // You can obtain one at http://mozilla.org/MPL/2.0/.
 
-// Package cmd cmdline client for the Baruwa REST API
 package cmd
 
 import (
@@ -45,7 +44,7 @@ func organizationFSShow(cmd *cli.Cmd) {
 		if b, err = prettyjson.Marshal(s); err != nil {
 			log.Fatal(err)
 		}
-		
+
 		fmt.Printf("%s\n", b)
 	}
 }
