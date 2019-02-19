@@ -18,6 +18,11 @@
 $ go get github.com/baruwa-enterprise/baruwa-go
 ```
 
+## Example usage
+
+A full cmdline application written using this API is available
+at [baruwactl](https://github.com/baruwa-enterprise/baruwactl)
+
 ## Testing
 
 ``make test``
