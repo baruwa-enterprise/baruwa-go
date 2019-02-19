@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.org/baruwa-enterprise/baruwa-go.svg?branch=master)](https://travis-ci.org/baruwa-enterprise/baruwa-go)
 [![codecov](https://codecov.io/gh/baruwa-enterprise/baruwa-go/branch/master/graph/badge.svg)](https://codecov.io/gh/baruwa-enterprise/baruwa-go)
 [![Go Report Card](https://goreportcard.com/badge/github.com/baruwa-enterprise/baruwa-go)](https://goreportcard.com/report/github.com/baruwa-enterprise/baruwa-go)
-[![GoDoc](https://godoc.org/github.com/baruwa-enterprise/baruwa-go?status.svg)](https://godoc.org/github.com/baruwa-enterprise/baruwa-go)
+[![GoDoc](https://godoc.org/github.com/baruwa-enterprise/baruwa-go?status.svg)](https://godoc.org/github.com/baruwa-enterprise/baruwa-go/api)
 [![MPLv2 License](https://img.shields.io/badge/license-MPLv2-blue.svg?style=flat-square)](https://www.mozilla.org/MPL/2.0/)
 
 ## Requirements
