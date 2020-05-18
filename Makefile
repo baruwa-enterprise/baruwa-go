@@ -9,13 +9,9 @@ help:
 	@echo 'Management commands for goexim:'
 	@echo
 	@echo 'Usage:'
-	@echo '    make get-deps        runs dep ensure, mostly used for ci.'
 	
 	@echo '    make clean           Clean the directory tree.'
 	@echo
-
-get-deps:
-	dep ensure
 
 test:
 	go test -coverprofile cp.out ./...
